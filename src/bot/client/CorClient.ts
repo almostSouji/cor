@@ -10,6 +10,7 @@ import database from "../structures/database";
 import { Sequelize, Options } from "sequelize";
 import { Guild } from "discord.js";
 import { readdirSync } from "fs";
+import { createLogger, Logger, transports, format } from 'winston';
 
 interface CorConfig {
   dialect: Options["dialect"];
@@ -43,6 +44,7 @@ export default class CorClient extends AkairoClient {
   private guildSettings: SequelizeProvider;
   private config: CorConfig;
   public hubGuildID: string;
+  public logger: Logger
 
   public constructor(config: CorConfig) {
     super(
@@ -54,6 +56,15 @@ export default class CorClient extends AkairoClient {
         disabledEvents: ["TYPING_START"]
       }
     );
+    this.logger = createLogger({
+      format: format.combine(
+        format.colorize({level: true}),
+        format.timestamp({format: 'YYYY/MM/DD HH:mm:ss'}),
+        format.printf((info):string => `[${info.timestamp}] ${info.level}: ${info.message}`)
+      ),
+      transports: [new transports.Console()]
+    });
+
     this.commandHandler.loadAll();
     this.listenerHandler.setEmitters({
       commandHandler: this.commandHandler,
