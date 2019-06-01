@@ -4,7 +4,7 @@ import { stripIndents } from 'common-tags';
 
 export default class HelpCommand extends Command {
 	private constructor() {
-		super('ping', {
+		super('help', {
 			aliases: ['help', 'h', 'commandinfo'],
 			description: {
 				content:
