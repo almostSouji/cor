@@ -8,23 +8,21 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "ts-node-dev src/index.ts",
-    "watch": "onchange -ki src -- yarn dev",
-    "sync": "typeorm schema:sync"
+    "sync": "typeorm schema:sync",
+    "lint": "eslint --fix src/*"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.27",
+    "@types/common-tags": "^1.8.0",
     "@types/node": "^12.0.4",
-    "@types/validator": "^10.11.0",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "eslint": "^5.16.0",
     "eslint-config-marine": "^3.0.2",
-    "eslint-config-prettier": "^4.3.0",
-    "onchange": "^6.0.0",
     "ts-node-dev": "^1.0.0-pre.39",
     "typescript": "^3.5.1"
   },
   "dependencies": {
+    "common-tags": "^1.8.0",
     "date-fns": "^1.30.1",
     "discord-akairo": "1Computer1/discord-akairo",
     "discord.js": "discordjs/discord.js",
@@ -34,21 +32,6 @@
     "winston": "^3.2.1"
   },
   "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "prettier",
-      "prettier/@typescript-eslint"
-    ],
-    "rules": {
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "no-console": "warn"
-    }
+    "extends": "marine/node"
   }
 }

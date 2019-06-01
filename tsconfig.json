@@ -1,14 +1,18 @@
 {
-  "include": ["src/**/*"],
+  "include": ["./src"],
   "compilerOptions": {
     "outDir": "dist",
     "strict": true,
+    "moduleResolution": "node",
+    "alwaysStrict": true,
     "lib": ["es2018"],
     "module": "commonjs",
     "target": "es2018",
     "sourceMap": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "pretty": true,
   }
 }
