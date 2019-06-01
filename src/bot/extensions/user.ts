@@ -4,7 +4,7 @@ import {
   MessageAttachment,
   MessageEmbed
 } from "discord.js";
-import CorClient from "../client/CorClient";
+import { CorClient } from "../client/CorClient";
 
 declare module "discord.js" {
   export interface User {
@@ -12,7 +12,7 @@ declare module "discord.js" {
   }
 }
 
-export default Structures.extend(
+const CorUser = Structures.extend(
   "User",
   (User): typeof User => {
     class CorUser extends User {
@@ -34,3 +34,5 @@ export default Structures.extend(
     return CorUser;
   }
 );
+
+export { CorUser };

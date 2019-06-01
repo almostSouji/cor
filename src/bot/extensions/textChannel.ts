@@ -12,7 +12,7 @@ declare module "discord.js" {
   }
 }
 
-export default Structures.extend(
+const CorTextChannel = Structures.extend(
   "TextChannel",
   (TextChannel): typeof TextChannel => {
     class CorTextChannel extends TextChannel {
@@ -34,3 +34,5 @@ export default Structures.extend(
     return CorTextChannel;
   }
 );
+
+export { CorTextChannel };

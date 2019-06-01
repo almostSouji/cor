@@ -1,40 +1,13 @@
-import { Sequelize, TEXT, JSON, Options } from "sequelize";
+import { ConnectionManager } from "typeorm";
+import { Setting } from "../models/Settings";
+import { join } from "path";
 
-function db(dialect: Options["dialect"], login: string): Sequelize {
-  const sequelize = new Sequelize(login, {
-    dialect,
-    logging: (): void => {},
-    define: { timestamps: false }
-  });
+const connectionManager = new ConnectionManager();
+connectionManager.create({
+  name: "cor",
+  type: "sqlite",
+  database: join(__dirname, "..", "..", "..", "cor.sqlite"),
+  entities: [Setting]
+});
 
-  sequelize.define("users", {
-    id: {
-      type: TEXT,
-      primaryKey: true
-    },
-    channel: TEXT
-  });
-
-  sequelize.define("settings", {
-    guild: {
-      type: TEXT,
-      primaryKey: true
-    },
-    settings: {
-      type: JSON
-    }
-  });
-
-  sequelize.define("blacklist", {
-    user: {
-      type: TEXT,
-      primaryKey: true
-    },
-    reason: {
-      type: TEXT
-    }
-  });
-  return sequelize;
-}
-
-export default db;
+export { connectionManager };

@@ -2,24 +2,32 @@ import {
   AkairoClient,
   CommandHandler,
   InhibitorHandler,
-  ListenerHandler,
-  SequelizeProvider
+  ListenerHandler
 } from "discord-akairo";
 import { join } from "path";
-import database from "../structures/database";
-import { Sequelize, Options } from "sequelize";
+import { Setting } from "../models/Settings";
 import { Guild } from "discord.js";
 import { readdirSync } from "fs";
-import { createLogger, Logger, transports, format } from 'winston';
+import { createLogger, Logger, transports, format } from "winston";
+import { Connection } from "typeorm";
+import { TypeORMProvider } from "../structures/SettingsProvider";
+import { connectionManager } from "../structures/Database";
 
 interface CorConfig {
-  dialect: Options["dialect"];
-  connection: string;
   token: string;
   hubGuildID: string;
 }
 
-export default class CorClient extends AkairoClient {
+declare module "discord-akairo" {
+  interface AkairoClient {
+    logger: Logger;
+    db: Connection;
+    settings: TypeORMProvider;
+    config: CorConfig;
+  }
+}
+
+export class CorClient extends AkairoClient {
   private commandHandler = new CommandHandler(this, {
     directory: join(__dirname, "..", "commands"),
     prefix: "!",
@@ -30,8 +38,8 @@ export default class CorClient extends AkairoClient {
     ignorePermissions: this.ownerID
   });
 
-  private inihitorHandler = new InhibitorHandler(this, {
-    directory: join(__dirname, "..", "listeners"),
+  private inhibitorHandler = new InhibitorHandler(this, {
+    directory: join(__dirname, "..", "inhibitors"),
     automateCategories: true
   });
 
@@ -40,11 +48,11 @@ export default class CorClient extends AkairoClient {
     automateCategories: true
   });
 
-  public db: Sequelize;
-  private guildSettings: SequelizeProvider;
-  private config: CorConfig;
+  public db: Connection;
+  public settings!: TypeORMProvider;
+  public config: CorConfig;
   public hubGuildID: string;
-  public logger: Logger
+  public logger: Logger;
 
   public constructor(config: CorConfig) {
     super(
@@ -58,28 +66,29 @@ export default class CorClient extends AkairoClient {
     );
     this.logger = createLogger({
       format: format.combine(
-        format.colorize({level: true}),
-        format.timestamp({format: 'YYYY/MM/DD HH:mm:ss'}),
-        format.printf((info):string => `[${info.timestamp}] ${info.level}: ${info.message}`)
+        format.colorize({ level: true }),
+        format.timestamp({ format: "YYYY/MM/DD HH:mm:ss" }),
+        format.printf(
+          (info): string => `[${info.timestamp}] ${info.level}: ${info.message}`
+        )
       ),
       transports: [new transports.Console()]
     });
 
-    this.commandHandler.loadAll();
+    this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
+    this.commandHandler.useListenerHandler(this.listenerHandler);
     this.listenerHandler.setEmitters({
       commandHandler: this.commandHandler,
-      inhibitorHandler: this.inihitorHandler,
+      inhibitorHandler: this.inhibitorHandler,
       listenerHandler: this.listenerHandler
     });
+    this.commandHandler.loadAll();
+    this.inhibitorHandler.loadAll();
+    this.listenerHandler.loadAll();
 
-    this.db = database(config.dialect, config.connection);
+    this.db = connectionManager.get("cor");
     this.config = config;
     this.hubGuildID = config.hubGuildID;
-
-    this.guildSettings = new SequelizeProvider(this.db.models.settings, {
-      idColumn: "guild",
-      dataColumn: "settings"
-    });
   }
 
   private get hubGuild(): Guild | undefined {
@@ -87,11 +96,14 @@ export default class CorClient extends AkairoClient {
   }
 
   public async start(): Promise<string> {
+    await this.db.connect();
+    this.settings = new TypeORMProvider(this.db.getRepository(Setting));
+    await this.settings.init();
     return this.login(this.config.token);
   }
 }
 
 const extensions = readdirSync(join(__dirname, "..", "extensions"));
-for (const ext of extensions) {
-  require(join(__dirname, "..", "extensions", ext));
-}
+    for (const ext of extensions) {
+      require(join(__dirname, "..", "extensions", ext));
+    }

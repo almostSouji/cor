@@ -8,7 +8,7 @@ function ellipsis(text: string, length: number): string {
   }
 }
 
-export default class CorEmbed extends MessageEmbed {
+export class CorEmbed extends MessageEmbed {
   private limits = {
     title: 256,
     description: 2048,
