@@ -1,5 +1,5 @@
 import { Structures, User} from "discord.js";
-import CorClient from "../client/CorClient";
+import { CorClient } from "../client/CorClient";
 
 declare module 'discord.js' {
 	export interface Guild {
