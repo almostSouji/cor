@@ -7,6 +7,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
+    "dev": "ts-node-dev src/index.ts",
+    "watch": "onchange -ki src -- yarn dev",
     "dev": "ts-node src/index.ts",
     "watch": "onchange -ki src -- yarn dev"
   },
@@ -20,7 +22,7 @@
     "eslint-config-marine": "^3.0.2",
     "eslint-config-prettier": "^4.3.0",
     "onchange": "^6.0.0",
-    "ts-node": "^8.2.0",
+    "ts-node-dev": "^1.0.0-pre.39",
     "typescript": "^3.5.1"
   },
   "dependencies": {
