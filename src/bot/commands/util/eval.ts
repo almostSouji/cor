@@ -12,8 +12,8 @@ class PingCommand extends Command {
 		super('eval', {
 			aliases: ['eval', 'ev'],
 			description: {
-				content: 'Evaluate code (flags customize display)',
-				usage: '<code> [--input] [--noout] [--notype] [--notime] [--haste] [--async] [--remove]'
+				content: 'Evaluate code',
+				usage: '<code> [--input] [--noout] [--haste] [--depth <number>] [--async] [--remove]'
 			},
 			ownerOnly: true,
 			editable: true,
@@ -38,16 +38,6 @@ class PingCommand extends Command {
 					flag: ['--noout', '--nout', '--no', '--silent', '-s']
 				},
 				{
-					id: 'notype',
-					match: 'flag',
-					flag: ['--notype', '--notp']
-				},
-				{
-					id: 'notime',
-					match: 'flag',
-					flag: ['--notime', '--noti']
-				},
-				{
 					id: 'haste',
 					match: 'flag',
 					flag: ['--haste', '-h']
@@ -56,7 +46,7 @@ class PingCommand extends Command {
 					'id': 'depth',
 					'match': 'option',
 					'flag': ['--depth', '-d'],
-					'type': 'numer',
+					'type': 'number',
 					'default': 0
 				},
 				{
@@ -73,7 +63,7 @@ class PingCommand extends Command {
 		});
 	}
 
-	public async exec(message: Message, { code, input, noout, notype, notime, haste, depth, del, as }: {code: string; input: boolean; noout: boolean; notype: boolean; notime: boolean; haste: boolean; depth: number; del: boolean; as: boolean }): Promise<Message | Message[]> {
+	public async exec(message: Message, { code, input, noout, haste, depth, del, as }: {code: string; input: boolean; noout: boolean; haste: boolean; depth: number; del: boolean; as: boolean }): Promise<Message | Message[] | void> {
 		function clean(text: string, token: string): string {
 			return text
 				.replace(/`/g, `\`${String.fromCharCode(8203)}`)
@@ -97,15 +87,11 @@ class PingCommand extends Command {
 			if (input) {
 				response += `\nInput:${cbStartJS}${code}${cbEnd}`;
 			}
-			if (!noout) {
-				response += `Output:${cbStartJS}${clean(util.inspect(evaled, { depth: depth }), this.client.token)}${cbEnd}`;
-			}
-			if (!noout && !notype) {
-				response += `• Type: \`${typeof evaled}\``;
-			}
-			if (!noout && !notime) {
-				response += ` • time taken: \`${(((hrStop[0] * 1e9) + hrStop[1])) / 1e6}ms\``;
-			}
+
+			response += `Output:${cbStartJS}${clean(util.inspect(evaled, { depth }), this.client.token)}${cbEnd}`;
+			response += `• Type: \`${typeof evaled}\``;
+			response += ` • time taken: \`${(((hrStop[0] * 1e9) + hrStop[1])) / 1e6}ms\``;
+
 			if (haste) {
 				const hasteLink = await postHaste(clean(util.inspect(evaled), this.client.token), 'js');
 				response += `\n• Full Inspect: ${hasteLink}`;
@@ -113,10 +99,12 @@ class PingCommand extends Command {
 			if (del && message.deletable) {
 				message.delete();
 			}
-			return message.util!.send(response);
+			if (!noout) {
+				return await message.util!.send(response);
+			}
 		} catch (error) {
-			if (error.message === 'Invalid Form Body\ncontent: Must be 2000 or fewer in length.') {
-				const hasteLink = await postHaste(clean(util.inspect(evaled), this.client.token));
+			if (error.message.includes('Must be 2000 or fewer in length')) {
+				const hasteLink = await postHaste(clean(util.inspect(evaled, { depth }), this.client.token));
 				return message.util!.send(`Output too long, trying to upload it to hastebin instead: ${hasteLink}`);
 			}
 			this.client.logger.info(`Eval error: ${error.stack}`);
