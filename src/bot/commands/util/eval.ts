@@ -13,7 +13,7 @@ class PingCommand extends Command {
 			aliases: ['eval', 'ev'],
 			description: {
 				content: 'Evaluate code (flags customize display)',
-				usage: '<code> [--input] [--noout] [--notype] [--notime] [--haste]'
+				usage: '<code> [--input] [--noout] [--notype] [--notime] [--haste] [--async] [--remove]'
 			},
 			ownerOnly: true,
 			editable: true,
@@ -62,13 +62,18 @@ class PingCommand extends Command {
 				{
 					id: 'del',
 					match: 'flag',
-					flag: ['--delete', '-del']
+					flag: ['--delete', '--del', '-r', '--remove']
+				},
+				{
+					id: 'as',
+					match: 'flag',
+					flag: ['--async', '-a']
 				}
 			]
 		});
 	}
 
-	public async exec(message: Message, { code, input, noout, notype, notime, haste, depth, del }: {code: string; input: boolean; noout: boolean; notype: boolean; notime: boolean; haste: boolean; depth: number; del: boolean}): Promise<Message | Message[]> {
+	public async exec(message: Message, { code, input, noout, notype, notime, haste, depth, del, as }: {code: string; input: boolean; noout: boolean; notype: boolean; notime: boolean; haste: boolean; depth: number; del: boolean; as: boolean }): Promise<Message | Message[]> {
 		function clean(text: string, token: string): string {
 			return text
 				.replace(/`/g, `\`${String.fromCharCode(8203)}`)
@@ -78,7 +83,12 @@ class PingCommand extends Command {
 		let evaled;
 		try {
 			const hrStart = process.hrtime();
-			evaled = eval(code); // eslint-disable-line no-eval
+			if (as) {
+				const asyncCode = `(async () => { ${code} })()`;
+				evaled = await eval(asyncCode); // eslint-disable-line no-eval
+			} else {
+				evaled = eval(code); // eslint-disable-line no-eval
+			}
 			if (evaled instanceof Promise) {
 				evaled = await evaled;
 			}
@@ -110,7 +120,7 @@ class PingCommand extends Command {
 				return message.util!.send(`Output too long, trying to upload it to hastebin instead: ${hasteLink}`);
 			}
 			this.client.logger.info(`Eval error: ${error.stack}`);
-			return message.util!.send(`Error:${cbStartXl}${clean(error, this.client.token)}${cbEnd}`);
+			return message.util!.send(`Error:${cbStartXl}${clean(error.stack, this.client.token)}${cbEnd}`);
 		}
 	}
 }
