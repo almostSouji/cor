@@ -12,6 +12,16 @@ interface CorConfig {
 	token: string;
 	hubGuildID: string;
 	prefix: string;
+	emojis: {
+		online: string;
+		offline: string;
+		invisible: string;
+		idle: string;
+		dnd: string;
+		streaming: string;
+		crest: string;
+		fail: string;
+	};
 }
 
 declare module 'discord-akairo' {
@@ -20,11 +30,13 @@ declare module 'discord-akairo' {
 		db: Connection;
 		settings: TypeORMProvider;
 		config: CorConfig;
+		commandHandler: CommandHandler;
+		listenerHandler: ListenerHandler;
 	}
 }
 
 export class CorClient extends AkairoClient {
-	private commandHandler = new CommandHandler(this, {
+	public commandHandler: CommandHandler = new CommandHandler(this, {
 		directory: join(__dirname, '..', 'commands'),
 		prefix: (message: Message): string => this.settings.get(message.guild!, 'prefix', this.config.prefix),
 		allowMention: true,
@@ -34,12 +46,12 @@ export class CorClient extends AkairoClient {
 		ignorePermissions: this.ownerID
 	});
 
-	private inhibitorHandler = new InhibitorHandler(this, {
+	public inhibitorHandler = new InhibitorHandler(this, {
 		directory: join(__dirname, '..', 'inhibitors'),
 		automateCategories: true
 	});
 
-	private listenerHandler = new ListenerHandler(this, {
+	public listenerHandler: ListenerHandler = new ListenerHandler(this, {
 		directory: join(__dirname, '..', 'listeners'),
 		automateCategories: true
 	});
