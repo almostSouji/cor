@@ -16,7 +16,7 @@ export class CorEmbed extends MessageEmbed {
 		fieldValue: 1024
 	};
 
-	private constructor(data = { color: 3553599 }) {
+	public constructor(data = { color: 3553599 }) {
 		super(data);
 	}
 
@@ -28,6 +28,12 @@ export class CorEmbed extends MessageEmbed {
 	}
 
 	public shorten(): CorEmbed {
+		if (this.description && this.description.length > this.limits.description) {
+			this.description = ellipsis(this.description, this.limits.description);
+		}
+		if (this.title && this.title.length > this.limits.title) {
+			this.title = ellipsis(this.title, this.limits.title);
+		}
 		if (this.fields.length > this.limits.fields) {
 			this.fields = this.fields.slice(0, this.limits.fields);
 		}
