@@ -13,7 +13,7 @@ class PingCommand extends Command {
 			aliases: ['eval', 'ev'],
 			description: {
 				content: 'Evaluate code',
-				usage: '<code> [--input] [--noout] [--haste] [--depth <number>] [--async] [--remove]'
+				usage: '<code> [--input] [--noout] [--haste] [--depth <number>] [--async] [--remove] [--async]'
 			},
 			ownerOnly: true,
 			editable: true,
