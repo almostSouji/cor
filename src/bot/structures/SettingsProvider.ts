@@ -54,7 +54,7 @@ export class TypeORMProvider extends Provider {
 			.insert()
 			.into(Setting)
 			.values({ guild: id, settings: stringData })
-			.onConflict("('guild') DO UPDATE SET 'settings' = :settings")
+			.onConflict('("guild") DO UPDATE SET "settings" = :settings')
 			.setParameter('settings', stringData)
 			.execute();
 	}
@@ -70,7 +70,7 @@ export class TypeORMProvider extends Provider {
 			.insert()
 			.into(Setting)
 			.values({ guild: id, settings: stringData })
-			.onConflict("('guild') DO UPDATE SET 'settings' = :settings")
+			.onConflict('("guild") DO UPDATE SET "settings" = :settings')
 			.setParameter('settings', 'null')
 			.execute();
 	}
