@@ -71,7 +71,7 @@ export class TypeORMProvider extends Provider {
 			.into(Setting)
 			.values({ guild: id, settings: stringData })
 			.onConflict('("guild") DO UPDATE SET "settings" = :settings')
-			.setParameter('settings', 'null')
+			.setParameter('settings', stringData)
 			.execute();
 	}
 
