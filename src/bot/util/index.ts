@@ -18,7 +18,7 @@ const getKeyByValue = (object: Record<string, any>, predicate: Function): string
 * @returns {string} Emojistring
 */
 const displayStatus = (client: CorClient, status: PresenceStatus, guild: Guild): string => {
-	if (guild && !guild.me.hasPermission('USE_EXTERNAL_EMOJIS')) {
+	if (guild && !guild.me!.hasPermission('USE_EXTERNAL_EMOJIS')) {
 		return `${status}:`;
 	}
 	return client.config.emojis[status];

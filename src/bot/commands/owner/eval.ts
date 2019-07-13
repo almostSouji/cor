@@ -88,12 +88,12 @@ class PingCommand extends Command {
 				response += `\nInput:${cbStartJS}${code}${cbEnd}`;
 			}
 
-			response += `Output:${cbStartJS}${clean(util.inspect(evaled, { depth }), this.client.token)}${cbEnd}`;
+			response += `Output:${cbStartJS}${clean(util.inspect(evaled, { depth }), this.client.token!)}${cbEnd}`;
 			response += `• Type: \`${typeof evaled}\``;
 			response += ` • time taken: \`${(((hrStop[0] * 1e9) + hrStop[1])) / 1e6}ms\``;
 
 			if (haste) {
-				const hasteLink = await postHaste(clean(util.inspect(evaled), this.client.token), 'js');
+				const hasteLink = await postHaste(clean(util.inspect(evaled), this.client.token!), 'js');
 				response += `\n• Full Inspect: ${hasteLink}`;
 			}
 			if (del && message.deletable) {
@@ -104,11 +104,11 @@ class PingCommand extends Command {
 			}
 		} catch (error) {
 			if (error.message.includes('Must be 2000 or fewer in length')) {
-				const hasteLink = await postHaste(clean(util.inspect(evaled, { depth }), this.client.token));
+				const hasteLink = await postHaste(clean(util.inspect(evaled, { depth }), this.client.token!));
 				return message.util!.send(`Output too long, trying to upload it to hastebin instead: ${hasteLink}`);
 			}
 			this.client.logger.info(`Eval error: ${error.stack}`);
-			return message.util!.send(`Error:${cbStartXl}${clean(error.stack, this.client.token)}${cbEnd}`);
+			return message.util!.send(`Error:${cbStartXl}${clean(error.stack, this.client.token!)}${cbEnd}`);
 		}
 	}
 }

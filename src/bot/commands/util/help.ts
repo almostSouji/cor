@@ -47,7 +47,7 @@ export default class HelpCommand extends Command {
 		}
 		let restrictionString = '';
 		if (ref.ownerOnly) {
-			const check = this.client.isOwner(message.author);
+			const check = this.client.isOwner(message.author!);
 			restrictionString += `\n${check ? '`✅`' : '`❌`'} Owner only`;
 		}
 		if (ref.channel === 'guild') {
@@ -56,7 +56,7 @@ export default class HelpCommand extends Command {
 		}
 		if (ref.userPermissions) {
 			const perms = ref.userPermissions as PermissionResolvable[];
-			const check = message.channel.type === 'text' && message.member.permissions.has(perms);
+			const check = message.channel.type === 'text' && message.member!.permissions.has(perms);
 			restrictionString += `\n${check ? '`✅`' : '`❌`'} User permissions: ${perms.map(e => `\`${e}\``).join(', ')}`;
 		}
 
@@ -67,8 +67,8 @@ export default class HelpCommand extends Command {
 		if (restrictionString) {
 			embed.addField('Restrictions', restrictionString);
 		}
-		if (!embed.color && message.guild && message.guild.me.displayColor) {
-			embed.setColor(message.guild.me.displayColor);
+		if (!embed.color && message.guild && message.guild.me!.displayColor) {
+			embed.setColor(message.guild.me!.displayColor);
 		}
 		return embed.applySpacers();
 	}
@@ -85,12 +85,12 @@ export default class HelpCommand extends Command {
 								return true;
 							}
 							if (message.channel.type === 'text' && command.userPermissions) {
-								return message.member.hasPermission(
+								return message.member!.hasPermission(
 									command.userPermissions as PermissionResolvable[]
 								);
 							}
 							if (command.ownerOnly) {
-								return this.client.isOwner(message.author);
+								return this.client.isOwner(message.author!);
 							}
 							return true;
 						}
@@ -109,7 +109,7 @@ export default class HelpCommand extends Command {
 								return true;
 							}
 							if (message.channel.type === 'text' && c.userPermissions) {
-								return message.member.hasPermission(
+								return message.member!.hasPermission(
 									c.userPermissions as PermissionResolvable[]
 								);
 							}

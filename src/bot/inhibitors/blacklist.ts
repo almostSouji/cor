@@ -8,6 +8,6 @@ export default class BlacklistInhibitor extends Inhibitor {
 
 	public async exec(message: Message): Promise<boolean> {
 		const bl = this.client.settings.get('global', 'blacklist', []);
-		return bl.includes(message.author.id);
+		return bl.includes(message.author!.id);
 	}
 }

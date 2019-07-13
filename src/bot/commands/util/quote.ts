@@ -38,13 +38,13 @@ class QuoteCommand extends Command {
 		const embed = new CorEmbed()
 			.setTimestamp(message.createdAt);
 		if (message.channel.type === 'text') {
-			const author = message.member;
+			const author = message.member!;
 			embed.setAuthor(`${author.displayName} ${author.user.bot ? '• Bot' : ''}`, author.user.displayAvatarURL());
 			if (author.displayColor && (!embed.color || color)) {
 				embed.setColor(author.displayColor);
 			}
 		} else {
-			embed.setAuthor(message.webhookID ? `${message.author.username!} • Webhook` : `${message.author.tag} ${message.author.bot ? '• Bot' : ''}`, message.author.displayAvatarURL());
+			embed.setAuthor(message.webhookID ? `${message.author!.username!} • Webhook` : `${message.author!.tag} ${message.author!.bot ? '• Bot' : ''}`, message.author!.displayAvatarURL());
 		}
 		if (message.channel.type === 'text') {
 			embed.setFooter(`In #${(message.channel as TextChannel).name}`);
@@ -65,13 +65,13 @@ class QuoteCommand extends Command {
 		}
 		if (quote instanceof Message) {
 			const channel = quote.channel as TextChannel;
-			if (quote.channel.type === 'text' && !channel.permissionsFor(message.author)!.has('VIEW_CHANNEL')) {
+			if (quote.channel.type === 'text' && !channel.permissionsFor(message.author!)!.has('VIEW_CHANNEL')) {
 				return message.util!.send(`✘ You don't have permission to quote this message.`);
 			}
 			if (!quote.content) {
 				return message.util!.send(`✘ The targeted message does not have any content to quote.`);
 			}
-			if (quote.channel.type === 'text' && !channel.permissionsFor(message.author)!.has('MANAGE_MESSAGES')) {
+			if (quote.channel.type === 'text' && !channel.permissionsFor(message.author!)!.has('MANAGE_MESSAGES')) {
 				edits = false;
 			}
 			return message.util!.send('', this.buildInfoEmbed(quote, color, edits));
