@@ -20,7 +20,7 @@ class PingCommand extends Command {
 				{
 					id: 'all',
 					match: 'flag',
-					flag: ['--all', '--a']
+					flag: ['--all', '-a']
 				}
 			]
 		});
