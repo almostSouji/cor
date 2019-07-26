@@ -29,7 +29,6 @@
     "discord-akairo": "1Computer1/discord-akairo",
     "discord.js": "discordjs/discord.js",
     "node-fetch": "^2.6.0",
-    "sequelize": "^5.8.7",
     "sqlite3": "^4.0.8",
     "typeorm": "^0.2.17",
     "winston": "^3.2.1"
