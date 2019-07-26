@@ -1,5 +1,5 @@
-import { Command, Argument } from 'discord-akairo';
-import { Message, User } from 'discord.js';
+import { Command } from 'discord-akairo';
+import { Message } from 'discord.js';
 
 class PrefixCommand extends Command {
 	private constructor() {
@@ -13,7 +13,6 @@ class PrefixCommand extends Command {
 				content: 'Change prefix, `--reset` to reset to default',
 				usage: '[new prefix]'
 			},
-			ownerOnly: true,
 			args: [
 				{
 					id: 'prefix',
