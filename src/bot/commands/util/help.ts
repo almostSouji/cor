@@ -2,6 +2,7 @@ import { Command, Category } from 'discord-akairo';
 import { Message, PermissionResolvable } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import { CorEmbed } from '../../structures/CorEmbed';
+import { toTitleCase } from '../../util/';
 
 export default class HelpCommand extends Command {
 	private constructor() {
@@ -121,9 +122,9 @@ export default class HelpCommand extends Command {
 							return true;
 						}
 					);
-					return commands
+					return `${toTitleCase(category.id)}:${commands
 						.map((c: Command): string => `\`${c.id}\``)
-						.join(', ');
+						.join(', ')}`;
 				}
 			);
 			const commandString = stripIndents`

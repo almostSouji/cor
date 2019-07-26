@@ -39,6 +39,7 @@ export class CorClient extends AkairoClient {
 	public commandHandler: CommandHandler = new CommandHandler(this, {
 		directory: join(__dirname, '..', 'commands'),
 		prefix: (message: Message): string => this.settings.get(message.guild!, 'prefix', this.config.prefix),
+		automateCategories: true,
 		allowMention: true,
 		handleEdits: true,
 		commandUtil: true,
