@@ -59,6 +59,11 @@ export default class HelpCommand extends Command {
 			const check = message.channel.type === 'text' && message.member!.permissions.has(perms);
 			restrictionString += `\n${check ? '`✅`' : '`❌`'} User permissions: ${perms.map(e => `\`${e}\``).join(', ')}`;
 		}
+		if (ref.clientPermissions) {
+			const perms = ref.clientPermissions as PermissionResolvable[];
+			const check = message.channel.type === 'text' && message.guild.me.permissions.has(perms);
+			restrictionString += `\n${check ? '`✅`' : '`❌`'} Bot permissions: ${perms.map(e => `\`${e}\``).join(', ')}`;
+		}
 
 
 		const embed = new CorEmbed()
