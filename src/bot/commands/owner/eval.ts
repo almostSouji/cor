@@ -1,7 +1,10 @@
 import { Command } from 'discord-akairo';
 import { Message } from 'discord.js';
-import * as util from 'util';
-import { postHaste } from '../../util';
+import * as UTIL from 'util';
+import { CorEmbed as COREMBED } from '../../structures/CorEmbed';
+import * as DATEFNS from 'date-fns';
+import * as FETCH from 'node-fetch';
+import * as CORUTIL from '../../util/';
 
 const cbStartJS = '```js\n';
 const cbStartXl = '```xl\n';
@@ -70,6 +73,13 @@ class PingCommand extends Command {
 				.replace(/@/g, `@${String.fromCharCode(8203)}`)
 				.replace(new RegExp(token, 'gi'), '*****');
 		}
+		/* eslint-disable @typescript-eslint/no-unused-vars */
+		const Embed = COREMBED;
+		const FateFns = DATEFNS;
+		const fetch = FETCH;
+		const corUtil = CORUTIL;
+		const util = UTIL;
+		/* eslint-enable @typescript-eslint/no-unused-vars */
 		let evaled;
 		try {
 			const hrStart = process.hrtime();
@@ -93,7 +103,7 @@ class PingCommand extends Command {
 			response += ` • time taken: \`${(((hrStop[0] * 1e9) + hrStop[1])) / 1e6}ms\``;
 
 			if (haste) {
-				const hasteLink = await postHaste(clean(util.inspect(evaled), this.client.token!), 'js');
+				const hasteLink = await corUtil.postHaste(clean(util.inspect(evaled), this.client.token!), 'js');
 				response += `\n• Full Inspect: ${hasteLink}`;
 			}
 			if (del && message.deletable) {
@@ -104,7 +114,7 @@ class PingCommand extends Command {
 			}
 		} catch (error) {
 			if (error.message.includes('Must be 2000 or fewer in length')) {
-				const hasteLink = await postHaste(clean(util.inspect(evaled, { depth }), this.client.token!));
+				const hasteLink = await corUtil.postHaste(clean(util.inspect(evaled, { depth }), this.client.token!));
 				return message.util!.send(`Output too long, trying to upload it to hastebin instead: ${hasteLink}`);
 			}
 			this.client.logger.info(`Eval error: ${error.stack}`);
