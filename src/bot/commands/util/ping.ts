@@ -15,10 +15,10 @@ class PingCommand extends Command {
 	}
 
 	public async exec(message: Message): Promise<Message | Message[]> {
-		const ping = await message.util!.send('awaiting ping...') as Message;
+		const start = Date.now();
+		await message.util!.send('awaiting ping...') as Message;
 		return message.util!.send(
-			`✓ pong! Api Latency is ${ping.createdTimestamp -
-			message.createdTimestamp}ms. Av. Heartbeat is ${Math.round(
+			`✓ pong! Api Latency is ${Date.now() - start}ms. Av. Heartbeat is ${Math.round(
 				this.client.ws.ping
 			)}ms.`
 		);
