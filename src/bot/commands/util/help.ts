@@ -62,7 +62,7 @@ export default class HelpCommand extends Command {
 		}
 		if (ref.clientPermissions) {
 			const perms = ref.clientPermissions as PermissionResolvable[];
-			const check = message.channel.type === 'text' && message.guild.me.permissions.has(perms);
+			const check = message.channel.type === 'text' && message.guild!.me!.permissions.has(perms);
 			restrictionString += `\n${check ? '`✅`' : '`❌`'} Bot permissions: ${perms.map(e => `\`${e}\``).join(', ')}`;
 		}
 
