@@ -39,15 +39,15 @@ export default class DocsCommand extends Command {
 	}
 
 	public async exec(message: Message, { defaultDocs, query, force }: { defaultDocs: string | string; query: string; force: boolean }): Promise<Message | Message[]> {
-		if (defaultDocs) {
-			if (!message.member.hasPermission('MANAGE_GUILD')) {
-				return message.util!.send(`✘ You are not authorized to set default logs for \`${message.guild.name}\`.`);
+		if (defaultDocs && message.channel.type === 'text') {
+			if (!message.member!.hasPermission('MANAGE_GUILD')) {
+				return message.util!.send(`✘ You are not authorized to set default logs for \`${message.guild!.name}\`.`);
 			}
 			if (!SOURCES.includes(defaultDocs)) {
-				return message.util!.send(`✘ Can not set default docs to: \`${message.guild.name}\`. Please pick one of: ${SOURCES.map(s => `\`${s}\``)}`);
+				return message.util!.send(`✘ Can not set default docs to: \`${message.guild!.name}\`. Please pick one of: ${SOURCES.map(s => `\`${s}\``)}`);
 			}
 			this.client.settings.set(message.guild!, 'defaultDocs', defaultDocs);
-			return message.util!.send(`✓ Set the default docs for \`${message.guild.name}\` to \`${defaultDocs}\``);
+			return message.util!.send(`✓ Set the default docs for \`${message.guild!.name}\` to \`${defaultDocs}\``);
 		}
 
 		const q = query.split(' ');
