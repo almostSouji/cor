@@ -87,7 +87,6 @@ export default class DocsCommand extends Command {
 			return message;
 		}
 		react.first()!.message.delete();
-
 		return message;
 	}
 }
