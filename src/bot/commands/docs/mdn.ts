@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo';
-import { Message, MessageEmbed } from 'discord.js';
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import * as qs from 'querystring';
 import * as Turndown from 'turndown';
@@ -49,6 +49,23 @@ export default class MDNCommand extends Command {
 			.setTitle(body.Title)
 			.setDescription(turndown.turndown(summary));
 
-		return message.util!.send(embed);
+		if (message.channel.type === 'dm' || !(message.channel as TextChannel).permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES'], false)) {
+			return message.util!.send({ embed });
+		}
+		const msg = await message.util!.send(embed) as Message;
+		msg.react('🗑');
+		let react;
+		try {
+			react = await msg.awaitReactions(
+				(reaction, user): boolean => reaction.emoji.name === '🗑' && user.id === message.author!.id,
+				{ max: 1, time: 5000, errors: ['time'] }
+			);
+		} catch (error) {
+			msg.reactions.removeAll();
+
+			return message;
+		}
+		react.first()!.message.delete();
+		return message;
 	}
 }
