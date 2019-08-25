@@ -89,4 +89,14 @@ const checkGenerator = (input: string): boolean => Boolean(input.length) && inpu
 
 const checkCRC = (input: string, generator: string): boolean => generator.length - input.length === 1;
 
-export { lstrip, prettify, crcRemainder, crcCheck, checkBit, checkGenerator, checkCRC };
+const toBinary = (input: string): string => {
+	const arr = [];
+	for (const c of input) {
+		arr.push(c.charCodeAt(0).toString(2).padStart(8, '0'));
+	}
+	return arr.join('');
+};
+
+const binaryToString = (binary: string): string => binary.replace(/[01]{8}/g, v => String.fromCharCode(parseInt(v, 2)));
+
+export { lstrip, prettify, crcRemainder, crcCheck, checkBit, checkGenerator, checkCRC, toBinary, binaryToString };
