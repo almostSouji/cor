@@ -77,7 +77,7 @@ class EvalCommand extends Command {
 	}
 
 	private async _result(result: any, hrDiff: [number, number], input: string | null = null, showinput: boolean | null = null, haste: boolean | null = null, depth: number = 0): Promise<string> {
-		const cleaned = this._clean(Util.inspect(result, { depth }), this.client.token);
+		const cleaned = this._clean(Util.inspect(result, { depth }), this.client.token!);
 		let response = '';
 		if (showinput) {
 			response += `\nInput:${cbStartJS}${input}${cbEnd}`;
