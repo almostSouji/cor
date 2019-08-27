@@ -84,6 +84,18 @@ export class CorClient extends AkairoClient {
 			transports: [new transports.Console()]
 		});
 
+		this.commandHandler.resolver.addType('dijkstraVector', (_, phrase) => {
+			if (!phrase) return null;
+			const reg = /(?<src>[^-]+)- ?(?<dest>[^-]+)- ?(?<cost>\d*)/;
+			const match = phrase.match(reg);
+			if (!match) return null;
+			const costNum = parseInt(match.groups!.cost, 10);
+			return {
+				src: match.groups!.src,
+				dest: match.groups!.dest,
+				cost: costNum
+			};
+		});
 		this.commandHandler.useInhibitorHandler(this.inhibitorHandler);
 		this.commandHandler.useListenerHandler(this.listenerHandler);
 		this.listenerHandler.setEmitters({
