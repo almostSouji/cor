@@ -7,7 +7,7 @@ import { toTitleCase } from '../../util/';
 export default class HelpCommand extends Command {
 	private constructor() {
 		super('help', {
-			aliases: ['help', 'h', 'commandinfo'],
+			aliases: ['help', 'h'],
 			description: {
 				content:
 					'Display Command help (`--all` to show all commands, regardless of permissions)',

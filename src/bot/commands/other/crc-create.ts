@@ -17,7 +17,7 @@ const explanation = stripIndents`The **C**yclic **R**edundancy **C**heck is a me
 class CRCCreateCommand extends Command {
 	private constructor() {
 		super('crc-create', {
-			aliases: ['crc', 'crc-create', 'crc-compute', 'crc-c', 'crc-checksum'],
+			aliases: ['crc', 'crc-create', 'crc-c'],
 			description: {
 				content: 'Computes Cyclic Redundancy Check checksum (`--verbose` to include the computation table in the response)',
 				usage: '<content> <bitstring generator> [--verbose]'

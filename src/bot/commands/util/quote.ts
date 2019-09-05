@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 class QuoteCommand extends Command {
 	private constructor() {
 		super('quote', {
-			aliases: ['quote', 'q', 'cite'],
+			aliases: ['quote', 'q'],
 			description: {
 				content: 'Quote provided message (`--color` to display with authors color, `--edits` to show edits (requires `MANAGE_MESSAGES` permission))',
 				usage: '<messageID> [--color] [--edits]'

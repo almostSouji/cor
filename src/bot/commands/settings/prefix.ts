@@ -5,9 +5,7 @@ class PrefixCommand extends Command {
 	private constructor() {
 		super('prefix', {
 			aliases: [
-				'prefix',
-				'pr',
-				'pre'
+				'prefix'
 			],
 			description: {
 				content: 'Change prefix, `--reset` to reset to default',

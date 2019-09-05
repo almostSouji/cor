@@ -10,7 +10,6 @@ export default class MDNCommand extends Command {
 	public constructor() {
 		super('mdn', {
 			aliases: ['mdn', 'mozilla-developer-network'],
-			category: 'docs',
 			description: {
 				content: 'Searches MDN for your query.',
 				usage: '<query>',

@@ -10,7 +10,7 @@ import { stripIndents } from 'common-tags';
 class VersionCommand extends Command {
 	private constructor() {
 		super('version', {
-			aliases: ['version', 'v', 'ver', 'dep', 'dependencies'],
+			aliases: ['version', 'v'],
 			description: {
 				content: 'Display project and depdency versions',
 				usage: ''

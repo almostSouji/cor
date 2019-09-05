@@ -52,7 +52,7 @@ class Node {
 class DijsktraCommand extends Command {
 	private constructor() {
 		super('dijkstra', {
-			aliases: ['dijkstra', 'routing-dijkstra', 'routing-d', 'linkstate'],
+			aliases: ['dijkstra', 'routing-d', 'linkstate'],
 			description: {
 				content: 'Apply dijkstra algorithm to the provided vectors (vectors need to be provided in the format `sourcename-destname-cost` for example `a-b-10)` represents a path from `a` to `b` that costs `10` to traverse)',
 				usage: '<...sourcename-destname-cost>'
