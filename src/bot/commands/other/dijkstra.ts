@@ -54,8 +54,8 @@ class DijsktraCommand extends Command {
 		super('dijkstra', {
 			aliases: ['dijkstra', 'routing-d', 'linkstate'],
 			description: {
-				content: 'Apply dijkstra algorithm to the provided vectors (vectors need to be provided in the format `sourcename-destname-cost` for example `a-b-10)` represents a path from `a` to `b` that costs `10` to traverse)',
-				usage: '<...sourcename-destname-cost>'
+				content: 'Apply dijkstra algorithm to the provided vectors (vectors need to be provided in the format `sourcename-destname-cost` for example `a-b-10)` represents a path from `a` to `b` that costs `10` to traverse, `--verbose` to include the computation table in the response)',
+				usage: '<...sourcename-destname-cost> [--verbose]'
 			},
 			cooldown: 5000,
 			ratelimit: 2,
