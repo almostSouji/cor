@@ -25,12 +25,12 @@ class ExecCommand extends Command {
 				{
 					id: 'noout',
 					match: 'flag',
-					flag: ['--noout', '--nout', '--no', '--silent', '-s']
+					flag: ['--silent', '-s']
 				},
 				{
 					id: 'del',
 					match: 'flag',
-					flag: ['--delete', '--del', '-r', '--remove']
+					flag: ['--remove', '-r']
 				}
 			]
 		});

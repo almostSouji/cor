@@ -26,12 +26,12 @@ export default class DocsCommand extends Command {
 				{
 					id: 'force',
 					match: 'flag',
-					flag: ['--force', '--f', '-f']
+					flag: ['--force', '-f']
 				},
 				{
 					id: 'defaultDocs',
 					match: 'option',
-					flag: ['--default', '-d', '--def'],
+					flag: ['--default', '-d'],
 					type: Argument.union(SOURCES, 'string')
 				}
 			]

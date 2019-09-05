@@ -36,12 +36,12 @@ class EvalCommand extends Command {
 				{
 					id: 'showInput',
 					match: 'flag',
-					flag: ['--input', '--in', '-i']
+					flag: ['--input', '-i']
 				},
 				{
 					id: 'noout',
 					match: 'flag',
-					flag: ['--noout', '--nout', '--no', '--silent', '-s']
+					flag: ['--silent', '-s']
 				},
 				{
 					id: 'haste',
@@ -58,12 +58,12 @@ class EvalCommand extends Command {
 				{
 					id: 'del',
 					match: 'flag',
-					flag: ['--delete', '--del', '-r', '--remove']
+					flag: ['--remove', 'r']
 				},
 				{
 					id: 'as',
 					match: 'flag',
-					flag: ['--async', '--as', '-a']
+					flag: ['--async', '-a']
 				}
 			]
 		});

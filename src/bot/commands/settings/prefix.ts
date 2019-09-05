@@ -21,7 +21,7 @@ class PrefixCommand extends Command {
 				{
 					id: 'sudo',
 					match: 'flag',
-					flag: ['--force', '-f', '--sudo']
+					flag: ['--force', '-f']
 				},
 				{
 					id: 'reset',

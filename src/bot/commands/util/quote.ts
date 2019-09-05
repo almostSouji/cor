@@ -21,12 +21,12 @@ class QuoteCommand extends Command {
 				{
 					id: 'color',
 					match: 'flag',
-					flag: ['-c', '--clr', '--color']
+					flag: ['--color', '-c']
 				},
 				{
 					id: 'edits',
 					match: 'flag',
-					flag: ['-e', '--changes', '--edits', '--show']
+					flag: ['--edits', '-e']
 				}
 			],
 			cooldown: 10000,

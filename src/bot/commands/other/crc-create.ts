@@ -37,7 +37,7 @@ class CRCCreateCommand extends Command {
 				{
 					id: 'verbose',
 					match: 'flag',
-					flag: ['--verbose', '--ver', '-v']
+					flag: ['--verbose', '-v']
 				}
 			]
 		});
