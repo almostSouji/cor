@@ -24,6 +24,7 @@
   "dependencies": {
     "@types/node-fetch": "^2.3.4",
     "@types/turndown": "^5.0.0",
+    "@types/ws": "^6.0.3",
     "@yarnpkg/lockfile": "^1.1.0",
     "common-tags": "^1.8.0",
     "date-fns": "^1.30.1",
