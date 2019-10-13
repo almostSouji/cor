@@ -1,6 +1,6 @@
 node_modules
 dist
 .vscode
-config.json
+.env
 ormconfig.json
 *.sqlite

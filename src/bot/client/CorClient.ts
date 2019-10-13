@@ -8,7 +8,7 @@ import { Connection } from 'typeorm';
 import { TypeORMProvider } from '../structures/SettingsProvider';
 import { connectionManager } from '../structures/Database';
 
-interface CorConfig {
+export interface CorConfig {
 	token: string;
 	hubGuildID: string;
 	prefix: string;
