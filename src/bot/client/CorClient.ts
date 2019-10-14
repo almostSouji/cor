@@ -10,6 +10,7 @@ import { connectionManager } from '../structures/Database';
 
 export interface CorConfig {
 	token: string;
+	owner: string;
 	hubGuildID: string;
 	prefix: string;
 	emojis: {
@@ -66,7 +67,7 @@ export class CorClient extends AkairoClient {
 	public constructor(config: CorConfig) {
 		super(
 			{
-				ownerID: '83886770768314368'
+				ownerID: config.owner
 			},
 			{
 				disableEveryone: true,

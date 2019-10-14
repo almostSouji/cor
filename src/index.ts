@@ -6,6 +6,7 @@ config({ path: resolve(__dirname, '../.env') });
 
 const corConfig: CorConfig = {
 	token: process.env.TOKEN!,
+	owner: process.env.OWNER!,
 	hubGuildID: process.env.HUB_GUILD!,
 	prefix: process.env.PREFIX!,
 	emojis: {
