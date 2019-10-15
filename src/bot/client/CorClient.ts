@@ -1,7 +1,7 @@
 import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
 import { join } from 'path';
 import { Setting } from '../models/Settings';
-import { Guild, Message } from 'discord.js';
+import { Guild, Message, CategoryChannel } from 'discord.js';
 import { readdirSync } from 'fs';
 import { createLogger, Logger, transports, format } from 'winston';
 import { Connection } from 'typeorm';
@@ -12,6 +12,7 @@ export interface CorConfig {
 	token: string;
 	owner: string;
 	hubGuildID: string;
+	hubCategoryID: string;
 	prefix: string;
 	emojis: {
 		online: string;
@@ -61,6 +62,7 @@ export class CorClient extends AkairoClient {
 	public settings!: TypeORMProvider;
 	public config: CorConfig;
 	public hubGuildID: string;
+	public hubCategoryID: string | null;
 	public logger: Logger;
 
 	public constructor(config: CorConfig) {
@@ -110,14 +112,24 @@ export class CorClient extends AkairoClient {
 		this.db = connectionManager.get('cor');
 		this.config = config;
 		this.hubGuildID = config.hubGuildID;
+		this.hubCategoryID = config.hubCategoryID || null;
 	}
 
-	private get hubGuild(): Guild | undefined {
+	public get hubGuild(): Guild | undefined {
 		return this.guilds.get(this.hubGuildID);
+	}
+
+	public get hubCategory(): CategoryChannel | undefined {
+		const channel = this.hubCategoryID && this.channels.get(this.hubCategoryID);
+		if (!(channel instanceof CategoryChannel)) {
+			return undefined;
+		}
+		return channel;
 	}
 
 	public async start(): Promise<string> {
 		await this.db.connect();
+		await this.db.synchronize();
 		this.settings = new TypeORMProvider(this.db.getRepository(Setting));
 		await this.settings.init();
 		return this.login(this.config.token);

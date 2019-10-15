@@ -9,6 +9,7 @@ const corConfig: CorConfig = {
 	token: process.env.TOKEN!,
 	owner: process.env.OWNER!,
 	hubGuildID: process.env.HUB_GUILD!,
+	hubCategoryID: process.env.HUB_CATEGORY!,
 	prefix: process.env.PREFIX!,
 	emojis: {
 		online: EMOJIS.ONLINE,

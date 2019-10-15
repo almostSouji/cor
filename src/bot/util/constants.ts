@@ -14,8 +14,11 @@ export const EMOJIS = {
 	IDLE: '<:idle:401146191943041028>',
 	DND: '<:dnd:401146192144236554>',
 	STREAMING: '<:streaming:418180446195810306>',
-	CREST: '<:CAI:553521046779592706>',
-	AUTH: '<:CAI:553521046779592706>'
+	AUTH: '<:launch:631846294972923914> '
+};
+
+export const DISCORD_LIMITS = {
+	MAX_CHANNELS: 500
 };
 
 export const EMBED_LIMITS = {
@@ -230,6 +233,14 @@ export const MESSAGES = {
 			ERRORS: {
 				TRY_AGAIN_IN: (offset: number) => `${PREFIXES.ERROR}Try again in ${offset}s.`
 			}
+		},
+		MESSAGE_INVALID: {
+			ERRORS: {
+				NO_CONNECTION: (user: User) => `${PREFIXES.ERROR}[${EMOJIS.AUTH}] Connection to \`${user.tag}\` (${user.id}) could not be established.`,
+				NO_RECIPIENT: `${PREFIXES.ERROR}[${EMOJIS.AUTH}] Recipient not found.`,
+				MAX_CHANNELS: `${PREFIXES.ERROR}Unfortunately the maximum channel size on the hub server is reached, so I can not create a channel to forward your message. Please try again later.`
+			},
+			TOPIC: (user: User) => `${EMOJIS.AUTH} DM relay: ${user} | ${user.tag} (${user.id}) Bot: ${user.client.user} | ${user.client.user!.tag} (${user.client.user!.id})`
 		}
 	}
 };
