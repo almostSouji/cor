@@ -80,7 +80,7 @@ export default class HelpCommand extends Command {
 		return embed.applySpacers();
 	}
 
-	public async exec(message: Message, { cmd, all }: { cmd: Command; all: boolean }): Promise<any> {
+	public async exec(message: Message, { cmd, all }: { cmd: Command; all: boolean }): Promise<Message | Message[]> {
 		// @ts-ignore
 		const prefix = this.handler.prefix(message);
 		if (!cmd) {
@@ -130,6 +130,6 @@ export default class HelpCommand extends Command {
 			);
 			return message.util!.send(MESSAGES.COMMANDS.HELP.OUTPUT(map, prefix, this.id));
 		}
-		message.util!.send('', this.buildInfoEmbed(cmd, message));
+		return message.util!.send('', this.buildInfoEmbed(cmd, message));
 	}
 }
