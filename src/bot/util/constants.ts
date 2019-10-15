@@ -214,6 +214,22 @@ export const MESSAGES = {
 		DISCONNECT: (eventcode: string) => `Disconnect (${eventcode})`,
 		READY: (user: ClientUser) => `Logged in as ${user.tag} (${user.id})`,
 		RECONNECT: 'Reconnecting...',
-		RESUME: (events: any) => `Resumed. (replayed ${events} events)`
+		RESUME: (events: any) => `Resumed. (replayed ${events} events)`,
+		COMMAND_BLOCKED: {
+			ERRORS: {
+				GUILD_ONLY: (commandname: string) => `${PREFIXES.ERROR}The command \`${commandname}\` is not available in direct messages.`
+			}
+		},
+		MISSING_PERMISSIONS: {
+			ERRORS: {
+				USER: (permissions: string[], commandname: string) => `${PREFIXES.ERROR}You need the permission${permissions.length > 1 && 's'} ${permissions} to execute the command \`${commandname}\`.`,
+				BOT: (permissions: string[], commandname: string) => `${PREFIXES.ERROR}I need the permission${permissions.length > 1 && 's'} ${permissions} to execute the command \`${commandname}\`.`
+			}
+		},
+		COOLDOWN: {
+			ERRORS: {
+				TRY_AGAIN_IN: (offset: number) => `${PREFIXES.ERROR}Try again in ${offset}s.`
+			}
+		}
 	}
 };
