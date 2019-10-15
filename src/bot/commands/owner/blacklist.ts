@@ -1,5 +1,6 @@
 import { Command, Argument } from 'discord-akairo';
 import { Message, User } from 'discord.js';
+import { MESSAGES } from '../../util/constants';
 
 class BlacklistCommand extends Command {
 	private constructor() {
@@ -24,18 +25,15 @@ class BlacklistCommand extends Command {
 		});
 	}
 
-	public async exec(
-		message: Message,
-		{ user }: { user: User | string }
-	): Promise<Message | Message[]> {
+	public async exec(message: Message, { user }: { user: User | string }): Promise<Message | Message[]> {
 		if (!user) {
-			return message.util!.send('✘ Provide a user to blacklist');
+			return message.util!.send(MESSAGES.ERRORS.TARGET('user to blacklist'));
 		}
 		if (typeof user === 'string') {
 			try {
 				user = await this.client.users.fetch(user);
 			} catch (_) {
-				return message.util!.send(`✘ Invalid user: \`${user}\``);
+				return message.util!.send(MESSAGES.ERRORS.RESOLVE((user as string), 'user'));
 			}
 		}
 		const blacklist = this.client.settings.get('global', 'blacklist', []);
@@ -44,11 +42,11 @@ class BlacklistCommand extends Command {
 			blacklist.splice(index, 1);
 
 			this.client.settings.set('global', 'blacklist', blacklist);
-			return message.util!.send(`✓ Unblacklisted \`${user.tag}\` (${user.id})`);
+			return message.util!.send(MESSAGES.COMMANDS.BLACKLIST.SUCCESS.UNBLACKLIST(user));
 		}
 		blacklist.push(user.id);
 		this.client.settings.set('global', 'blacklist', blacklist);
-		return message.util!.send(`✓ Blacklisted \`${user.tag}\` (${user.id})`);
+		return message.util!.send(MESSAGES.COMMANDS.BLACKLIST.SUCCESS.UNBLACKLIST(user));
 	}
 }
 export default BlacklistCommand;

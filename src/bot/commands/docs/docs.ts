@@ -2,10 +2,9 @@ import { Command, Argument } from 'discord-akairo';
 import { Message, TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import * as qs from 'querystring';
+import { COMMANDS, MESSAGES } from '../../util/constants';
 
 // command originally by iCrawl @https://github.com/Naval-Base/yukikaze
-
-const SOURCES = ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', '11.5-dev'];
 
 export default class DocsCommand extends Command {
 	public constructor() {
@@ -13,7 +12,7 @@ export default class DocsCommand extends Command {
 			aliases: ['docs'],
 			description: {
 				content: 'Searches discord.js documentation.',
-				usage: '<query>'
+				usage: '<query> [--default <docversion>]'
 			},
 			clientPermissions: ['EMBED_LINKS'],
 			ratelimit: 2,
@@ -32,7 +31,7 @@ export default class DocsCommand extends Command {
 					id: 'defaultDocs',
 					match: 'option',
 					flag: ['--default', '-d'],
-					type: Argument.union(SOURCES, 'string')
+					type: Argument.union(COMMANDS.DOCS.SOURCES, 'string')
 				}
 			]
 		});
@@ -41,31 +40,31 @@ export default class DocsCommand extends Command {
 	public async exec(message: Message, { defaultDocs, query, force }: { defaultDocs: string | string; query: string; force: boolean }): Promise<Message | Message[]> {
 		if (defaultDocs && message.channel.type === 'text') {
 			if (!message.member!.hasPermission('MANAGE_GUILD')) {
-				return message.util!.send(`✘ You are not authorized to set default logs for \`${message.guild!.name}\`.`);
+				return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.MISSING_PERMISSIONS(message.guild!));
 			}
-			if (!SOURCES.includes(defaultDocs)) {
-				return message.util!.send(`✘ Can not set default docs to: \`${message.guild!.name}\`. Please pick one of: ${SOURCES.map(s => `\`${s}\``)}`);
+			if (!COMMANDS.DOCS.SOURCES.includes(defaultDocs)) {
+				return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.INVALID_DOCS(defaultDocs, COMMANDS.DOCS.SOURCES));
 			}
 			this.client.settings.set(message.guild!, 'defaultDocs', defaultDocs);
-			return message.util!.send(`✓ Set the default docs for \`${message.guild!.name}\` to \`${defaultDocs}\``);
+			return message.util!.send(MESSAGES.COMMANDS.DOCS.SUCESS.SET_DEFAULT(message.guild!, defaultDocs));
 		}
 
 		const q = query.split(' ');
 		const docs = this.client.settings.get(message.guild!, 'defaultDocs', 'stable');
-		let source = SOURCES.includes(q.slice(-1)[0]) ? q.pop() : docs;
+		let source = COMMANDS.DOCS.SOURCES.includes(q.slice(-1)[0]) ? q.pop() : docs;
 		let forceColor;
-		if (source === '11.5-dev') {
+		if (source === COMMANDS.DOCS.STABLE_DEV_SOURCE) {
 			forceColor = 16426522;
-			source = `https://raw.githubusercontent.com/discordjs/discord.js/docs/${source}.json`;
+			source = `${COMMANDS.DOCS.API.STABLE_DEV_DOCS}${source}.json`;
 		}
-		if (source === 'master') {
+		if (source === COMMANDS.DOCS.DEV_SOURCE) {
 			forceColor = 13650249;
 		}
 		const queryString = qs.stringify({ src: source, q: q.join(' '), force });
-		const res = await fetch(`https://djsdocs.sorta.moe/v2/embed?${queryString}`);
+		const res = await fetch(`${COMMANDS.DOCS.API.BASE_URL}${queryString}`);
 		const embed = await res.json();
 		if (!embed) {
-			return message.util!.send(`✘ Could not find the requested information for \`${query}\``);
+			return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.NONE_FOUND(query));
 		}
 		if (forceColor) {
 			embed.color = forceColor;
@@ -74,11 +73,11 @@ export default class DocsCommand extends Command {
 			return message.util!.send({ embed });
 		}
 		const msg = await message.util!.send({ embed }) as Message;
-		msg.react('🗑');
+		msg.react(COMMANDS.DOCS.EMOJIS.DELETE);
 		let react;
 		try {
 			react = await msg.awaitReactions(
-				(reaction, user): boolean => reaction.emoji.name === '🗑' && user.id === message.author!.id,
+				(reaction, user): boolean => reaction.emoji.name === COMMANDS.DOCS.EMOJIS.DELETE && user.id === message.author!.id,
 				{ max: 1, time: 5000, errors: ['time'] }
 			);
 		} catch (error) {

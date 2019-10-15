@@ -20,8 +20,7 @@ export interface CorConfig {
 		idle: string;
 		dnd: string;
 		streaming: string;
-		crest: string;
-		fail: string;
+		auth: string;
 	};
 }
 

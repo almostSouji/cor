@@ -1,6 +1,7 @@
 import { Guild, Collection, Client, PresenceStatus } from 'discord.js'; // eslint-disable-line
 import fetch from 'node-fetch';
 import { CorClient } from '../client/CorClient';
+import { MESSAGES, UTIL } from '../util/constants';
 
 
 /**
@@ -57,14 +58,14 @@ const groupBy = <T, K>(collection: Collection<T, K>, fn: Function): Collection<T
 const postHaste = async (code: string, lang: string = ''): Promise<string> => {
 	try {
 		if (code.length > 400000) {
-			return 'Document exceeds maximum length.';
+			return MESSAGES.UTIL.ERRORS.MAX_LENGTH;
 		}
-		const res = await fetch('https://paste.nomsy.net/documents', { method: 'POST', body: code });
+		const res = await fetch(`${UTIL.HASTEBIN.PASTE_API_BASE_URL}/documents`, { method: 'POST', body: code });
 		const { key, message } = await res.json();
 		if (!key) {
 			return message;
 		}
-		return `https://paste.nomsy.net/${key}${lang && `.${lang}`}`;
+		return `${UTIL.HASTEBIN.PASTE_API_BASE_URL}/${key}${lang && `.${lang}`}`;
 	} catch (err) {
 		throw err;
 	}
@@ -78,5 +79,18 @@ const postHaste = async (code: string, lang: string = ''): Promise<string> => {
 */
 const chunkArray = <T>(list: T[], chunksize: number): T[][] => new Array(Math.ceil(list.length / chunksize)).fill(undefined).map(() => list.splice(0, chunksize));
 
-export { getKeyByValue, displayStatus, groupBy, postHaste, toTitleCase, chunkArray };
+/**
+ * Shorten text with ellipsis (returns input if short enough)
+ * @param {string} text Text to shorten
+ * @param {number} length Length to shorten to (without ellipsis)
+ * @returns {string} Shortened text
+ */
+const ellipsis = (text: string, length: number): string => {
+	if (text.length > length) {
+		return `${text.slice(0, length - 3)}...`;
+	}
+	return text;
+};
+
+export { getKeyByValue, displayStatus, groupBy, postHaste, toTitleCase, chunkArray, ellipsis };
 

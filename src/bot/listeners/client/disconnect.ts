@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import { MESSAGES } from '../../util/constants';
 
 class DisconnectListener extends Listener {
 	private constructor() {
@@ -10,7 +11,7 @@ class DisconnectListener extends Listener {
 	}
 
 	public exec(event: any): void {
-		this.client.logger.warn(`Disconnect (${event.code})`);
+		this.client.logger.warn(MESSAGES.LOGGER('DISCONNECT', MESSAGES.LISTENERS.DISCONNECT(event.code)));
 	}
 }
 

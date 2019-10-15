@@ -3,6 +3,7 @@ import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import fetch from 'node-fetch';
 import * as qs from 'querystring';
 import * as Turndown from 'turndown';
+import { COMMANDS, MESSAGES } from '../../util/constants';
 
 // command originally by iCrawl @https://github.com/Naval-Base/yukikaze
 
@@ -12,8 +13,7 @@ export default class MDNCommand extends Command {
 			aliases: ['mdn', 'mozilla-developer-network'],
 			description: {
 				content: 'Searches MDN for your query.',
-				usage: '<query>',
-				examples: ['Map', 'Map#get', 'Map.set']
+				usage: '<query>'
 			},
 			regex: /^(?:mdn,) (.+)/i,
 			clientPermissions: ['EMBED_LINKS'],
@@ -30,21 +30,21 @@ export default class MDNCommand extends Command {
 	public async exec(message: Message, { query, match }: { query: string; match: any }): Promise<Message | Message[]> {
 		if (!query && match) query = match[1];
 		const queryString = qs.stringify({ q: query });
-		const res = await fetch(`https://mdn.pleb.xyz/search?${queryString}`);
+		const res = await fetch(`${COMMANDS.MDN.API.SEARCH_BASE_URL}${queryString}`);
 		const body = await res.json();
 		if (!body.URL || !body.Title || !body.Summary) {
-			return message.util!.send(`✘ Could not find the requested information for \`${query}\``);
+			return message.util!.send(MESSAGES.COMMANDS.MDN.ERRORS.NOT_FOUND(query));
 		}
 		const turndown = new Turndown();
 		turndown.addRule('hyperlink', {
 			filter: 'a',
-			replacement: (text, node): string => `[${text}](https://developer.mozilla.org${(node as HTMLLinkElement)}.href})`
+			replacement: (text, node): string => `[${text}](${COMMANDS.MDN.API.MOZ_BASE_URL}${(node as HTMLLinkElement)}.href})`
 		});
 		const summary = body.Summary.replace(/<code><strong>(.+)<\/strong><\/code>/g, '<strong><code>$1<\/code><\/strong>');
 		const embed = new MessageEmbed()
 			.setColor(0x066FAD)
-			.setAuthor('MDN', 'https://i.imgur.com/DFGXabG.png', 'https://developer.mozilla.org/')
-			.setURL(`https://developer.mozilla.org${body.URL}`)
+			.setAuthor('MDN', COMMANDS.MDN.MDN_ICON, COMMANDS.MDN.API.MOZ_BASE_URL)
+			.setURL(`${COMMANDS.MDN.API.MOZ_BASE_URL}${body.URL}`)
 			.setTitle(body.Title)
 			.setDescription(turndown.turndown(summary));
 
@@ -52,11 +52,11 @@ export default class MDNCommand extends Command {
 			return message.util!.send({ embed });
 		}
 		const msg = await message.util!.send(embed) as Message;
-		msg.react('🗑');
+		msg.react(COMMANDS.MDN.EMOJIS.DELETE);
 		let react;
 		try {
 			react = await msg.awaitReactions(
-				(reaction, user): boolean => reaction.emoji.name === '🗑' && user.id === message.author!.id,
+				(reaction, user): boolean => reaction.emoji.name === COMMANDS.MDN.EMOJIS.DELETE && user.id === message.author!.id,
 				{ max: 1, time: 5000, errors: ['time'] }
 			);
 		} catch (error) {

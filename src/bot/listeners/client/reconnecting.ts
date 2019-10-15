@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import { MESSAGES } from '../../util/constants';
 
 class ReconnectListener extends Listener {
 	private constructor() {
@@ -10,7 +11,7 @@ class ReconnectListener extends Listener {
 	}
 
 	public exec(): void {
-		this.client.logger.info(`Reconnecting...`);
+		this.client.logger.info(MESSAGES.LOGGER('RECONNET', MESSAGES.LISTENERS.RECONNECT));
 	}
 }
 

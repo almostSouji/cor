@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-import { stripIndents } from 'common-tags';
+import { MESSAGES } from '../../util/constants';
 
 class ReadyListener extends Listener {
 	private constructor() {
@@ -10,7 +10,7 @@ class ReadyListener extends Listener {
 	}
 
 	public exec(): void {
-		this.client.logger.info(stripIndents`Logged in as ${this.client.user!.tag} (${this.client.user!.id}).`);
+		this.client.logger.info(MESSAGES.LOGGER('LOGIN', MESSAGES.LISTENERS.READY(this.client.user!)));
 	}
 }
 

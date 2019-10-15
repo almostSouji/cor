@@ -1,22 +1,19 @@
 import { MessageEmbed } from 'discord.js';
-
-function ellipsis(text: string, length: number): string {
-	if (text.length > length)	return `${text.slice(0, length - 3)}...`;
-	return text;
-}
+import { ellipsis } from '../util/';
+import { EMBED_LIMITS, EMBED_DEFAULT_COLOR } from '../util/constants';
 
 export class CorEmbed extends MessageEmbed {
 	private limits = {
-		title: 256,
-		description: 2048,
-		footer: 2048,
-		author: 256,
-		fields: 25,
-		fieldName: 256,
-		fieldValue: 1024
+		title: EMBED_LIMITS.TITLE,
+		description: EMBED_LIMITS.DESCRIPTION,
+		footer: EMBED_LIMITS.FOOTER,
+		author: EMBED_LIMITS.AUTHOR,
+		fields: EMBED_LIMITS.FIELDS,
+		fieldName: EMBED_LIMITS.FIELD_NAME,
+		fieldValue: EMBED_LIMITS.FIELD_VALUE
 	};
 
-	public constructor(data = { color: 3553599 }) {
+	public constructor(data = { color: EMBED_DEFAULT_COLOR }) {
 		super(data);
 	}
 

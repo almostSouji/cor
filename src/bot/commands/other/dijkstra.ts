@@ -1,14 +1,11 @@
 import { Command } from 'discord-akairo';
 import { Message, Collection, MessageAttachment } from 'discord.js';
 import { CorEmbed } from '../../structures/CorEmbed';
-import { stripIndents } from 'common-tags';
+import { COMMANDS, MESSAGES } from '../../util/constants';
 
-const explanation = stripIndents`Dijkstras routing algorithm is a so called **Link State (LS)** algorithm. The **centralized** algorithm computes the least-cost path between a set source and its various possible destinations using **complete, global knowledge** about the network. This means that the algorithm needs to know everything there is to know about the networks connectivity prior to the start of the computing operation. 
-
-	After an initialization step in which all non-neighbours to the source node receive Infinity as distance (as the node doesn't know about them yet) a loop is executed. For each node in the network that the definitive shortest part is not yet known for we compare the current shortest path to the new path information obtained by the current node. The former shortest path is replaced by the new shortest path and the former predecessor by the new predecessor of said shortest path. The current node is added to the list of nodes the definitive shortest path is known for and the loop continues.
-
-	After iteration the definitive shortest path and predecessor for each node in the network from the source node is known.
-`;
+export interface LooseVector {
+	src: string; dest: string; cost: number;
+}
 
 class Vector {
 	public node: Node;
@@ -75,13 +72,17 @@ class DijsktraCommand extends Command {
 		});
 	}
 
-	public async exec(message: Message, { vectors, verbose }: {vectors: {src: string; dest: string; cost: number}[]; verbose: boolean}): Promise<Message | Message[]> {
+	public async exec(message: Message, { vectors, verbose }: {vectors: LooseVector[]; verbose: boolean}): Promise<Message | Message[]> {
 		const states: string[] = [];
+		const invalidVectors = vectors.filter(vector => !vector.src || !vector.dest || isNaN(vector.cost));
+		if (invalidVectors.length) {
+			return message.util!.send(MESSAGES.COMMANDS.DIJKSTRA.ERRORS.INVALID_VECTORS(invalidVectors));
+		}
 		if (!vectors.length) {
-			message.util!.reply('✘ No valid vectors found, vectors have the format of \`sourcename-destinationname-cost\` and are separated by spaces');
+			return message.util!.send(MESSAGES.COMMANDS.DIJKSTRA.ERRORS.NO_VECTORS);
 		}
 		if (vectors.length < 3) {
-			message.util!.reply('✘ Please provide at least three vectors, the source of the first vector will become the source of the calculation.');
+			return message.util!.send(MESSAGES.COMMANDS.DIJKSTRA.ERRORS.TOO_FEW_VECTORS);
 		}
 
 		const known: Collection <string, Node> = new Collection();
@@ -151,11 +152,11 @@ class DijsktraCommand extends Command {
 		if (routing.length < 2000) {
 			embed.addField('Routing table', routing, true);
 		} else {
-			embed.addField('Routing table', '✘ table too big, see attachment for routing table...', true);
+			embed.addField('Routing table', MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG, true);
 		}
 		embed.addField('Source Node', u.id, true);
 		if (verbose) {
-			embed.setDescription(explanation);
+			embed.setDescription(MESSAGES.COMMANDS.DIJKSTRA.EXPLANATION);
 		}
 		if (routing.length >= 2000) {
 			let b: Buffer;
@@ -165,25 +166,26 @@ class DijsktraCommand extends Command {
 				b = Buffer.from(states.join('\r\n'), 'utf-8');
 			}
 			try {
-				embed.setColor('#faa61a');
-				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(b, 'dijkstra_computation.txt')]);
+				embed.setColor(COMMANDS.DIJKSTRA.COLORS.WARNING);
+				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
 			} catch (_) {
-				embed.addField('Routing table', `✘ File too big, ${verbose ? 'try to remove the \`--verbose\` flag or' : ''} select less vectors.`);
-				embed.setColor('#d04949');
+				const content = verbose ? MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE : MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG;
+				embed.addField('Routing table', content);
+				embed.setColor(COMMANDS.DIJKSTRA.COLORS.FAIL);
 				return message.util!.send(embed.applySpacers().shorten());
 			}
 		} else if (verbose) {
 			const b = Buffer.from(states.join('\r\n'));
 			try {
-				embed.setColor('#03b581');
-				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(b, 'dijkstra_computation.txt')]);
+				embed.setColor(COMMANDS.DIJKSTRA.COLORS.SUCCESS);
+				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
 			} catch (_) {
-				embed.addField('Routing table', `✘ File too big, try to remove the \`--verbose\` flag or select less vectors.`);
-				embed.setColor('#d04949');
+				embed.addField('Routing table', MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE);
+				embed.setColor(COMMANDS.DIJKSTRA.COLORS.FAIL);
 				return message.util!.send(embed.applySpacers().shorten());
 			}
 		}
-		embed.setColor('#03b581');
+		embed.setColor(COMMANDS.DIJKSTRA.COLORS.SUCCESS);
 		return message.util!.send(embed.applySpacers().shorten());
 	}
 }

@@ -5,10 +5,7 @@ import { CorEmbed as Embed } from '../../structures/CorEmbed';
 import * as DateFns from 'date-fns';
 import * as fetch from 'node-fetch';
 import * as CorUtil from '../../util/';
-
-const cbStartJS = '```js\n';
-const cbStartXl = '```xl\n';
-const cbEnd = '\n```';
+import { MESSAGES } from '../../util/constants';
 
 class EvalCommand extends Command {
 	public hrStart: [number, number] | undefined;
@@ -79,17 +76,21 @@ class EvalCommand extends Command {
 	private async _result(result: any, hrDiff: [number, number], input: string | null = null, showinput: boolean | null = null, haste: boolean | null = null, depth: number = 0): Promise<string> {
 		const cleaned = this._clean(Util.inspect(result, { depth }), this.client.token!);
 		let response = '';
-		if (showinput) {
-			response += `\nInput:${cbStartJS}${input}${cbEnd}`;
+		if (showinput && input) {
+			response += MESSAGES.COMMANDS.EVAL.INPUT(input);
 		}
 
-		response += `Output:${cbStartJS}${cleaned}${cbEnd}`;
-		response += `• Type: \`${typeof result}\``;
-		response += ` • time taken: \`${(((hrDiff[0] * 1e9) + hrDiff[1])) / 1e6}ms\``;
+		response += MESSAGES.COMMANDS.EVAL.OUTPUT(cleaned);
+		response += MESSAGES.COMMANDS.EVAL.TYPE(typeof result);
+		response += MESSAGES.COMMANDS.EVAL.TIME((((hrDiff[0] * 1e9) + hrDiff[1])) / 1e6);
 
 		if (haste) {
-			const hasteLink = await CorUtil.postHaste(cleaned, 'js');
-			response += `\n• Full Inspect: ${hasteLink}`;
+			try {
+				const hasteLink = await CorUtil.postHaste(cleaned, 'js');
+				response += MESSAGES.COMMANDS.EVAL.HASTE(hasteLink);
+			} catch (error) {
+				response += MESSAGES.COMMANDS.EVAL.ERRORS.HASTE(error);
+			}
 		}
 		return response;
 	}
@@ -106,7 +107,7 @@ class EvalCommand extends Command {
 		const msg = message;
 		const doReply = (val: any): any => {
 			if (val instanceof Error) {
-				return message.util!.send(`Callback error: \`${val}\``);
+				return message.util!.send(MESSAGES.COMMANDS.EVAL.ERRORS.CALLBACK(val));
 			}
 			const result = this._result(val, process.hrtime(this.hrStart));
 			return message.util!.send(result);
@@ -132,13 +133,13 @@ class EvalCommand extends Command {
 			if (!noout) {
 				return await message.util!.send(result);
 			}
-		} catch (error) {
-			if (error.message.includes('Must be 2000 or fewer in length')) {
+			if (result.length > 1990) {
 				const hasteLink = await CorUtil.postHaste(this._clean(Util.inspect(this.lastResult, { depth }), this.client.token!));
-				return message.util!.send(`Output too long, trying to upload it to hastebin instead: ${hasteLink}`);
+				return message.util!.send(MESSAGES.COMMANDS.EVAL.HASTE(hasteLink));
 			}
-			this.client.logger.info(`Eval error: ${error.stack}`);
-			return message.util!.send(`Error:${cbStartXl}${this._clean(error.stack, this.client.token!)}${cbEnd}`);
+		} catch (error) {
+			this.client.logger.info(MESSAGES.LOGGER('EVAL', error));
+			return message.util!.send(MESSAGES.COMMANDS.EVAL.ERRORS.CATCH(this._clean(error.stack, this.client.token!)));
 		}
 	}
 }

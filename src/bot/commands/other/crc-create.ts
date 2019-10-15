@@ -3,16 +3,7 @@ import { Message, MessageAttachment } from 'discord.js';
 import { crcRemainder, checkBit, checkGenerator, toBinary } from '../../util/crcUtil';
 import { stripIndents } from 'common-tags';
 import { CorEmbed } from '../../structures/CorEmbed';
-
-const cbStartJS = '```js\n';
-const cbEnd = '\n```';
-const explanation = stripIndents`The **C**yclic **R**edundancy **C**heck is a method to find bit errors during transmission of data packets.
-
-	CRC uses standardized polynomials as generators that are known by both the sending as well as the receiving party.
-	The senders goal is to find \`generator length - 1\` checksum bits that, appended to the original data and XORed with the generator result in no remainder.
-
-	To compute this value a padding of \`generator length - 1\` filler bits is appended to the data and the resulting padded bit sequence is XORed with the generator sequence.
-`;
+import { CODEBLOCK, COMMANDS, MESSAGES } from '../../util/constants';
 
 class CRCCreateCommand extends Command {
 	private constructor() {
@@ -49,14 +40,14 @@ class CRCCreateCommand extends Command {
 		const crcCheck = this.handler.modules.get('crc-check');
 		const binaryContent = checkBit(content) ? content : toBinary(content);
 		if (!checkBit(generator)) {
-			return message.util!.send(`✘ Invalid generator bitstring \`${generator}\`. The generator must consist of only \`0\` and \`1\``);
+			return message.util!.send(MESSAGES.COMMANDS.CRC.ERRORS.GENERATOR_ONLY_BINARY(generator));
 		}
 		if (!checkGenerator(generator)) {
-			return message.util!.send(`✘ Invlaid generator bitstring \`${generator}\`. The most significant (leftmost) bit is required to be a \`1\``);
+			return message.util!.send(MESSAGES.COMMANDS.CRC.ERRORS.GENERATOR_LEFTMOST_BIT);
 		}
 		const { crc, steps } = crcRemainder(binaryContent, generator, '0');
-		const computationCodeblock = `${cbStartJS}${steps.join('\n').replace(/ /g, '\u200B ')}${cbEnd}`;
-		const ceillLenght = computationCodeblock.length + explanation.length + 3;
+		const computationCodeblock = `${CODEBLOCK.START('js')}${steps.join('\n').replace(/ /g, '\u200B ')}${CODEBLOCK.END}`;
+		const ceillLenght = computationCodeblock.length + MESSAGES.COMMANDS.CRC.EXPLANATIONS.CREATE.length + 3;
 
 		const embed = new CorEmbed().setTitle('Cyclic Redundancy Check')
 			.addField('Input', content);
@@ -69,10 +60,10 @@ class CRCCreateCommand extends Command {
 			.setFooter(`You can check the validity of a string with: ${prefix} ${crcCheck!.id} ${crcCheck!.description!.usage}`);
 
 		if (verbose) {
-			embed.setDescription(explanation);
+			embed.setDescription(MESSAGES.COMMANDS.CRC.EXPLANATIONS.CREATE);
 			if (ceillLenght > 2000) {
 				if (ceillLenght > 2000000) {
-					embed.addField('[WARNING] Can not attach file', '✘ Request entity too large to upload steps');
+					embed.addField(MESSAGES.COMMANDS.CRC.WARNINGS.TITLE, MESSAGES.COMMANDS.CRC.WARNINGS.ENTITY_TOO_LARGE);
 					return message.util!.send(embed.applySpacers().shorten());
 				}
 				const attachText = stripIndents`
