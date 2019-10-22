@@ -16,7 +16,7 @@ class MessageInvalidListener extends Listener {
 		const client = this.client as CorClient;
 		const repo = client.db.getRepository(User);
 		if (message.channel.type === 'dm') {
-			if (message.author.bot) return;
+			if (message.author!.bot) return;
 			const hubGuild = client.hubGuild;
 			if (!hubGuild) {
 				this.client.logger.warn(MESSAGES.LOGGER('NO HUB', 'Hub guild expected, none found!'));
@@ -26,20 +26,20 @@ class MessageInvalidListener extends Listener {
 			const userQuery = await repo.findOne({
 				select: ['channelid'],
 				where: {
-					userid: message.author.id
+					userid: message.author!.id
 				}
 			});
 			if (!userQuery || !userQuery.channelid || !this.client.channels.get(userQuery.channelid)) {
 				if (hubGuild.channels.size >= DISCORD_LIMITS.MAX_CHANNELS) {
 					return message.channel.send(MESSAGES.LISTENERS.MESSAGE_INVALID.ERRORS.MAX_CHANNELS);
 				}
-				const channel = await hubGuild.channels.create(`${message.author.id}`, {
-					topic: MESSAGES.LISTENERS.MESSAGE_INVALID.TOPIC(message.author),
+				const channel = await hubGuild.channels.create(`${message.author!.id}`, {
+					topic: MESSAGES.LISTENERS.MESSAGE_INVALID.TOPIC(message.author!),
 					parent: client.hubCategory
 				});
 
 				const newUser = repo.create({
-					userid: message.author.id,
+					userid: message.author!.id,
 					channelid: channel.id
 				});
 				await repo.save(newUser);
