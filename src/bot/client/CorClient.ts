@@ -1,5 +1,5 @@
 import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
-import { join } from 'path';
+import { join, extname } from 'path';
 import { Setting } from '../models/Settings';
 import { Guild, Message, CategoryChannel } from 'discord.js';
 import { readdirSync } from 'fs';
@@ -137,6 +137,6 @@ export class CorClient extends AkairoClient {
 }
 
 const extensions = readdirSync(join(__dirname, '..', 'extensions'));
-for (const ext of extensions) {
+for (const ext of extensions.filter(file => extname(file).toLowerCase() === 'js')) {
 	require(join(__dirname, '..', 'extensions', ext));
 }
