@@ -35,6 +35,8 @@ declare module 'discord-akairo' {
 		config: CorConfig;
 		commandHandler: CommandHandler;
 		listenerHandler: ListenerHandler;
+		hubGuild: Guild | undefined;
+		hubCategory: CategoryChannel | undefined;
 	}
 }
 

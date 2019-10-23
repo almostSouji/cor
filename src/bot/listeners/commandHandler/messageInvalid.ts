@@ -1,7 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { Message, TextChannel } from 'discord.js';
 import { MESSAGES, DISCORD_LIMITS } from '../../util/constants';
-import { CorClient } from '../../client/CorClient';
 import { User } from '../../models/Users';
 
 class MessageInvalidListener extends Listener {
@@ -13,11 +12,10 @@ class MessageInvalidListener extends Listener {
 	}
 
 	public async exec(message: Message): Promise<Message|Message[]|undefined> {
-		const client = this.client as CorClient;
-		const repo = client.db.getRepository(User);
+		const repo = this.client.db.getRepository(User);
 		if (message.channel.type === 'dm') {
 			if (message.author!.bot) return;
-			const hubGuild = client.hubGuild;
+			const hubGuild = this.client.hubGuild;
 			if (!hubGuild) {
 				this.client.logger.warn(MESSAGES.LOGGER('NO HUB', 'Hub guild expected, none found!'));
 				return;
@@ -35,7 +33,7 @@ class MessageInvalidListener extends Listener {
 				}
 				const channel = await hubGuild.channels.create(`${message.author!.id}`, {
 					topic: MESSAGES.LISTENERS.MESSAGE_INVALID.TOPIC(message.author!),
-					parent: client.hubCategory
+					parent: this.client.hubCategory
 				});
 
 				const newUser = repo.create({
