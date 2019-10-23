@@ -1,9 +1,4 @@
-import {
-	Message,
-	Structures,
-	MessageAttachment,
-	MessageEmbed
-} from 'discord.js';
+import { Message, Structures, MessageAttachment, MessageEmbed } from 'discord.js';
 
 declare module 'discord.js' {
 	export interface User {
