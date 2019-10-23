@@ -2,7 +2,7 @@ import { Guild, User, ClientUser } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import { LooseVector } from '../commands/other/dijkstra';
 import { Task } from '../models/Tasks';
-import { format } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 
 export const DATEFORMAT = {
 	DAY: 'MMM do yyy',
@@ -108,6 +108,12 @@ export const COMMANDS = {
 		MIN_DURATION_TEXT: '1 minute',
 		DELETE_SUFFIX: ' \`🚮\`',
 		DELETE_EMOJI: '🚮'
+	},
+	TEA: {
+		MIN_DURATION: 60000,
+		MIN_DURATION_TEXT: '1 minute',
+		MAX_DURATION: 600000,
+		MAX_DURATION_TEXT: '10 minutes'
 	}
 };
 
@@ -243,7 +249,7 @@ export const MESSAGES = {
 			DELETE_NOTICE: `* ${COMMANDS.TEMPROLE.DELETE_EMOJI}: role will be deleted when the task expires and the bot has the ability to do so.`,
 			ERRORS: {
 				INVALID_ROLE_ARGS: (argsstring: string) => `${PREFIXES.ERROR}Can not build a role from \`${argsstring}\`. Please provide the format \`"role Name, color"\`, where \`,\` separates role name and color and the full argument is provided in double quotes \`"\`.`,
-				TOO_SHORT: `${PREFIXES.ERROR}Duration must at least be \`${COMMANDS.TEMPROLE.MIN_DURATION_TEXT}\``,
+				TOO_SHORT: `${PREFIXES.ERROR}Duration must at least be \`${COMMANDS.TEMPROLE.MIN_DURATION_TEXT}\`.`,
 				NO_ENTRY: `${PREFIXES.ERROR}Could not created task.`,
 				NOT_MANAGEABLE: (role: string) => `${PREFIXES.ERROR}I can not manage the role \`${role}\`.`,
 				NO_TASKS: (guildname: string) => `${PREFIXES.ERROR}No executable tasks found for \`${guildname}\``,
@@ -251,6 +257,29 @@ export const MESSAGES = {
 				AUTH: `${PREFIXES.ERROR}You are not authorized to assign the targeted role.`
 			},
 			SUCCESS: (role: string, target: string, task: Task, deleteRole: boolean) => `${PREFIXES.SUCCESS}Granted \`${target}\` the role \`${role}\`, scheduled to be removed \`${format(task.timestamp, DATEFORMAT.MINUTE)} (${TIMEZONE})\`${deleteRole ? COMMANDS.TEMPROLE.DELETE_SUFFIX : ''}`
+		},
+		TEA: {
+			ERRORS: {
+				TOO_SHORT: `${PREFIXES.ERROR}Duration must at least be \`${COMMANDS.TEA.MIN_DURATION_TEXT}\`. I'm sure you want *some* flavor in your tea.`,
+				TOO_LONG: `${PREFIXES.ERROR}You don't want to let your tea steep that long. The maximum recommended steep time is \`${COMMANDS.TEA.MAX_DURATION_TEXT}\`.`,
+				NO_ENTRY: `${PREFIXES.ERROR}Could not created task.`
+			},
+			SUCCESS: (task: Task) => `${PREFIXES.SUCCESS}I will remind you in \`${formatDistanceToNow(task.timestamp)}\`.`,
+			FOOTER: 'Your tea is readily steeped and awaits sipping. 🍵',
+			QUOTES: [
+				'> I say let the world go to hell, but I should always have my tea.\n> ― Fyodor Dostoevsky, Notes from Underground ',
+				'> "Take some more tea.\n> - The March Hare to Alice, very earnestly',
+				"> Honestly, if you're given the choice between Armageddon or tea, you don't say 'what kind of tea?\n> ― Neil Gaiman ",
+				'> Tea ... is a religion of the art of life.\n> ― Kakuzō Okakura, The Book of Tea',
+				"> The proper, wise balancing of one's whole life may depend upon the feasibility of a cup of tea at an unusual hour.\n> ― Arnold Bennett, How to Live on 24 Hours a Day",
+				'> A simple cup of tea is far from a simple matter.\n> ― Mary Lou Heiss, The Story of Tea: A Cultural History and Drinking Guide ',
+				'> With melted snow I boil fragrant tea.\n> ― Mencius, Mencius ',
+				'> The spirit of the tea beverage is one of peace, comfort and refinement.\n> ― Arthur Gray, Little Tea Book ',
+				'> A man who wishes to make his way in life could do no better than go through the world with a boiling tea-kettle in his hand.\n> - Sydney Smith, A memoir of the Rev. Sydney Smith',
+				'> I always fear that creation will expire before teatime.\n> ― Sydney Smith, The Sayings of Sydney Smith ',
+				'> [Tea-masters] have given emphasis to our natural love of simplicity, and shown us the beauty of humility. In fact, through their teachings tea has entered the life of the people.\n> ― Kakuzō Okakura, The Book of Tea',
+				'> One of the first requisites of a tea-master is the knowledge of how to sweep, clean, and wash, for there is an art in cleaning and dusting.\n> ― Kakuzo Okakura, The Book of Tea'
+			]
 		}
 	},
 	LISTENERS: {

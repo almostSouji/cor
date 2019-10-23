@@ -101,6 +101,11 @@ export class Schedule {
 					await member.send(task.message);
 				}
 			} catch (_) { }
+		} else if (task.message && task.command === 'dm') {
+			try {
+				const user = await this.client.users.fetch(task.userid);
+				await user.send(task.message);
+			} catch (_) { }
 		}
 		this.deleteTask(task);
 	}
