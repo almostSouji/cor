@@ -15,7 +15,7 @@ class TempRoleCommand extends Command {
 			],
 			description: {
 				content: 'Create and Assign a role until given date (the role can be provided as role data: `"role name,color"`, `--list` lists active role tasks for provided user (if provided, else for guild), `--delete` causes the role to be deleted when the task expires and the bot has the ability to do so).',
-				usage: '[target] [role] [--list] [--delete]'
+				usage: '[target] [role] [duration] [--list] [--delete]'
 			},
 			channel: 'guild',
 			args: [
