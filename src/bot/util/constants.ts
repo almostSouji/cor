@@ -1,11 +1,20 @@
 import { Guild, User, ClientUser } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import { LooseVector } from '../commands/other/dijkstra';
+import { Task } from '../models/Tasks';
+import { format } from 'date-fns';
+
+export const DATEFORMAT = {
+	DAY: 'MMM do yyy',
+	MINUTE: `MMM do yyy 'at' HH:mm`
+};
 
 export const CODEBLOCK = {
 	START: (language: string) => `\`\`\`${language}\n`,
 	END: '\n```'
 };
+
+export const TIMEZONE = 'CET';
 
 export const EMOJIS = {
 	ONLINE: ': <:online:401146192135847936>',
@@ -38,6 +47,17 @@ export const PREFIXES = {
 	ERROR: '✘ ',
 	GRANTED: '`✅`',
 	DENIED: '`❌`'
+};
+
+export const PROMPT_ANSWERS = {
+	GRANTED: ['yes', 'y'],
+	DENIED: ['no', 'n']
+};
+
+export const PROMPT_ANSWERS_ALL = PROMPT_ANSWERS.GRANTED.concat(PROMPT_ANSWERS.DENIED);
+
+export const SUFFIXES = {
+	PROMPT: '[y/n]'
 };
 
 export const UTIL = {
@@ -82,6 +102,12 @@ export const COMMANDS = {
 			WARNING: '#faa61a'
 		},
 		FILE_NAME: 'dijkstra_computation.txt'
+	},
+	TEMPROLE: {
+		MIN_DURATION: 60000,
+		MIN_DURATION_TEXT: '1 minute',
+		DELETE_SUFFIX: ' \`🚮\`',
+		DELETE_EMOJI: '🚮'
 	}
 };
 
@@ -93,7 +119,7 @@ export const MESSAGES = {
 	},
 	ERRORS: {
 		RESOLVE: (input: string, type: string) => `${PREFIXES.ERROR}Can not convert \`${input}\` to \`${type}\`.`,
-		TARGET: (type: string) => `${PREFIXES.ERROR}No target provided, please provide a valid ${type}.`,
+		TARGET: (type: string) => `${PREFIXES.ERROR}Missing argument, please provide a valid ${type}.`,
 		CANCEL: `${PREFIXES.ERROR}Action cancelled.`,
 		CANCEL_WITH_ERROR: (error: string) => `${PREFIXES.ERROR}Action cancelled: \`${error}\`.`,
 		CATCH: `${PREFIXES.ERROR}Something went wrong.`
@@ -211,6 +237,19 @@ export const MESSAGES = {
 			${commandMap.join('\n')}
 
 			You can use \`${prefix}${commandName} <commandname>\` to get more information about a command.`
+		},
+		TEMPROLE: {
+			PROMPT: (role: string, target: string, task: Task) => `There is already a role record for \`${target}\` and \`${role}\` in task \`#${task.id}\` for \`${format(task.timestamp, DATEFORMAT.MINUTE)}\`. Are you sure you want to overwrite? ${SUFFIXES.PROMPT}`,
+			DELETE_NOTICE: `* ${COMMANDS.TEMPROLE.DELETE_EMOJI}: role will be deleted when the task expires and the bot has the ability to do so.`,
+			ERRORS: {
+				INVALID_ROLE_ARGS: (argsstring: string) => `${PREFIXES.ERROR}Can not build a role from \`${argsstring}\`. Please provide the format \`"role Name, color"\`, where \`,\` separates role name and color and the full argument is provided in double quotes \`"\`.`,
+				TOO_SHORT: `${PREFIXES.ERROR}Duration must at least be \`${COMMANDS.TEMPROLE.MIN_DURATION_TEXT}\``,
+				NO_ENTRY: `${PREFIXES.ERROR}Could not created task.`,
+				NOT_MANAGEABLE: (role: string) => `${PREFIXES.ERROR}I can not manage the role \`${role}\`.`,
+				NO_TASKS: (guildname: string) => `${PREFIXES.ERROR}No executable tasks found for \`${guildname}\``,
+				NO_TARGET_TASKS: (username: string) => `${PREFIXES.ERROR}No executable tasks found for user \`${username}\`.`
+			},
+			SUCCESS: (role: string, target: string, task: Task, deleteRole: boolean) => `${PREFIXES.SUCCESS}Granted \`${target}\` the role \`${role}\`, scheduled to be removed \`${format(task.timestamp, DATEFORMAT.MINUTE)} (${TIMEZONE})\`${deleteRole ? COMMANDS.TEMPROLE.DELETE_SUFFIX : ''}`
 		}
 	},
 	LISTENERS: {

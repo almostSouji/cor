@@ -23,8 +23,14 @@ export class Task {
 	roleid!: string;
 
 	@Column({ nullable: true })
+	guildid!: string;
+
+	@Column({ nullable: true })
 	message!: string;
 
 	@Column({ nullable: true })
 	command!: string;
+
+	@Column()
+	deleterole!: boolean;
 }

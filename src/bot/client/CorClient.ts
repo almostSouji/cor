@@ -31,6 +31,7 @@ declare module 'discord-akairo' {
 	interface AkairoClient {
 		logger: Logger;
 		db: Connection;
+		schedule: Schedule;
 		settings: TypeORMProvider;
 		config: CorConfig;
 		commandHandler: CommandHandler;
@@ -136,10 +137,11 @@ export class CorClient extends AkairoClient {
 		await this.db.connect();
 		await this.db.synchronize();
 		this.settings = new TypeORMProvider(this.db.getRepository(Setting));
-		this.schedule = new Schedule(this.db.getRepository(Task));
+		this.schedule = new Schedule(this.db.getRepository(Task), this);
+		const loginString = await this.login(this.config.token);
 		await this.settings.init();
 		await this.schedule.init();
-		return this.login(this.config.token);
+		return loginString;
 	}
 }
 
