@@ -7,6 +7,8 @@ import { createLogger, Logger, transports, format } from 'winston';
 import { Connection } from 'typeorm';
 import { TypeORMProvider } from '../structures/SettingsProvider';
 import { connectionManager } from '../structures/Database';
+import { Schedule } from '../structures/Schedule';
+import { Task } from '../models/Tasks';
 
 export interface CorConfig {
 	token: string;
@@ -60,6 +62,7 @@ export class CorClient extends AkairoClient {
 
 	public db: Connection;
 	public settings!: TypeORMProvider;
+	public schedule!: Schedule;
 	public config: CorConfig;
 	public hubGuildID: string;
 	public hubCategoryID: string | null;
@@ -131,7 +134,9 @@ export class CorClient extends AkairoClient {
 		await this.db.connect();
 		await this.db.synchronize();
 		this.settings = new TypeORMProvider(this.db.getRepository(Setting));
+		this.schedule = new Schedule(this.db.getRepository(Task));
 		await this.settings.init();
+		await this.schedule.init();
 		return this.login(this.config.token);
 	}
 }
