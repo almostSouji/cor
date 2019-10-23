@@ -11,11 +11,11 @@ class TempRoleCommand extends Command {
 		super('temprole', {
 			aliases: [
 				'temprole',
-				'tmprole'
+				'tmpr'
 			],
 			description: {
-				content: 'Create and Assign a role until given date',
-				usage: '[new prefix]'
+				content: 'Create and Assign a role until given date (the role can be provided as role data: `"role name,color"`, `--list` lists active role tasks for provided user (if provided, else for guild), `--delete` causes the role to be deleted when the task expires and the bot has the ability to do so).',
+				usage: '[target] [role] [--list] [--delete]'
 			},
 			channel: 'guild',
 			args: [
@@ -46,7 +46,9 @@ class TempRoleCommand extends Command {
 					match: 'flag',
 					flag: ['--delete', '-d']
 				}
-			]
+			],
+			userPermissions: ['MANAGE_ROLES'],
+			clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS']
 		});
 	}
 
@@ -125,6 +127,11 @@ class TempRoleCommand extends Command {
 
 		if (!role.editable) {
 			return message.util!.send(MESSAGES.COMMANDS.TEMPROLE.ERRORS.NOT_MANAGEABLE(role.name));
+		}
+		const isOwner = message.member!.id === message.guild!.ownerID;
+		const positionCheck = message.member!.roles.highest.position >= role.position;
+		if (!isOwner && !positionCheck) {
+			return message.util!.send(MESSAGES.COMMANDS.TEMPROLE.ERRORS.AUTH);
 		}
 		const task = this.client.schedule.find(task => task.roleid === (role as Role).id && task.targetid === member.id);
 		if (task) {

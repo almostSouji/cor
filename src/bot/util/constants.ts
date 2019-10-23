@@ -247,7 +247,8 @@ export const MESSAGES = {
 				NO_ENTRY: `${PREFIXES.ERROR}Could not created task.`,
 				NOT_MANAGEABLE: (role: string) => `${PREFIXES.ERROR}I can not manage the role \`${role}\`.`,
 				NO_TASKS: (guildname: string) => `${PREFIXES.ERROR}No executable tasks found for \`${guildname}\``,
-				NO_TARGET_TASKS: (username: string) => `${PREFIXES.ERROR}No executable tasks found for user \`${username}\`.`
+				NO_TARGET_TASKS: (username: string) => `${PREFIXES.ERROR}No executable tasks found for user \`${username}\`.`,
+				AUTH: `${PREFIXES.ERROR}You are not authorized to assign the targeted role.`
 			},
 			SUCCESS: (role: string, target: string, task: Task, deleteRole: boolean) => `${PREFIXES.SUCCESS}Granted \`${target}\` the role \`${role}\`, scheduled to be removed \`${format(task.timestamp, DATEFORMAT.MINUTE)} (${TIMEZONE})\`${deleteRole ? COMMANDS.TEMPROLE.DELETE_SUFFIX : ''}`
 		}
