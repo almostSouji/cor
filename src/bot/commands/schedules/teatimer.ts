@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo';
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { MESSAGES, COMMANDS } from '../../util/constants';
 import ms = require('ms');
 import { stripIndents } from 'common-tags';
@@ -21,12 +21,17 @@ class PingCommand extends Command {
 						if (duration && !isNaN(duration)) return duration;
 						return str;
 					}
+				},
+				{
+					id: 'dm',
+					match: 'flag',
+					flag: ['--directmessage', '--dm', '-d']
 				}
 			]
 		});
 	}
 
-	public async exec(message: Message, { duration }: {duration: number}): Promise<Message | Message[]> {
+	public async exec(message: Message, { duration, dm }: {duration: number; dm: boolean}): Promise<Message | Message[]> {
 		if (!duration) {
 			return message.util!.send(MESSAGES.ERRORS.TARGET('steeping duration'));
 		}
@@ -42,11 +47,14 @@ class PingCommand extends Command {
 		const notification = stripIndents`
 			${quote} [quote #${rand + 1}]
 			${MESSAGES.COMMANDS.TEA.FOOTER}`;
+		const dmCheck = dm || message.channel.type !== 'text';
+		const target = !dm && message.channel.type === 'text' ? (message.channel as TextChannel) : undefined;
 		const entry = await this.client.schedule.add({
+			target,
 			user: message.author!,
 			timestamp: Date.now() + duration,
-			command: 'dm',
-			message: notification
+			command: dmCheck ? 'dm' : 'channel',
+			message: dmCheck ? notification : `${message.author} ${notification}`
 		});
 		if (!entry) {
 			return message.util!.send(MESSAGES.COMMANDS.TEA.ERRORS.NO_ENTRY);
