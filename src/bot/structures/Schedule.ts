@@ -110,7 +110,7 @@ export class Schedule {
 			const channel = this.client.channels.get(task.targetid);
 			if (!channel || channel.type !== 'text') return;
 			const textChannel = channel as TextChannel;
-			if (!textChannel.permissionsFor(this.client.user!)!.has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {
+			if (textChannel.permissionsFor(this.client.user!)!.has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {
 				textChannel.send(task.message);
 			}
 		}
