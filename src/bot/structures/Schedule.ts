@@ -1,13 +1,13 @@
 import { Task } from '../models/Tasks';
 import { Repository } from 'typeORM';
-import { User, Role, Guild, Collection } from 'discord.js';
+import { User, Role, Guild, Collection, TextChannel } from 'discord.js';
 import { AkairoClient } from 'discord-akairo';
 
 export interface TaskArguments {
 	user: User;
 	timestamp: number;
 	role?: Role;
-	target?: User;
+	target?: User | TextChannel;
 	message?: string;
 	command?: string;
 	guild?: Guild;
@@ -106,8 +106,15 @@ export class Schedule {
 				const user = await this.client.users.fetch(task.userid);
 				await user.send(task.message);
 			} catch (_) { }
+		} else if (task.message && task.targetid && task.command === 'channel') {
+			const channel = this.client.channels.get(task.targetid);
+			if (!channel || channel.type !== 'text') return;
+			const textChannel = channel as TextChannel;
+			if (!textChannel.permissionsFor(this.client.user!)!.has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {
+				textChannel.send(task.message);
+			}
 		}
-		this.deleteTask(task);
+		return this.deleteTask(task);
 	}
 
 	public get(taskID: number): Task | undefined {
