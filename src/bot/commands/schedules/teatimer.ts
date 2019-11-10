@@ -46,7 +46,7 @@ class PingCommand extends Command {
 		const quote = quotes[rand];
 		const notification = stripIndents`
 			${quote} [quote #${rand + 1}]
-			${MESSAGES.COMMANDS.TEA.FOOTER}`;
+			${message.author}, ${MESSAGES.COMMANDS.TEA.FOOTER}`;
 		const dmCheck = dm || message.channel.type !== 'text';
 		const target = !dm && message.channel.type === 'text' ? (message.channel as TextChannel) : undefined;
 		const entry = await this.client.schedule.add({
@@ -54,7 +54,7 @@ class PingCommand extends Command {
 			user: message.author!,
 			timestamp: Date.now() + duration,
 			command: dmCheck ? 'dm' : 'channel',
-			message: dmCheck ? notification : `${message.author} ${notification}`
+			message: notification
 		});
 		if (!entry) {
 			return message.util!.send(MESSAGES.COMMANDS.TEA.ERRORS.NO_ENTRY);

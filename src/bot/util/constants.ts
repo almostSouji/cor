@@ -265,7 +265,7 @@ export const MESSAGES = {
 				NO_ENTRY: `${PREFIXES.ERROR}Could not created task.`
 			},
 			SUCCESS: (task: Task) => `${PREFIXES.SUCCESS}I will remind you in \`${formatDistanceToNow(task.timestamp)}\`.`,
-			FOOTER: 'Your tea is readily steeped and awaits sipping. 🍵',
+			FOOTER: 'your tea is readily steeped and awaits sipping. 🍵',
 			QUOTES: [
 				'> I say let the world go to hell, but I should always have my tea.\n> ― Fyodor Dostoevsky, Notes from Underground ',
 				'> "Take some more tea.\n> - The March Hare to Alice, very earnestly',
