@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import * as qs from 'querystring';
 import { CorEmbed } from '../../structures/CorEmbed';
 import { COMMANDS, MESSAGES } from '../../util/constants';
-import { format, addDays, parseISO, getDay } from 'date-fns';
+import { format, addDays, getDay } from 'date-fns';
 
 interface ApiEntry {
 	m_id: string;
@@ -45,15 +45,16 @@ class MensaCommand extends Command {
 					id: 'date',
 					type: (_, str): Date => {
 						if (!str) return new Date();
-						const num = parseInt(str, 10);
-						if (!isNaN(num)) {
-							return addDays(new Date(), num);
+						const match = str.match(/^-?\d+$/);
+						if (match) {
+							return addDays(new Date(), parseInt(match[0], 10));
 						}
-						try {
-							return parseISO(str);
-						} catch {
+
+						const date = new Date(str);
+						if (isNaN((date as any as number))) {
 							return new Date();
 						}
+						return date;
 					}
 				},
 				{
