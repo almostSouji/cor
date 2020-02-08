@@ -4,13 +4,13 @@ import { MESSAGES, COMMANDS } from '../../util/constants';
 import ms = require('ms');
 import { stripIndents } from 'common-tags';
 
-class PingCommand extends Command {
+class TeaTimerCommand extends Command {
 	private constructor() {
 		super('teatimer', {
 			aliases: ['teatimer', 'teatime', 'tea'],
 			description: {
-				content: 'Display response time',
-				usage: 'duration'
+				content: 'Set a tea timer to provided duration, `--dm` to receive the notification via dm (make sure you have DM enabled for this server)',
+				usage: 'duration [--directmessage]'
 			},
 			args: [
 				{
@@ -62,4 +62,4 @@ class PingCommand extends Command {
 		return message.util!.send(MESSAGES.COMMANDS.TEA.SUCCESS(entry));
 	}
 }
-export default PingCommand;
+export default TeaTimerCommand;
