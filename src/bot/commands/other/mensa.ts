@@ -86,7 +86,12 @@ class MensaCommand extends Command {
 			.setFooter(MESSAGES.COMMANDS.MENSA.CREDIT);
 		for (const dish of dishes) {
 			let string = '';
-			string += `${dish.title}${mini ? '' : '\n'}`;
+			const title = dish.loc === 'Atrium'
+				? `• ${dish.title.split(',')
+					.filter(element => ['vegan', 'vegetarisch'].some(s => element.toLowerCase().includes(s)))
+					.join('\n•')}`
+				: dish.title;
+			string += `${title}${mini ? '' : '\n'}`;
 			if (dish.price && !mini) {
 				string += `\nPrice: \`${dish.price}${COMMANDS.MENSA.CURRENCY_SYMBOL}\``;
 			}
@@ -114,7 +119,7 @@ class MensaCommand extends Command {
 			}
 			const groups = match!.groups!;
 			const loc = groups.loc!;
-			const vegetarian = groups.veg || entry.icon === 'veg' ? true : false;
+			const vegetarian = groups.veg || entry.title.toLowerCase().includes('vegan') || entry.icon === 'veg' ? true : false;
 			return {
 				id: entry.m_id,
 				date: new Date(entry.date),
