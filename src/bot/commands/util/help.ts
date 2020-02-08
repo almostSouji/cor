@@ -45,7 +45,7 @@ export default class HelpCommand extends Command {
 			infoString += MESSAGES.COMMANDS.HELP.INFO.DESCRIPTION(ref.description.content);
 		}
 		if (ref.description.usage) {
-			infoString += MESSAGES.COMMANDS.HELP.INFO.DESCRIPTION(ref.description.usage);
+			infoString += MESSAGES.COMMANDS.HELP.INFO.USAGE(ref.description.usage);
 		}
 		let restrictionString = '';
 		if (ref.ownerOnly) {
