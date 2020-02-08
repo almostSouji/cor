@@ -40,7 +40,7 @@ export const EMBED_LIMITS = {
 	FIELD_VALUE: 1024
 };
 
-export const EMBED_DEFAULT_COLOR = 3553599;
+export const EMBED_DEFAULT_COLOR = 3092790;
 
 export const PREFIXES = {
 	SUCCESS: '✓ ',
