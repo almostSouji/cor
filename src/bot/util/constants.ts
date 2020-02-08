@@ -114,6 +114,26 @@ export const COMMANDS = {
 		MIN_DURATION_TEXT: '1 minute',
 		MAX_DURATION: 600000,
 		MAX_DURATION_TEXT: '10 minutes'
+	},
+	MENSA: {
+		API: {
+			BASE_URL: 'https://www.mensa-kl.de',
+			IMAGE_BASE_URL: 'https://www.mensa-kl.de/mimg',
+			API_BASE_URL: 'https://www.mensa-kl.de/api.php'
+		},
+		COLORS: {
+			FAIL: '#d04949',
+			SUCCESS: '#03b581',
+			VEG: '#86e161'
+		},
+		RATING_MAX: 5,
+		CURRENCY_SYMBOL: '€',
+		EMOJIS: {
+			RATING: '⭐',
+			VEG: '🥕'
+		},
+		DATEFORMAT: `eeee MMM do yyy`,
+		DATE_ISO: `yyyy-MM-dd`
 	}
 };
 
@@ -280,6 +300,14 @@ export const MESSAGES = {
 				'> [Tea-masters] have given emphasis to our natural love of simplicity, and shown us the beauty of humility. In fact, through their teachings tea has entered the life of the people.\n> ― Kakuzō Okakura, The Book of Tea',
 				'> One of the first requisites of a tea-master is the knowledge of how to sweep, clean, and wash, for there is an art in cleaning and dusting.\n> ― Kakuzo Okakura, The Book of Tea'
 			]
+		},
+		MENSA: {
+			ERRORS: {
+				NO_WEEKDAY: (date: string) => `${PREFIXES.ERROR}No Data for ${date}, Mensa data is only available Mo-Fr.`,
+				NO_DATA: (date: string) => `${PREFIXES.ERROR}No data available for ${date} (the date might be too far in the past or future or fall into lecture pauses), please specify another date or offset.`,
+				NO_DATA_ALL: `${PREFIXES.ERROR}No future data available.`
+			},
+			CREDIT: 'Data provided by https://www.mensa-kl.de'
 		}
 	},
 	LISTENERS: {
