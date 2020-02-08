@@ -71,7 +71,7 @@ class CRCCheckCommand extends Command {
 			if (ceillLenght > 2000) {
 				if (ceillLenght > 2000000) {
 					embed.addField(MESSAGES.COMMANDS.CRC.WARNINGS.TITLE, MESSAGES.COMMANDS.CRC.WARNINGS.ENTITY_TOO_LARGE);
-					return message.util!.send(embed.applySpacers().shorten());
+					return message.util!.send(embed.shorten());
 				}
 				const attachText = stripIndents`
 					INPUT: ${content}
@@ -82,10 +82,10 @@ class CRCCheckCommand extends Command {
 					VERBOSE: ${verbose ? 'TRUE' : 'FALSE'}
 					${steps.join('\n').replace(/ /g, '\u200B ')}
 				`;
-				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(Buffer.from(attachText.replace(/\n/g, '\r\n'), 'utf8'), 'crc_check.txt')]);
+				return message.util!.send([embed.shorten(), new MessageAttachment(Buffer.from(attachText.replace(/\n/g, '\r\n'), 'utf8'), 'crc_check.txt')]);
 			}
 		}
-		return message.util!.send(verbose ? computationCodeblock : '', embed.applySpacers().shorten());
+		return message.util!.send(verbose ? computationCodeblock : '', embed.shorten());
 	}
 }
 export default CRCCheckCommand;

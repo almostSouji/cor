@@ -17,13 +17,6 @@ export class CorEmbed extends MessageEmbed {
 		super(data);
 	}
 
-	public applySpacers(): CorEmbed {
-		for (let i = 0; i < this.fields.length - 1; i++) {
-			this.fields[i].value += `\n\u200B`;
-		}
-		return this;
-	}
-
 	public shorten(): CorEmbed {
 		if (this.description && this.description.length > this.limits.description) {
 			this.description = ellipsis(this.description, this.limits.description);

@@ -167,26 +167,26 @@ class DijsktraCommand extends Command {
 			}
 			try {
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.WARNING);
-				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
+				return message.util!.send([embed.shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
 			} catch (_) {
 				const content = verbose ? MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE : MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG;
 				embed.addField('Routing table', content);
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.FAIL);
-				return message.util!.send(embed.applySpacers().shorten());
+				return message.util!.send(embed.shorten());
 			}
 		} else if (verbose) {
 			const b = Buffer.from(states.join('\r\n'));
 			try {
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.SUCCESS);
-				return message.util!.send([embed.applySpacers().shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
+				return message.util!.send([embed.shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
 			} catch (_) {
 				embed.addField('Routing table', MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE);
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.FAIL);
-				return message.util!.send(embed.applySpacers().shorten());
+				return message.util!.send(embed.shorten());
 			}
 		}
 		embed.setColor(COMMANDS.DIJKSTRA.COLORS.SUCCESS);
-		return message.util!.send(embed.applySpacers().shorten());
+		return message.util!.send(embed.shorten());
 	}
 }
 export default DijsktraCommand;

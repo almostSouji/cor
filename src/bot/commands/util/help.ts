@@ -77,7 +77,7 @@ export default class HelpCommand extends Command {
 		if (!embed.color && message.guild && message.guild.me!.displayColor) {
 			embed.setColor(message.guild.me!.displayColor);
 		}
-		return embed.applySpacers();
+		return embed;
 	}
 
 	public async exec(message: Message, { cmd, all }: { cmd: Command; all: boolean }): Promise<Message | Message[]> {

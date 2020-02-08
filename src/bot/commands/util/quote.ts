@@ -56,7 +56,7 @@ class QuoteCommand extends Command {
 		}
 		embed.setDescription(`${message.content}\n[➜](${message.url} 'jump to message')`);
 
-		return embed.applySpacers().shorten();
+		return embed.shorten();
 	}
 
 	public exec(message: Message, { quote, color, edits }: {quote: Message | string; color: boolean; edits: boolean}): Promise<Message | Message[]> {

@@ -51,7 +51,7 @@ class VersionCommand extends Command {
 		if (!embed.color && message.guild && message.guild.me!.displayColor) {
 			embed.setColor(message.guild.me!.displayColor);
 		}
-		return message.util!.send(embed.applySpacers());
+		return message.util!.send(embed);
 	}
 }
 export default VersionCommand;
