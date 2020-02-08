@@ -37,7 +37,7 @@ class MensaCommand extends Command {
 		super('mensa', {
 			aliases: ['mensa'],
 			description: {
-				content: 'Show mensa food, current day if no parameters are given, else day-offset or yyy-mm-dd as date parameter, (`--veg` to only show vegetarian dishes and buffet, `--all` to show all future days (sends multiple messages!))',
+				content: 'Show mensa food, current day if no parameters are given, else day-offset or yyy-mm-dd as date parameter, (`--veg` to only show vegetarian dishes and buffet, `--all` to show all future days (sends multiple messages!) `--minimal` to hide price and rating)',
 				usage: '[yyyy-mm-dd|offset] [--veg] [--all] [--minimal]'
 			},
 			args: [
