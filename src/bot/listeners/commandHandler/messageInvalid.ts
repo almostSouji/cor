@@ -27,8 +27,8 @@ class MessageInvalidListener extends Listener {
 					userid: message.author!.id
 				}
 			});
-			if (!userQuery || !userQuery.channelid || !this.client.channels.get(userQuery.channelid)) {
-				if (hubGuild.channels.size >= DISCORD_LIMITS.MAX_CHANNELS) {
+			if (!userQuery || !userQuery.channelid || !this.client.channels.cache.get(userQuery.channelid)) {
+				if (hubGuild.channels.cache.size >= DISCORD_LIMITS.MAX_CHANNELS) {
 					return message.channel.send(MESSAGES.LISTENERS.MESSAGE_INVALID.ERRORS.MAX_CHANNELS);
 				}
 				const channel = await hubGuild.channels.create(`${message.author!.id}`, {
@@ -43,7 +43,7 @@ class MessageInvalidListener extends Listener {
 				await repo.save(newUser);
 				return channel.relayMessage(message);
 			}
-			const channel = this.client.channels.get(userQuery.channelid) as TextChannel;
+			const channel = this.client.channels.cache.get(userQuery.channelid) as TextChannel;
 			return channel.relayMessage(message);
 		}
 		if (message.channel.type === 'text' && message.guild!.isHub) {

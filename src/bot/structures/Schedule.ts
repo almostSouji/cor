@@ -40,8 +40,8 @@ export class Schedule {
 		const tasks = await this.repo.find();
 		for (const task of tasks) {
 			if (task.guildid && task.roleid) {
-				const guild = this.client.guilds.get(task.guildid);
-				if (!guild || !guild.roles.has(task.roleid)) {
+				const guild = this.client.guilds.cache.get(task.guildid);
+				if (!guild || !guild.roles.cache.has(task.roleid)) {
 					this.deleteTask(task);
 					continue;
 				}
@@ -84,17 +84,17 @@ export class Schedule {
 
 	public async fulfill(task: Task): Promise<void> {
 		if (task.roleid && task.guildid && task.targetid) {
-			const guild = this.client.guilds.get(task.guildid);
+			const guild = this.client.guilds.cache.get(task.guildid);
 			if (!guild) return this.deleteTask(task);
 
-			const role = guild.roles.get(task.roleid);
+			const role = guild.roles.cache.get(task.roleid);
 			if (!role || !role.editable) return this.deleteTask(task);
 			try {
 				if (task.deleterole) {
 					await role.delete();
 				}
 				const member = await guild.members.fetch(task.targetid);
-				if (member.roles.has(task.roleid)) {
+				if (member.roles.cache.has(task.roleid)) {
 					await member.roles.remove(task.roleid);
 				}
 				if (task.message) {
@@ -107,7 +107,7 @@ export class Schedule {
 				await user.send(task.message);
 			} catch (_) { }
 		} else if (task.message && task.targetid && task.command === 'channel') {
-			const channel = this.client.channels.get(task.targetid);
+			const channel = this.client.channels.cache.get(task.targetid);
 			if (!channel || channel.type !== 'text') return;
 			const textChannel = channel as TextChannel;
 			if (textChannel.permissionsFor(this.client.user!)!.has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {

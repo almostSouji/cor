@@ -76,7 +76,7 @@ class TempRoleCommand extends Command {
 		}
 		const member = target as GuildMember;
 		if (list) {
-			const guildTasks = this.client.schedule.filter(task => Boolean(task.roleid && message.guild!.roles.has(task.roleid)));
+			const guildTasks = this.client.schedule.filter(task => Boolean(task.roleid && message.guild!.roles.cache.has(task.roleid)));
 			if (!guildTasks.size) {
 				return message.util!.send(MESSAGES.COMMANDS.TEMPROLE.ERRORS.NO_TASKS(message.guild!.name));
 			}
@@ -150,7 +150,7 @@ class TempRoleCommand extends Command {
 				return message.util!.send(MESSAGES.ERRORS.CANCEL_WITH_ERROR('timeout'));
 			}
 		}
-		if (!member.roles.has(role.id)) {
+		if (!member.roles.cache.has(role.id)) {
 			member.roles.add(role.id);
 		}
 		const schedule = this.client.schedule;

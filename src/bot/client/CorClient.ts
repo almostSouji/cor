@@ -122,11 +122,11 @@ export class CorClient extends AkairoClient {
 	}
 
 	public get hubGuild(): Guild | undefined {
-		return this.guilds.get(this.hubGuildID);
+		return this.guilds.cache.get(this.hubGuildID);
 	}
 
 	public get hubCategory(): CategoryChannel | undefined {
-		const channel = this.hubCategoryID && this.channels.get(this.hubCategoryID);
+		const channel = this.hubCategoryID && this.channels.cache.get(this.hubCategoryID);
 		if (!(channel instanceof CategoryChannel)) {
 			return undefined;
 		}
