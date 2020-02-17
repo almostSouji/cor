@@ -59,9 +59,8 @@ class CRCCheckCommand extends Command {
 		const ceillLenght = computationCodeblock.length + MESSAGES.COMMANDS.CRC.EXPLANATIONS.CHECK.length + 3;
 
 		const embed = new CorEmbed().setTitle('Cyclic Redundancy Check')
-			.addField('Input', content);
-
-		embed.addField('Provided generator', `\`${generator}\``, true)
+			.addField('Input', content)
+			.addField('Provided generator', `\`${generator}\``, true)
 			.addField('Provided checksum', `\`${crc}\``, true)
 			.addField(`CRC-check`, `${check ? MESSAGES.COMMANDS.CRC.CHECK_PASSED : MESSAGES.COMMANDS.CRC.CHECK_FAILED}`, true)
 			.setColor(check ? COMMANDS.CRC.COLORS.SUCCESS : COMMANDS.CRC.COLORS.FAIL);
