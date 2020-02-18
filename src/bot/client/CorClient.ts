@@ -146,6 +146,6 @@ export class CorClient extends AkairoClient {
 }
 
 const extensions = readdirSync(join(__dirname, '..', 'extensions'));
-for (const ext of extensions.filter(file => extname(file).toLowerCase() === 'js')) {
+for (const ext of extensions.filter(file => ['.js', '.ts'].includes(extname(file)))) {
 	require(join(__dirname, '..', 'extensions', ext));
 }
