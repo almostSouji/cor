@@ -67,6 +67,9 @@ export const UTIL = {
 };
 
 export const COMMANDS = {
+	VERSION: {
+		REGEX: (name: string) => new RegExp(`(?<name>${name})@(?<holder>.+)/(?<repo>.+)`)
+	},
 	DOCS: {
 		SOURCES: ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', '11.5-dev'],
 		STABLE_DEV_SOURCE: '11.5-dev',
@@ -263,6 +266,11 @@ export const MESSAGES = {
 			${commandMap.join('\n')}
 
 			You can use \`${prefix}${commandName} <commandname>\` to get more information about a command.`
+		},
+		VERSION: {
+			ERRORS: {
+				KEY_NOT_FOUND: `${PREFIXES.ERROR}I could not find a required depdency in the lockfile.`
+			}
 		},
 		TEMPROLE: {
 			PROMPT: (role: string, target: string, task: Task) => `There is already a role record for \`${target}\` and \`${role}\` in task \`#${task.id}\` for \`${format(task.timestamp, DATEFORMAT.MINUTE)}\`. Are you sure you want to overwrite? ${SUFFIXES.PROMPT}`,
