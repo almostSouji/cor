@@ -245,8 +245,18 @@ export const MESSAGES = {
 			DM_PREFIX: (defaultPrefix: string) => `You can use the standard prefix \`${defaultPrefix}\` in direct messages.`,
 			GUILD_PREFIX: (prefix: string) => `My prefix here is \`${prefix}\`.\nAlternatively you can mention me.`,
 			SUCCESS: {
-				CHANGE: (guild: Guild, oldPrefix: string, newPrefix: string) => `Prefix on \`${guild.name}\` changed from \`${oldPrefix}\` to \`${newPrefix}\`.`,
-				RESET: (guild: Guild, defaultPrefix: string) => `Prefix on \`${guild.name}\` reset to \`${defaultPrefix}\`.`
+				CHANGE: (guild: Guild, oldPrefix: string, newPrefix: string) => `${PREFIXES.SUCCESS}Prefix on \`${guild.name}\` changed from \`${oldPrefix}\` to \`${newPrefix}\`.`,
+				RESET: (guild: Guild, defaultPrefix: string) => `${PREFIXES.SUCCESS}PPrefix on \`${guild.name}\` reset to \`${defaultPrefix}\`.`
+			}
+		},
+		DISABLE: {
+			SUCCESS: {
+				RESET: (location: string) => `${PREFIXES.SUCCESS}Enabled all commands ${location}.`,
+				ENABLED: (name: string, location: string, isCommand: boolean) => `${PREFIXES.SUCCESS}Enabled ${isCommand ? 'command' : 'category'} ${name} ${location}`,
+				DISABLED: (name: string, location: string, isCommand: boolean) => `${PREFIXES.SUCCESS}Disabled ${isCommand ? 'command' : 'category'} ${name} ${location}`
+			},
+			ERRORS: {
+				OWNER_DISABLED: (name: string, isCommand: boolean) => `${PREFIXES.ERROR}The ${isCommand ? 'command' : 'category'} \`${name}\` ${isCommand ? 'or its category' : ''} is disabled globally by the owner. You can not apply settings for it at this time.`
 			}
 		},
 		HELP: {
@@ -259,7 +269,9 @@ export const MESSAGES = {
 				OWNER_ONLY: (isOwner: boolean) => `\n${isOwner ? PREFIXES.GRANTED : PREFIXES.DENIED} Owner only`,
 				GUILD_ONLY: (isGuild: boolean) => `\n${isGuild ? PREFIXES.GRANTED : PREFIXES.DENIED} Command can only be used in a guild`,
 				USER_PERMISSIONS: (permissions: string, granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} User permissions: ${permissions}`,
-				BOT_PERMISSIONS: (permissions: string, granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Bot permissions: ${permissions}`
+				BOT_PERMISSIONS: (permissions: string, granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Bot permissions: ${permissions}`,
+				BLACKLISTED_OWNER: (granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Disabled globally by Owner`,
+				BLACKLISTED_GUILD: (granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Disabled locally on guild`
 			},
 			OUTPUT: (commandMap: string[], prefix: string, commandName: string) => stripIndents`
 			Your available commands are:

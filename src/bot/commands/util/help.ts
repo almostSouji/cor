@@ -31,7 +31,7 @@ export default class HelpCommand extends Command {
 		});
 	}
 
-	private buildInfoEmbed(ref: Command, message: Message): CorEmbed {
+	private buildInfoEmbed(ref: Command, message: Message, globalBlacklist: string[], localBlacklist: string[]): CorEmbed {
 		const permissionMapper = (permissions: PermissionResolvable[]): string => permissions.map(e => `\`${e}\``).join(', ');
 		let idString = `Name: \`${ref.id}\``;
 		if (ref.category) {
@@ -66,6 +66,14 @@ export default class HelpCommand extends Command {
 			const check = message.channel.type === 'text' && message.guild!.me!.permissions.has(permissions);
 			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BOT_PERMISSIONS(permissionMapper(permissions), check);
 		}
+		if ([ref.id, ref.categoryID].some(source => globalBlacklist.includes(source))) {
+			const check = this.client.isOwner(message.author);
+			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLISTED_OWNER(check);
+		}
+		if ([ref.id, ref.categoryID].some(source => localBlacklist.includes(source))) {
+			const check = this.client.isOwner(message.author);
+			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLISTED_GUILD(check);
+		}
 
 
 		const embed = new CorEmbed()
@@ -83,14 +91,22 @@ export default class HelpCommand extends Command {
 	public async exec(message: Message, { cmd, all }: { cmd: Command; all: boolean }): Promise<Message | Message[]> {
 		// @ts-ignore
 		const prefix = this.handler.prefix(message);
+		const globalBlacklist = this.client.settings.get('global', 'disabled', []);
+		const localBlacklist = this.client.settings.get(message.guild!, 'disabled', []);
 		if (!cmd) {
 			const allowedCategories = this.handler.categories.filter(
 				(category: Category<string, Command>): boolean => {
+					if (all) {
+						return true;
+					}
+					if (globalBlacklist.includes(category.id)) {
+						return false;
+					}
+					if (localBlacklist.includes(category.id)) {
+						return false;
+					}
 					const filtered = category.filter(
 						(command: Command): boolean => {
-							if (all) {
-								return true;
-							}
 							if (message.channel.type === 'text' && command.userPermissions) {
 								return message.member!.hasPermission(
 									command.userPermissions as PermissionResolvable[]
@@ -115,6 +131,12 @@ export default class HelpCommand extends Command {
 							if (all) {
 								return true;
 							}
+							if (globalBlacklist.includes(c.id)) {
+								return false;
+							}
+							if (localBlacklist.includes(c.id)) {
+								return false;
+							}
 							if (message.channel.type === 'text' && c.userPermissions) {
 								return message.member!.hasPermission(
 									c.userPermissions as PermissionResolvable[]
@@ -130,6 +152,6 @@ export default class HelpCommand extends Command {
 			);
 			return message.util!.send(MESSAGES.COMMANDS.HELP.OUTPUT(map, prefix, this.id));
 		}
-		return message.util!.send('', this.buildInfoEmbed(cmd, message));
+		return message.util!.send('', this.buildInfoEmbed(cmd, message, globalBlacklist, localBlacklist));
 	}
 }
