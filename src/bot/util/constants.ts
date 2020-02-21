@@ -17,7 +17,7 @@ export const CODEBLOCK = {
 export const TIMEZONE = 'CET';
 
 export const EMOJIS = {
-	ONLINE: ': <:online:401146192135847936>',
+	ONLINE: '<:online:401146192135847936>',
 	OFFLINE: '<:offline:401146191645245444>',
 	INVISIBLE: '<:offline:401146191645245444>',
 	IDLE: '<:idle:401146191943041028>',
