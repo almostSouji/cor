@@ -55,7 +55,7 @@ const groupBy = <T, K>(collection: Collection<T, K>, fn: Function): Collection<T
 * @param {string} lang Code language to use
 * @returns {string} Link to the paste
 */
-const postHaste = async (code: string, lang: string = ''): Promise<string> => {
+const postHaste = async (code: string, lang = ''): Promise<string> => {
 	try {
 		if (code.length > 400000) {
 			return MESSAGES.UTIL.ERRORS.MAX_LENGTH;

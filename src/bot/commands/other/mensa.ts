@@ -45,7 +45,8 @@ class MensaCommand extends Command {
 					id: 'date',
 					type: (_, str): Date => {
 						if (!str) return new Date();
-						const match = str.match(/^-?\d+$/);
+						const reg = new RegExp('/^-?\d+$/');
+						const match = reg.exec(str);
 						if (match) {
 							return addDays(new Date(), parseInt(match[0], 10));
 						}

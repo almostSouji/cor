@@ -94,8 +94,8 @@ export class CorClient extends AkairoClient {
 
 		this.commandHandler.resolver.addType('dijkstraVector', (_, phrase) => {
 			if (!phrase) return null;
-			const reg = /(?<src>[^-]+)- ?(?<dest>[^-]+)- ?(?<cost>\d*)/;
-			const match = phrase.match(reg);
+			const reg = new RegExp('/(?<src>[^-]+)- ?(?<dest>[^-]+)- ?(?<cost>\d*)/');
+			const match = reg.exec(phrase);
 			if (!match) return null;
 			const costNum = parseInt(match.groups!.cost, 10);
 			return {
@@ -147,5 +147,6 @@ export class CorClient extends AkairoClient {
 
 const extensions = readdirSync(join(__dirname, '..', 'extensions'));
 for (const ext of extensions.filter(file => ['.js', '.ts'].includes(extname(file)))) {
-	require(join(__dirname, '..', 'extensions', ext));
+	import(join(__dirname, '..', 'extensions', ext));
+	// require(join(__dirname, '..', 'extensions', ext));
 }

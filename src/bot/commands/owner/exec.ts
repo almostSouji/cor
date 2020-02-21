@@ -37,7 +37,7 @@ class ExecCommand extends Command {
 	}
 
 	public async exec(message: Message, { code, haste, noout }: { code: string; haste: boolean; noout: boolean }): Promise<Message | Message[] | void> {
-		const exec = promisify(require('child_process').exec);
+		const exec = promisify((await import('child_process')).exec);
 		try {
 			const res = await exec(code, { windowsHide: true });
 			const { stdout, stderr } = res;

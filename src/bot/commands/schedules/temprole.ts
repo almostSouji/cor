@@ -1,7 +1,7 @@
 import { Command, Argument } from 'discord-akairo';
 import { Message, Role, GuildMember, Util, Collection } from 'discord.js';
 import { MESSAGES, PROMPT_ANSWERS_ALL, PROMPT_ANSWERS, COMMANDS, DATEFORMAT, TIMEZONE } from '../../util/constants';
-import ms = require('ms');
+import ms from '@naval-base/ms';
 import { CorEmbed } from '../../structures/CorEmbed';
 import { format } from 'date-fns';
 import { Task } from '../../models/Tasks';
@@ -138,7 +138,7 @@ class TempRoleCommand extends Command {
 			message.util!.send(MESSAGES.COMMANDS.TEMPROLE.PROMPT(role.name, member.user.tag, task));
 
 			try {
-				const filter = (msg: Message): boolean => msg.author!.id === message.author!.id && PROMPT_ANSWERS_ALL.includes(msg.content);
+				const filter = (msg: Message): boolean => msg.author.id === message.author.id && PROMPT_ANSWERS_ALL.includes(msg.content);
 				const collected = await message.channel.awaitMessages(filter, { max: 1, time: 20000, errors: ['time'] });
 				if (!PROMPT_ANSWERS.GRANTED.includes(collected.first()!.content)) {
 					throw new Error('Negative user input');
@@ -155,7 +155,7 @@ class TempRoleCommand extends Command {
 		}
 		const schedule = this.client.schedule;
 		const entry = await schedule.add({
-			user: message.author!,
+			user: message.author,
 			timestamp: Date.now() + duration,
 			role,
 			target: member.user,

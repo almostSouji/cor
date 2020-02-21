@@ -36,7 +36,7 @@ class PrefixCommand extends Command {
 		if (message.channel.type !== 'text') {
 			return message.util!.send(MESSAGES.COMMANDS.PREFIX.DM_PREFIX(defaultPrefix));
 		}
-		const override = this.client.isOwner(message.author!) && force;
+		const override = this.client.isOwner(message.author) && force;
 		const currentPrefix = this.client.settings.get(message.guild!.id, 'prefix', defaultPrefix);
 		if ((!prefix && !reset) || (!message.member!.hasPermission('MANAGE_GUILD') && !override)) {
 			return message.util!.send(MESSAGES.COMMANDS.PREFIX.GUILD_PREFIX(currentPrefix));

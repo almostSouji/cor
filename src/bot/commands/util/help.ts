@@ -49,7 +49,7 @@ export default class HelpCommand extends Command {
 		}
 		let restrictionString = '';
 		if (ref.ownerOnly) {
-			const check = this.client.isOwner(message.author!);
+			const check = this.client.isOwner(message.author);
 			restrictionString += MESSAGES.COMMANDS.HELP.INFO.OWNER_ONLY(check);
 		}
 		if (ref.channel === 'guild') {
@@ -97,7 +97,7 @@ export default class HelpCommand extends Command {
 								);
 							}
 							if (command.ownerOnly) {
-								return this.client.isOwner(message.author!);
+								return this.client.isOwner(message.author);
 							}
 							return true;
 						}

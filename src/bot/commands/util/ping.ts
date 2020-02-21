@@ -16,7 +16,7 @@ class PingCommand extends Command {
 
 	public async exec(message: Message): Promise<Message | Message[]> {
 		const start = Date.now();
-		await message.util!.send('awaiting ping...') as Message;
+		await message.util!.send('awaiting ping...');
 		return message.util!.send(
 			`✓ pong! Api Latency is ${Date.now() - start}ms. Av. Heartbeat is ${Math.round(
 				this.client.ws.ping

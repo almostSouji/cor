@@ -1,9 +1,9 @@
 import { MessageEmbed } from 'discord.js';
-import { ellipsis } from '../util/';
+import { ellipsis } from '../util';
 import { EMBED_LIMITS, EMBED_DEFAULT_COLOR } from '../util/constants';
 
 export class CorEmbed extends MessageEmbed {
-	private limits = {
+	private readonly limits = {
 		title: EMBED_LIMITS.TITLE,
 		description: EMBED_LIMITS.DESCRIPTION,
 		footer: EMBED_LIMITS.FOOTER,
@@ -33,9 +33,7 @@ export class CorEmbed extends MessageEmbed {
 		if (this.footer && this.footer.text) {
 			this.footer.text = ellipsis(this.footer.text, this.limits.footer);
 		}
-		for (let i = 0; i < this.fields.length; i++) {
-			const field = this.fields[i];
-
+		for (const field of this.fields) {
 			field.name = ellipsis(field.name, this.limits.fieldName);
 			field.value = ellipsis(field.value, this.limits.fieldValue);
 		}

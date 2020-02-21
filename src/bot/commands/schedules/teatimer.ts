@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { Message, TextChannel } from 'discord.js';
 import { MESSAGES, COMMANDS } from '../../util/constants';
-import ms = require('ms');
+import ms from '@naval-base/ms';
 import { stripIndents } from 'common-tags';
 
 class TeaTimerCommand extends Command {
@@ -51,7 +51,7 @@ class TeaTimerCommand extends Command {
 		const target = !dm && message.channel.type === 'text' ? (message.channel as TextChannel) : undefined;
 		const entry = await this.client.schedule.add({
 			target,
-			user: message.author!,
+			user: message.author,
 			timestamp: Date.now() + duration,
 			command: dmCheck ? 'dm' : 'channel',
 			message: notification

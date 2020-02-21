@@ -1,11 +1,11 @@
 dependencies:
+  '@naval-base/ms': 3.1.0
   '@types/dotenv': 6.1.1
   '@types/js-yaml': 3.12.2
   '@types/ms': 0.7.31
   '@types/node-fetch': 2.5.4
   '@types/turndown': 5.0.0
   '@types/ws': 6.0.4
-  '@yarnpkg/lockfile': 1.1.0
   common-tags: 1.8.0
   date-fns: 2.9.0
   discord-akairo: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev
@@ -13,7 +13,6 @@ dependencies:
   dotenv: 8.2.0
   eslint-config-marine: 6.0.0_eslint@6.8.0
   js-yaml: 3.13.1
-  ms: 2.1.2
   node-fetch: 2.6.0
   reflect-metadata: 0.1.13
   sqlite3: 4.1.1
@@ -46,6 +45,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-AwCjNahVqASGv5mxnZCC0DfcV/hkAV/U7edUB0K+20xx7v0ZfQ3/o02bNROzpNjvfak5pM8KO5SCmJVK90e3lQ==
+  /@naval-base/ms/3.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-3xSG3J2f9xSEgni7liDFBNnlhOf6/sLedCMaEtWv3iaJkeaWvyfdWBYhd2bTko3BLMcQfY4MgICoUGRla1bXiQ==
   /@types/color-name/1.1.1:
     dev: false
     resolution:
@@ -183,10 +186,6 @@ packages:
         optional: true
     resolution:
       integrity: sha512-WlFk8QtI8pPaE7JGQGxU7nGcnk1ccKAJkhbVookv94ZcAef3m6oCE/jEDL6dGte3JcD7reKrA0o55XhBRiVT3A==
-  /@yarnpkg/lockfile/1.1.0:
-    dev: false
-    resolution:
-      integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
   /abab/2.0.3:
     dev: false
     resolution:
@@ -2908,6 +2907,7 @@ packages:
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/f85230812ff6de4f1ba1c021c93fe308fb0685e6'
     version: 12.0.0-dev
 specifiers:
+  '@naval-base/ms': ^3.1.0
   '@types/common-tags': ^1.8.0
   '@types/dotenv': ^6.1.1
   '@types/js-yaml': ^3.12.2
@@ -2918,7 +2918,6 @@ specifiers:
   '@types/ws': ^6.0.4
   '@typescript-eslint/eslint-plugin': ^2.20.0
   '@typescript-eslint/parser': ^2.20.0
-  '@yarnpkg/lockfile': ^1.1.0
   common-tags: ^1.8.0
   date-fns: ^2.9.0
   discord-akairo: 'github:1Computer1/discord-akairo'
@@ -2927,7 +2926,6 @@ specifiers:
   eslint: ^6.8.0
   eslint-config-marine: ^6.0.0
   js-yaml: ^3.13.1
-  ms: ^2.1.2
   node-fetch: ^2.6.0
   reflect-metadata: ^0.1.13
   sqlite3: ^4.1.1

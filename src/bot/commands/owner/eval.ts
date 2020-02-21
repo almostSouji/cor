@@ -73,7 +73,7 @@ class EvalCommand extends Command {
 			.replace(new RegExp(token, 'gi'), '*****');
 	}
 
-	private async _result(result: any, hrDiff: [number, number], input: string | null = null, showinput: boolean | null = null, haste: boolean | null = null, depth: number = 0): Promise<string> {
+	private async _result(result: any, hrDiff: [number, number], input: string | null = null, showinput: boolean | null = null, haste: boolean | null = null, depth = 0): Promise<string> {
 		const cleaned = this._clean(Util.inspect(result, { depth }), this.client.token!);
 		let response = '';
 		if (showinput && input) {

@@ -21,6 +21,7 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
+    "@naval-base/ms": "^3.1.0",
     "@types/dotenv": "^6.1.1",
     "@types/js-yaml": "^3.12.2",
     "@types/ms": "^0.7.31",
@@ -34,7 +35,6 @@
     "dotenv": "^8.2.0",
     "eslint-config-marine": "^6.0.0",
     "js-yaml": "^3.13.1",
-    "ms": "^2.1.2",
     "node-fetch": "^2.6.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.1.1",

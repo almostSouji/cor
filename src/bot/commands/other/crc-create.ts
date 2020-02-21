@@ -57,7 +57,7 @@ class CRCCreateCommand extends Command {
 		}
 		embed.addField('Provided generator', `\`${generator}\``, true)
 			.addField('Computed checksum', `\`${crc}\``, true)
-			.setFooter(`You can check the validity of a string with: ${prefix} ${crcCheck!.id} ${crcCheck!.description!.usage}`);
+			.setFooter(`You can check the validity of a string with: ${prefix} ${crcCheck!.id} ${crcCheck!.description.usage}`);
 
 		if (verbose) {
 			embed.setDescription(MESSAGES.COMMANDS.CRC.EXPLANATIONS.CREATE);

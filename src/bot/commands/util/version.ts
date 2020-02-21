@@ -65,8 +65,7 @@ class VersionCommand extends Command {
 				embed.setColor(message.guild.me!.displayColor);
 			}
 			return message.util!.send(embed);
-		} catch (e) {
-			console.error(e);
+		} catch {
 			return message.util!.send(MESSAGES.ERRORS.CATCH);
 		}
 	}
