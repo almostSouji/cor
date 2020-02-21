@@ -68,7 +68,7 @@ export const UTIL = {
 
 export const COMMANDS = {
 	VERSION: {
-		REGEX: (name: string) => new RegExp(`(?<name>${name})@(?<holder>.+)/(?<repo>.+)`)
+		REGEX: new RegExp(`github\.com\/(?<holder>.+)\/(?<repo>.+)\/(?<hash>[^_]+)`)
 	},
 	DOCS: {
 		SOURCES: ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', '11.5-dev'],

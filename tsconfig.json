@@ -6,7 +6,6 @@
     "moduleResolution": "node",
     "alwaysStrict": true,
     "lib": [
-      "es2019",
       "esnext",
       "esnext.array",
       "esnext.asynciterable",
@@ -17,10 +16,10 @@
     "module": "commonjs",
     "target": "es2019",
     "sourceMap": true,
-    "resolveJsonModule": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "pretty": true
+    "pretty": true,
+    "resolveJsonModule": true
   }
 }
