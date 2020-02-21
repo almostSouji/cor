@@ -38,15 +38,15 @@ const toTitleCase = (input: string): string => input = input.replace(/(\w)(\w*\s
 * @param {Function} fn Function to group by
 * @returns {Collection} Grouped Collection
 */
-const groupBy = <T, K>(collection: Collection<T, K>, fn: Function): Collection<T, Collection<T, K>> => {
-	const c: Collection<any, any> = new Collection();
+const groupBy = <K, V, G>(collection: Collection<K, V>, fn: (param: V) => G): Collection<G, Collection<K, V>> => {
+	const collector: Collection<G, Collection<K, V>> = new Collection();
 	for (const [key, val] of collection) {
 		const group = fn(val);
-		const existing = c.get(group);
+		const existing = collector.get(group);
 		if (existing) existing.set(key, val);
-		else c.set(group, new Collection([[key, val]]));
+		else collector.set(group, new Collection([[key, val]]));
 	}
-	return c;
+	return collector;
 };
 
 /**
