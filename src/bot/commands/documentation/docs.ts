@@ -11,8 +11,14 @@ export default class DocsCommand extends Command {
 		super('docs', {
 			aliases: ['docs'],
 			description: {
-				content: 'Searches discord.js documentation. (`--force` to force refresh, `--source` to provide a source other than stable discord.js documentation, `--default` to set a default source for this server (requires MANAGE_GUILD permissions on the sender))',
-				usage: '<query> [--source <source>] [--force] [--default <docversion>]'
+				content: 'Searches discord.js documentation.',
+				usage: '<query> [--source <source>] [--force] [--default <docversion>]',
+				flags: {
+					'`-s`, `--source`': 'provide a source other than the default source',
+					'`-f`, `--force`': 'refresh documentation cache',
+					'`-d`, `--default`': 'set a default source for this server (requires MANAGE_GUILD permissions)'
+				}
+
 			},
 			clientPermissions: ['EMBED_LINKS'],
 			ratelimit: 2,
@@ -25,19 +31,19 @@ export default class DocsCommand extends Command {
 				{
 					id: 'force',
 					match: 'flag',
-					flag: ['--force', '-f']
+					flag: ['-f', '--force']
 				},
 				{
 					'id': 'source',
 					'match': 'option',
-					'flag': ['--source', '-s'],
+					'flag': ['-s', '--source'],
 					'type': 'string',
 					'default': 'stable'
 				},
 				{
 					id: 'defaultDocs',
 					match: 'option',
-					flag: ['--default', '-d'],
+					flag: ['-d', '--default'],
 					type: Argument.union(COMMANDS.DOCS.SOURCES, 'string')
 				}
 			]

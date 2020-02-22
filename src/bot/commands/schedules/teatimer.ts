@@ -9,8 +9,11 @@ class TeaTimerCommand extends Command {
 		super('teatimer', {
 			aliases: ['teatimer', 'teatime', 'tea'],
 			description: {
-				content: 'Set a tea timer to provided duration, `--dm` to receive the notification via dm (make sure you have DM enabled for this server)',
-				usage: 'duration [--directmessage]'
+				content: 'Set a tea timer to provided duration',
+				usage: 'duration [--directmessage]',
+				flags: {
+					'`-d`, `--directmessage`': 'receive the notification via dm (make sure you have DM enabled for this server)'
+				}
 			},
 			args: [
 				{
@@ -25,7 +28,7 @@ class TeaTimerCommand extends Command {
 				{
 					id: 'dm',
 					match: 'flag',
-					flag: ['--directmessage', '--dm', '-d']
+					flag: ['--directmessage', '-d']
 				}
 			]
 		});

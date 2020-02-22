@@ -12,8 +12,11 @@ class RoleInfoCommand extends Command {
 		super('roleinfo', {
 			aliases: ['rinfo', 'role', 'roleinfo'],
 			description: {
-				content: 'Display information about the provided role, a random one if unable to resolve (`--color` to display with role color)',
-				usage: '[role] [--color]'
+				content: 'Display information about the provided role, a random one if unable to resolve',
+				usage: '[role] [--color]',
+				flags: {
+					'`-c`, `--color`': 'use the role color of the targeted role'
+				}
 			},
 			cooldown: 5000,
 			ratelimit: 2,
@@ -27,7 +30,7 @@ class RoleInfoCommand extends Command {
 				{
 					id: 'color',
 					match: 'flag',
-					flag: ['--color', '-c']
+					flag: ['-c', '--color']
 				}
 			]
 		});

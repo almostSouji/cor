@@ -10,8 +10,11 @@ export default class HelpCommand extends Command {
 			aliases: ['help', 'h'],
 			description: {
 				content:
-					'Display Command help (`--all` to show all commands, regardless of permissions)',
-				usage: '[command] [--all]'
+					'Display Command help.',
+				usage: '[command] [--all]',
+				flags: {
+					'`-a`, `--all': 'show all, regardless permissions'
+				}
 			},
 			clientPermissions: ['EMBED_LINKS'],
 			editable: true,
@@ -25,7 +28,7 @@ export default class HelpCommand extends Command {
 				{
 					id: 'all',
 					match: 'flag',
-					flag: ['--all', '--a']
+					flag: ['-a', '--all']
 				}
 			]
 		});
@@ -75,10 +78,20 @@ export default class HelpCommand extends Command {
 			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLISTED_GUILD(check);
 		}
 
-
 		const embed = new CorEmbed()
 			.addField('Command Information', idString)
 			.addField('About', infoString);
+
+		if (ref.description.flags) {
+			let flagString = '\n';
+			const flags = ref.description.flags;
+			for (const key in flags) {
+				if (flags.hasOwnProperty(key)) {
+					flagString += MESSAGES.COMMANDS.HELP.INFO.USAGE_FLAG_FORMAT(key, flags[key]);
+				}
+			}
+			embed.addField('Options', flagString);
+		}
 		if (restrictionString) {
 			embed.addField('Restrictions', restrictionString);
 		}

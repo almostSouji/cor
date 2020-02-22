@@ -10,8 +10,11 @@ class CRCCreateCommand extends Command {
 		super('crc-create', {
 			aliases: ['crc', 'crc-create', 'crc-c'],
 			description: {
-				content: 'Computes Cyclic Redundancy Check checksum (`--verbose` to include the computation table in the response)',
-				usage: '<content> <bitstring generator> [--verbose]'
+				content: 'Computes Cyclic Redundancy Check checksum',
+				usage: '<content> <bitstring generator> [--verbose]',
+				flags: {
+					'`-v`, `--verbose`': 'include the computation table'
+				}
 			},
 			cooldown: 5000,
 			ratelimit: 2,
@@ -28,7 +31,7 @@ class CRCCreateCommand extends Command {
 				{
 					id: 'verbose',
 					match: 'flag',
-					flag: ['--verbose', '-v']
+					flag: ['-v', '--verbose']
 				}
 			]
 		});

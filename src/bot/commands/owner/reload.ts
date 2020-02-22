@@ -8,7 +8,10 @@ class PingCommand extends Command {
 			aliases: ['reload', 'rel', 're'],
 			description: {
 				content: 'It... reloads.',
-				usage: '<command or listener> [--all]'
+				usage: '<command or listener> [--all]',
+				flags: {
+					'`-a`, `--all`': 'reload all'
+				}
 			},
 			ownerOnly: true,
 			cooldown: 5000,
@@ -21,7 +24,7 @@ class PingCommand extends Command {
 				{
 					id: 'all',
 					match: 'flag',
-					flag: ['--all', '-a']
+					flag: ['-a', '--all']
 				}
 			]
 		});

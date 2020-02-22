@@ -16,7 +16,15 @@ class EvalCommand extends Command {
 			aliases: ['eval', 'ev'],
 			description: {
 				content: 'Evaluate code',
-				usage: '<code> [--input] [--noout] [--haste] [--depth <number>] [--async] [--remove] [--async]'
+				usage: '<code> [--input] [--noout] [--haste] [--depth <number>] [--async] [--remove] [--async]',
+				flags: {
+					'`-i`, `--input`': 'show input',
+					'`-s`, `--silent`': 'don\'t respond with return value',
+					'`-h`, `--haste`': 'upload return value to hastebin, disregarding length',
+					'`-d`, `--depth`': 'depth of inspection on the return value',
+					'`-r`, `--remove`': 'delete invoking message',
+					'`-a`, `--async`': 'make the execution scope asynchronous (prevents immediate return)'
+				}
 			},
 			ownerOnly: true,
 			editable: true,
@@ -33,34 +41,34 @@ class EvalCommand extends Command {
 				{
 					id: 'showInput',
 					match: 'flag',
-					flag: ['--input', '-i']
+					flag: ['-i', '--input']
 				},
 				{
 					id: 'noout',
 					match: 'flag',
-					flag: ['--silent', '-s']
+					flag: ['-s', '--silent']
 				},
 				{
 					id: 'haste',
 					match: 'flag',
-					flag: ['--haste', '-h']
+					flag: ['-h', '--haste']
 				},
 				{
 					'id': 'depth',
 					'match': 'option',
-					'flag': ['--depth', '-d'],
+					'flag': ['-d', '--depth'],
 					'type': 'number',
 					'default': 0
 				},
 				{
 					id: 'del',
 					match: 'flag',
-					flag: ['--remove', 'r']
+					flag: ['-r', '--remove']
 				},
 				{
 					id: 'as',
 					match: 'flag',
-					flag: ['--async', '-a']
+					flag: ['-a', '--async']
 				}
 			]
 		});

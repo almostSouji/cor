@@ -9,7 +9,12 @@ class ExecCommand extends Command {
 			aliases: ['exec', 'exe'],
 			description: {
 				content: 'Execute shell code',
-				usage: '<code> [--haste] [--noout]'
+				usage: '<code> [--haste] [--noout]',
+				flags: {
+					'`-s`, `--silent`': 'don\'t respond with return value',
+					'`-h`, `--haste`': 'upload return value to hastebin, disregarding length',
+					'`-r`, `--remove`': 'delete invoking message'
+				}
 			},
 			ownerOnly: true,
 			args: [
@@ -20,17 +25,17 @@ class ExecCommand extends Command {
 				{
 					id: 'haste',
 					match: 'flag',
-					flag: ['--haste', '-h']
+					flag: ['-h', '--haste']
 				},
 				{
 					id: 'noout',
 					match: 'flag',
-					flag: ['--silent', '-s']
+					flag: ['-s', '--silent']
 				},
 				{
 					id: 'del',
 					match: 'flag',
-					flag: ['--remove', '-r']
+					flag: ['-r', '--remove']
 				}
 			]
 		});

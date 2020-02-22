@@ -14,8 +14,12 @@ class TempRoleCommand extends Command {
 				'tmpr'
 			],
 			description: {
-				content: 'Create and Assign a role until given date (the role can be provided as role data: `"role name,color"`, `--list` lists active role tasks for provided user (if provided, else for guild), `--delete` causes the role to be deleted when the task expires and the bot has the ability to do so).',
-				usage: '[target] [role] [duration] [--list] [--delete]'
+				content: 'Create and Assign a role until given date (the role can be provided as role data: `name,color`)',
+				usage: '[target] [role] [duration] [--list] [--delete]',
+				flags: {
+					'`-ls`, `--list`': 'list active role tasks for provided user or guild (if none)',
+					'`-d`, `--delete`': 'deletes role when task expires and bot has permission'
+				}
 			},
 			channel: 'guild',
 			args: [
@@ -39,12 +43,12 @@ class TempRoleCommand extends Command {
 				{
 					id: 'list',
 					match: 'flag',
-					flag: ['--list', '-l', '-ls']
+					flag: ['-ls', '--list']
 				},
 				{
 					id: 'deleteRole',
 					match: 'flag',
-					flag: ['--delete', '-d']
+					flag: ['-d', '--delete']
 				}
 			],
 			userPermissions: ['MANAGE_ROLES'],

@@ -8,7 +8,11 @@ class QuoteCommand extends Command {
 			aliases: ['quote', 'q'],
 			description: {
 				content: 'Quote provided message (`--color` to display with authors color, `--edits` to show edits (requires `MANAGE_MESSAGES` permission))',
-				usage: '<messageID> [--color] [--edits]'
+				usage: '<messageID> [--color] [--edits]',
+				flag: {
+					'`-c`, `--color`': 'use authors color',
+					'`-e`, `--edits`': 'show edits (requires MANAGE_MESSAGES permissions)'
+				}
 			},
 			editable: true,
 			clientPermissions: ['EMBED_LINKS'],
@@ -21,12 +25,12 @@ class QuoteCommand extends Command {
 				{
 					id: 'color',
 					match: 'flag',
-					flag: ['--color', '-c']
+					flag: ['-c', '--color']
 				},
 				{
 					id: 'edits',
 					match: 'flag',
-					flag: ['--edits', '-e']
+					flag: ['-e', '--edits']
 				}
 			],
 			cooldown: 10000,

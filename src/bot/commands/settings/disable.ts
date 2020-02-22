@@ -11,7 +11,11 @@ class DisableCommand extends Command {
 			],
 			description: {
 				content: 'disable or re-enable module or command for this guild',
-				usage: '[module or command]'
+				usage: '[module or command] [--reset] [--global]',
+				flags: {
+					'`-g`, `--global`': 'edit global settings (Owner only)',
+					'`-r`, `--reset`': 'enable all commands'
+				}
 			},
 			args: [
 				{
@@ -28,12 +32,12 @@ class DisableCommand extends Command {
 				{
 					id: 'global',
 					match: 'flag',
-					flag: ['--global', '-g']
+					flag: ['-g', '--global']
 				},
 				{
 					id: 'reset',
 					match: 'flag',
-					flag: ['--reset', '-r']
+					flag: ['-r', '--reset']
 				}
 			],
 			channel: 'guild',

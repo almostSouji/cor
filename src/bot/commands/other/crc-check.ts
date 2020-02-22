@@ -10,8 +10,11 @@ class CRCCheckCommand extends Command {
 		super('crc-check', {
 			aliases: ['crc-check', 'crc-verify', 'crc-v'],
 			description: {
-				content: 'Cyclic Redundancy Check (`--verbose` to include the computation table in the response)',
-				usage: '<content> <bitstring generator> <crc bits> [--verbose]'
+				content: 'Cyclic Redundancy Check',
+				usage: '<content> <bitstring generator> <crc bits> [--verbose]',
+				flags: {
+					'`-v`, `--verbose`': 'include the computation table'
+				}
 			},
 			cooldown: 5000,
 			ratelimit: 2,
@@ -32,7 +35,7 @@ class CRCCheckCommand extends Command {
 				{
 					id: 'verbose',
 					match: 'flag',
-					flag: ['--verbose', '-v']
+					flag: ['-v', '--verbose']
 				}
 			]
 		});

@@ -272,6 +272,7 @@ export const MESSAGES = {
 				ALIASES: (aliases: string[]) => `\nAliases: ${aliases.map(e => `\`${e}\``).join(', ')}`,
 				DESCRIPTION: (description: string) => `\nDescription: ${description}`,
 				USAGE: (usage: string) => `\nUsage: \`${usage}\``,
+				USAGE_FLAG_FORMAT: (flags: string, usage: string) => `${flags}: ${usage}\n`,
 				OWNER_ONLY: (isOwner: boolean) => `\n${isOwner ? PREFIXES.GRANTED : PREFIXES.DENIED} Owner only`,
 				GUILD_ONLY: (isGuild: boolean) => `\n${isGuild ? PREFIXES.GRANTED : PREFIXES.DENIED} Command can only be used in a guild`,
 				USER_PERMISSIONS: (permissions: string, granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} User permissions: ${permissions}`,

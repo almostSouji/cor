@@ -9,8 +9,12 @@ class PrefixCommand extends Command {
 				'prefix'
 			],
 			description: {
-				content: 'Change prefix, `--reset` to reset to default',
-				usage: '[new prefix]'
+				content: 'Change prefix',
+				usage: '[new prefix] [--force] [--reset]',
+				flags: {
+					'`-f`, `--force`': 'bypass permissions (Owner only)',
+					'`-r`, `--reset`': 'reset to default'
+				}
 			},
 			args: [
 				{
@@ -20,12 +24,12 @@ class PrefixCommand extends Command {
 				{
 					id: 'sudo',
 					match: 'flag',
-					flag: ['--force', '-f']
+					flag: ['-f', '--force']
 				},
 				{
 					id: 'reset',
 					match: 'flag',
-					flag: ['--reset', '-r']
+					flag: ['-r', '--reset']
 				}
 			]
 		});
