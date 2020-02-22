@@ -11,8 +11,8 @@ export default class DocsCommand extends Command {
 		super('docs', {
 			aliases: ['docs'],
 			description: {
-				content: 'Searches discord.js documentation.',
-				usage: '<query> [--default <docversion>]'
+				content: 'Searches discord.js documentation. (`--force` to force refresh, `--source` to provide a source other than stable discord.js documentation, `--default` to set a default source for this server (requires MANAGE_GUILD permissions on the sender))',
+				usage: '<query> [--source <source>] [--force] [--default <docversion>]'
 			},
 			clientPermissions: ['EMBED_LINKS'],
 			ratelimit: 2,
@@ -28,6 +28,13 @@ export default class DocsCommand extends Command {
 					flag: ['--force', '-f']
 				},
 				{
+					'id': 'source',
+					'match': 'option',
+					'flag': ['--source', '-s'],
+					'type': 'string',
+					'default': 'stable'
+				},
+				{
 					id: 'defaultDocs',
 					match: 'option',
 					flag: ['--default', '-d'],
@@ -37,7 +44,7 @@ export default class DocsCommand extends Command {
 		});
 	}
 
-	public async exec(message: Message, { defaultDocs, query, force }: { defaultDocs: string | string; query: string; force: boolean }): Promise<Message | Message[]> {
+	public async exec(message: Message, { defaultDocs, query, force, source }: { defaultDocs: string | string; query: string; force: boolean; source: string }): Promise<Message | Message[]> {
 		if (defaultDocs && message.channel.type === 'text') {
 			if (!message.member!.hasPermission('MANAGE_GUILD')) {
 				return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.MISSING_PERMISSIONS(message.guild!));
@@ -50,15 +57,19 @@ export default class DocsCommand extends Command {
 		}
 
 		const q = query.split(' ');
-		const docs = this.client.settings.get(message.guild!, 'defaultDocs', 'stable');
-		let source = COMMANDS.DOCS.SOURCES.includes(q.slice(-1)[0]) ? q.pop() : docs;
+		if (!COMMANDS.DOCS.SOURCES.includes(source)) {
+			source = this.client.settings.get(message.guild!, 'defaultDocs', 'stable');
+		}
 		let forceColor;
 		if (source === COMMANDS.DOCS.STABLE_DEV_SOURCE) {
-			forceColor = 16426522;
+			forceColor = COMMANDS.DOCS.COLORS.STABLE_DEV;
 			source = `${COMMANDS.DOCS.API.STABLE_DEV_DOCS}${source}.json`;
 		}
+		if (source === COMMANDS.DOCS.COLLECTION_SOURCE) {
+			forceColor = COMMANDS.DOCS.COLORS.COLLECTION;
+		}
 		if (source === COMMANDS.DOCS.DEV_SOURCE) {
-			forceColor = 13650249;
+			forceColor = COMMANDS.DOCS.COLORS.DEV;
 		}
 		const queryString = qs.stringify({ src: source, q: q.join(' '), force });
 		const res = await fetch(`${COMMANDS.DOCS.API.BASE_URL}${queryString}`);

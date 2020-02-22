@@ -71,8 +71,9 @@ export const COMMANDS = {
 		REGEX: new RegExp(`github\.com\/(?<holder>.+)\/(?<repo>.+)\/(?<hash>[^_]+)`)
 	},
 	DOCS: {
-		SOURCES: ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', '11.5-dev'],
+		SOURCES: ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', '11.5-dev', 'collection'],
 		STABLE_DEV_SOURCE: '11.5-dev',
+		COLLECTION_SOURCE: 'collection',
 		DEV_SOURCE: 'master',
 		API: {
 			BASE_URL: 'https://djsdocs.sorta.moe/v2/embed?',
@@ -80,6 +81,11 @@ export const COMMANDS = {
 		},
 		EMOJIS: {
 			DELETE: '🗑'
+		},
+		COLORS: {
+			STABLE_DEV: 16426522,
+			DEV: 13650249,
+			COLLECTION: 29439
 		}
 	},
 	MDN: {
