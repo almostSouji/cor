@@ -328,6 +328,9 @@ export const MESSAGES = {
 				NO_DATA_ALL: `${PREFIXES.ERROR}No future data available.`
 			},
 			CREDIT: 'Data provided by https://www.mensa-kl.de'
+		},
+		ROLEINFO: {
+			RANDOM_FOOTER: 'I could not resolve your query to a role, so i picked one at random!'
 		}
 	},
 	LISTENERS: {
