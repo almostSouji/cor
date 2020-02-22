@@ -9,7 +9,7 @@ dependencies:
   common-tags: 1.8.0
   date-fns: 2.9.0
   discord-akairo: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev
-  discord.js: github.com/discordjs/discord.js/f85230812ff6de4f1ba1c021c93fe308fb0685e6
+  discord.js: github.com/discordjs/discord.js/f6075a6e3ac31674b66546481dfeae62329dc6cc
   dotenv: 8.2.0
   eslint-config-marine: 6.0.0_eslint@6.8.0
   js-yaml: 3.13.1
@@ -2856,7 +2856,7 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
   github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev:
     dependencies:
-      discord.js: github.com/discordjs/discord.js/f85230812ff6de4f1ba1c021c93fe308fb0685e6
+      discord.js: github.com/discordjs/discord.js/f6075a6e3ac31674b66546481dfeae62329dc6cc
     dev: false
     id: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61
     name: discord-akairo
@@ -2868,7 +2868,7 @@ packages:
       registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/1Computer1/discord-akairo/tar.gz/ccd021cb8075db3c71aedb09672ec9c575a76e61'
     version: 8.0.0-beta.8
-  github.com/discordjs/discord.js/f85230812ff6de4f1ba1c021c93fe308fb0685e6:
+  github.com/discordjs/discord.js/f6075a6e3ac31674b66546481dfeae62329dc6cc:
     dependencies:
       '@discordjs/collection': 0.1.4
       abort-controller: 3.0.0
@@ -2903,8 +2903,7 @@ packages:
       zlib-sync:
         optional: true
     resolution:
-      registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/f85230812ff6de4f1ba1c021c93fe308fb0685e6'
+      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/f6075a6e3ac31674b66546481dfeae62329dc6cc'
     version: 12.0.0-dev
 specifiers:
   '@naval-base/ms': ^3.1.0
