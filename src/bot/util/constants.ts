@@ -23,7 +23,7 @@ export const EMOJIS = {
 	IDLE: '<:idle:401146191943041028>',
 	DND: '<:dnd:401146192144236554>',
 	STREAMING: '<:streaming:418180446195810306>',
-	AUTH: '<:launch:631846294972923914> '
+	AUTH: '<:launch:631846294972923914>'
 };
 
 export const DISCORD_LIMITS = {
