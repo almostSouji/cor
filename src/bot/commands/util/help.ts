@@ -16,7 +16,7 @@ export default class HelpCommand extends Command {
 					'`-a`, `--all': 'show all, regardless permissions'
 				}
 			},
-			clientPermissions: ['EMBED_LINKS'],
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
 			editable: true,
 			cooldown: 5000,
 			ratelimit: 2,

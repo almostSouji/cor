@@ -30,7 +30,8 @@ class TeaTimerCommand extends Command {
 					match: 'flag',
 					flag: ['--directmessage', '-d']
 				}
-			]
+			],
+			clientPermissions: ['SEND_MESSAGES']
 		});
 	}
 

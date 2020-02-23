@@ -82,7 +82,7 @@ class MensaCommand extends Command {
 			cooldown: 20000,
 			ratelimit: 1,
 			editable: true,
-			clientPermissions: ['EMBED_LINKS']
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
 		});
 	}
 

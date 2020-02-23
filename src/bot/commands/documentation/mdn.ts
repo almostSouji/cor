@@ -16,7 +16,7 @@ export default class MDNCommand extends Command {
 				usage: '<query>'
 			},
 			regex: /^(?:mdn,) (.+)/i,
-			clientPermissions: ['EMBED_LINKS'],
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
 			args: [
 				{
 					id: 'query',

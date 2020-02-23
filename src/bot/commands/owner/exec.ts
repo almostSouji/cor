@@ -17,6 +17,7 @@ class ExecCommand extends Command {
 				}
 			},
 			ownerOnly: true,
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'code',

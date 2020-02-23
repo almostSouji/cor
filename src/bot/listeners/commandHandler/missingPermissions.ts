@@ -10,8 +10,11 @@ class MissingPermissionsListener extends Listener {
 		});
 	}
 
-	public exec(message: Message, command: Command, type: string, missing: string[]): Promise<Message | Message[]> {
+	public exec(message: Message, command: Command, type: string, missing: string[]): Promise<Message | Message[]> | null {
 		const missingFormatted = missing.map(p => `\`${p}\``);
+		if (missing.includes('SEND_MESSAGES')) {
+			return null;
+		}
 		if (type === 'client') {
 			return message.util!.send(MESSAGES.LISTENERS.MISSING_PERMISSIONS.ERRORS.BOT(missingFormatted, command.id));
 		}

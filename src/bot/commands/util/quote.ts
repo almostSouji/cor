@@ -15,7 +15,7 @@ class QuoteCommand extends Command {
 				}
 			},
 			editable: true,
-			clientPermissions: ['EMBED_LINKS'],
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
 			channel: 'guild',
 			args: [
 				{

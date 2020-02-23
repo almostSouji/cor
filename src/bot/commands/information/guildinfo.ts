@@ -18,7 +18,7 @@ class GuildInfoCommand extends Command {
 			cooldown: 5000,
 			ratelimit: 2,
 			channel: 'guild',
-			clientPermissions: ['EMBED_LINKS']
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES']
 		});
 	}
 

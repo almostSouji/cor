@@ -10,7 +10,8 @@ class PingCommand extends Command {
 				usage: ''
 			},
 			cooldown: 5000,
-			ratelimit: 2
+			ratelimit: 2,
+			clientPermissions: ['SEND_MESSAGES']
 		});
 	}
 

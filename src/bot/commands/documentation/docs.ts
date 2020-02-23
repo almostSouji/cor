@@ -20,7 +20,7 @@ export default class DocsCommand extends Command {
 				}
 
 			},
-			clientPermissions: ['EMBED_LINKS'],
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
 			ratelimit: 2,
 			args: [
 				{

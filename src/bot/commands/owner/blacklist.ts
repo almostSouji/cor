@@ -16,6 +16,7 @@ class BlacklistCommand extends Command {
 				usage: '<user>'
 			},
 			ownerOnly: true,
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'user',

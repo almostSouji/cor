@@ -16,6 +16,7 @@ class PrefixCommand extends Command {
 					'`-r`, `--reset`': 'reset to default'
 				}
 			},
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'prefix',

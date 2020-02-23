@@ -52,7 +52,7 @@ class TempRoleCommand extends Command {
 				}
 			],
 			userPermissions: ['MANAGE_ROLES'],
-			clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS']
+			clientPermissions: ['MANAGE_ROLES', 'EMBED_LINKS', 'SEND_MESSAGES']
 		});
 	}
 

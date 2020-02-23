@@ -20,7 +20,7 @@ class RoleInfoCommand extends Command {
 			},
 			cooldown: 5000,
 			ratelimit: 2,
-			clientPermissions: ['EMBED_LINKS'],
+			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
 			channel: 'guild',
 			args: [
 				{

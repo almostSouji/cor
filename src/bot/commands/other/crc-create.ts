@@ -18,7 +18,7 @@ class CRCCreateCommand extends Command {
 			},
 			cooldown: 5000,
 			ratelimit: 2,
-			clientPermissions: ['ATTACH_FILES', 'EMBED_LINKS'],
+			clientPermissions: ['ATTACH_FILES', 'EMBED_LINKS', 'SEND_MESSAGES'],
 			args: [
 				{
 					id: 'content',

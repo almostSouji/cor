@@ -16,6 +16,7 @@ class PingCommand extends Command {
 			ownerOnly: true,
 			cooldown: 5000,
 			ratelimit: 2,
+			clientPermissions: ['SEND_MESSAGES'],
 			args: [
 				{
 					id: 'commandOrListener',
