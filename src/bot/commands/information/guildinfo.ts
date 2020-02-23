@@ -43,7 +43,7 @@ class GuildInfoCommand extends Command {
 			.addField('Counts', channelCounts.concat(memberCounts, roleCounts).join('\n'), true)
 			.addField('Members', presenceCounts.join('\n'));
 
-		if (!embed.color && guild.me && guild.me.displayColor) {
+		if (!embed.color && guild.me?.displayColor) {
 			embed.setColor(guild.me.displayColor);
 		}
 		return embed.shorten();
