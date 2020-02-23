@@ -49,29 +49,36 @@ class ChannelInfoCommand extends Command {
 			infoString += `\nMention: ${channel}`;
 		}
 		infoString += `\nCreated: ${formatDistanceStrict(channel.createdAt, Date.now(), { addSuffix: true })} (${format(channel.createdAt, DATEFORMAT.DAY)})`;
-		embed.addField('Channel Information', infoString);
+		embed.addFields({ name: 'Channel Information', value: infoString });
 
 		if (channel instanceof VoiceChannel) {
 			let voiceString = `Bitrate: ${channel.bitrate / 1000} kbps`;
 			if (channel.userLimit) {
 				voiceString += `\nCapacity: \`${channel.members.size.toString().padStart(2, '0')}/${channel.userLimit.toString().padStart(2, '0')}\``;
 			}
-			embed.addField('Voice Information', voiceString, false);
+			embed.addFields({ name: 'Voice Information', value: voiceString, inline: false });
 		}
 		if (channel instanceof TextChannel && channel.topic) {
-			embed.addField('Channel Topic', channel.topic, false);
+			embed.addFields({ name: 'Channel Topic', value: channel.topic, inline: false });
 		}
 		if (channel instanceof GuildChannel) {
 			if (channel.parent) {
-				embed.addField('Parent Information', stripIndents`
-					Name: \`${channel.parent.name}\`
-					ID: ${channel.parentID}
-					Permissions synchronized: ${channel.permissionsLocked}`, false);
+				embed.addFields({
+					name: 'Parent Information',
+					value: stripIndents`
+						Name: \`${channel.parent.name}\`
+						ID: ${channel.parentID}
+						Permissions synchronized: ${channel.permissionsLocked}`,
+					inline: false
+				});
 			}
 			if (channel.members.size) {
 				const members = groupBy(channel.members, (m: GuildMember) => m.presence.status)
 					.map((v: Collection<string, GuildMember>, k: PresenceStatus) => `${displayStatus(this.client as CorClient, k, channel.guild)} ${v.size}`);
-				embed.addField('Members', members);
+				embed.addFields({
+					name: 'Members',
+					value: members
+				});
 			}
 			if (!embed.color && channel.guild.me?.displayColor) {
 				embed.setColor(channel.guild.me.displayColor);
@@ -79,11 +86,14 @@ class ChannelInfoCommand extends Command {
 		}
 		if (channel instanceof DMChannel) {
 			const { recipient } = channel;
-			embed.addField('Recipient Information', stripIndents`
-				ID: ${recipient.id}
-				Profile: ${recipient}
-				Status: ${toTitleCase(recipient.presence.status)}${displayStatus(this.client as CorClient, recipient.presence.status, null)}
-				Created: ${formatDistanceStrict(recipient.createdAt, Date.now(), { addSuffix: true })} (${format(recipient.createdAt, DATEFORMAT.DAY)})`);
+			embed.addFields({
+				name: 'Recipient Information',
+				value: stripIndents`
+					ID: ${recipient.id}
+					Profile: ${recipient}
+					Status: ${toTitleCase(recipient.presence.status)}${displayStatus(this.client as CorClient, recipient.presence.status, null)}
+					Created: ${formatDistanceStrict(recipient.createdAt, Date.now(), { addSuffix: true })} (${format(recipient.createdAt, DATEFORMAT.DAY)})`
+			});
 		}
 
 		return embed.shorten();

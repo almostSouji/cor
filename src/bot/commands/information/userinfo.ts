@@ -54,8 +54,7 @@ class UserInfoCommand extends Command {
 		}
 		if (blacklist) {
 			const bl = this.client.settings.get('global', 'blacklist', []);
-
-			embed.addField('Blacklist status', bl.includes(member.id) ? MESSAGES.COMMANDS.USERINFO.BLACKLIST.BLACKLISTED : MESSAGES.COMMANDS.USERINFO.BLACKLIST.NOT_BLACKLISTED);
+			embed.addFields({ name: 'Blacklist status', value: bl.includes(member.id) ? MESSAGES.COMMANDS.USERINFO.BLACKLIST.BLACKLISTED : MESSAGES.COMMANDS.USERINFO.BLACKLIST.NOT_BLACKLISTED });
 		}
 		return embed.shorten();
 	}
@@ -72,7 +71,7 @@ class UserInfoCommand extends Command {
 		}
 		const embed = new CorEmbed()
 			.setThumbnail(user.displayAvatarURL())
-			.addField(`${user.bot ? 'Bot' : 'User'}Information`, infoString);
+			.addFields({ name: `${user.bot ? 'Bot' : 'User'}Information`, value: infoString });
 		return embed;
 	}
 
@@ -97,7 +96,7 @@ class UserInfoCommand extends Command {
 		if (member.guild.ownerID === member.id) {
 			infoString += `\nGuild Owner \`👑\``;
 		}
-		embed.addField('Member Information', infoString, true);
+		embed.addFields({ name: 'Member Information', value: infoString, inline: true });
 		if (member.presence?.activities.length) {
 			let activity = member.presence.activities.find(activity => activity.name === 'Spotify' && activity.type === 'LISTENING');
 			if (!activity) {
@@ -124,7 +123,7 @@ class UserInfoCommand extends Command {
 				listening to Spotify (${timeIn}/${duration})
 				Title: ${details}
 				By: ${state}`;
-			return embed.addField(`Song Information`, activityString)
+			return embed.addFields({ name: 'Song Information', value: activityString })
 				.setFooter(`Album:\n${assets?.largeText}`, assets!.largeImageURL()!);
 		}
 		if (type === 'CUSTOM_STATUS') {
@@ -170,7 +169,7 @@ class UserInfoCommand extends Command {
 				embed.setFooter(footerString, assets.smallImageURL()!);
 			}
 		}
-		return embed.addField(name, activityString);
+		return embed.addFields({ name, value: activityString });
 	}
 
 	public async exec(message: Message, { member, blacklist }: {member: GuildMember | User | string; blacklist: boolean}): Promise<Message | Message[]> {

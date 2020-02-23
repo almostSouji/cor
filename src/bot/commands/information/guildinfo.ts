@@ -32,16 +32,28 @@ class GuildInfoCommand extends Command {
 		const roleCounts = `Roles: ${guild.roles.cache.size}`;
 		const embed = new CorEmbed()
 			.setThumbnail(guild.iconURL({ format: 'png', dynamic: true, size: 2048 })!)
-			.addField('Server Information', stripIndents`
-			Name: \`${guild.name}\`
-			ID: ${guild.id}
-			Created: ${formatDistanceStrict(guild.createdAt, Date.now(), { addSuffix: true })} (${format(guild.createdAt, DATEFORMAT.DAY)})
-			Region: ${guild.region}
-			Owner: \`${guild.owner?.user.tag}\`
-			Verification: ${Constants.VerificationLevels[guild.verificationLevel]}
-			`, true)
-			.addField('Counts', channelCounts.concat(memberCounts, roleCounts).join('\n'), true)
-			.addField('Members', presenceCounts.join('\n'));
+			.addFields(
+				{
+					name: 'Server Information',
+					value: stripIndents`
+						Name: \`${guild.name}\`
+						ID: ${guild.id}
+						Created: ${formatDistanceStrict(guild.createdAt, Date.now(), { addSuffix: true })} (${format(guild.createdAt, DATEFORMAT.DAY)})
+						Region: ${guild.region}
+						Owner: \`${guild.owner?.user.tag}\`
+						Verification: ${Constants.VerificationLevels[guild.verificationLevel]}`,
+					inline: true
+				},
+				{
+					name: 'Counts',
+					value: channelCounts.concat(memberCounts, roleCounts),
+					inline: true
+				},
+				{
+					name: 'Members',
+					value: presenceCounts
+				}
+			);
 
 		if (!embed.color && guild.me?.displayColor) {
 			embed.setColor(guild.me.displayColor);

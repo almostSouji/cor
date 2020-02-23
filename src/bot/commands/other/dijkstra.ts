@@ -149,15 +149,15 @@ class DijsktraCommand extends Command {
 
 		const embed = new CorEmbed();
 		embed.setTitle('Dijkstra Linkstate Algorithm')
-			.addField('Accepted vectors', validVectors.map(v => `${v.src}-${v.dest}-${v.cost}`), true);
+			.addFields({ name: 'Accepted vectors', value: validVectors.map(v => `${v.src}-${v.dest}-${v.cost}`), inline: true });
 		const routing = routingTable.join('\n');
 
 		if (routing.length < 2000) {
-			embed.addField('Routing table', routing, true);
+			embed.addFields({ name: 'Routing table', value: routing, inline: true });
 		} else {
-			embed.addField('Routing table', MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG, true);
+			embed.addFields({ name: 'Routing table', value: MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG, inline: true });
 		}
-		embed.addField('Source Node', u.id, true);
+		embed.addFields({ name: 'Source Node', value: u.id, inline: true });
 		if (verbose) {
 			embed.setDescription(MESSAGES.COMMANDS.DIJKSTRA.EXPLANATION);
 		}
@@ -173,7 +173,7 @@ class DijsktraCommand extends Command {
 				return message.util!.send([embed.shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
 			} catch (_) {
 				const content = verbose ? MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE : MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG;
-				embed.addField('Routing table', content);
+				embed.addFields({ name: 'Routing table', value: content });
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.FAIL);
 				return message.util!.send(embed.shorten());
 			}
@@ -183,7 +183,7 @@ class DijsktraCommand extends Command {
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.SUCCESS);
 				return message.util!.send([embed.shorten(), new MessageAttachment(b, COMMANDS.DIJKSTRA.FILE_NAME)]);
 			} catch (_) {
-				embed.addField('Routing table', MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE);
+				embed.addFields({ name: 'Routing Table', value: MESSAGES.COMMANDS.DIJKSTRA.ERRORS.FILE_TOO_BIG_VERBOSE });
 				embed.setColor(COMMANDS.DIJKSTRA.COLORS.FAIL);
 				return message.util!.send(embed.shorten());
 			}

@@ -55,7 +55,7 @@ class QuoteCommand extends Command {
 		}
 		if (message.edits.length && showedits) {
 			for (const m of message.edits.slice(1)) {
-				embed.addField(`Version ${format(m.editedAt || m.createdAt, 'YYYY/MM/DD [at] HH:mm:ss')} (UTC)`, m.content);
+				embed.addFields({ name: `Version ${format(m.editedAt || m.createdAt, 'YYYY/MM/DD [at] HH:mm:ss')} (UTC)`, value: m.content });
 			}
 		}
 		embed.setDescription(`${message.content}\n[➜](${message.url} 'jump to message')`);

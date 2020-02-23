@@ -62,17 +62,19 @@ class CRCCheckCommand extends Command {
 		const ceillLenght = computationCodeblock.length + MESSAGES.COMMANDS.CRC.EXPLANATIONS.CHECK.length + 3;
 
 		const embed = new CorEmbed().setTitle('Cyclic Redundancy Check')
-			.addField('Input', content)
-			.addField('Provided generator', `\`${generator}\``, true)
-			.addField('Provided checksum', `\`${crc}\``, true)
-			.addField(`CRC-check`, `${check ? MESSAGES.COMMANDS.CRC.CHECK_PASSED : MESSAGES.COMMANDS.CRC.CHECK_FAILED}`, true)
+			.addFields(
+				{ name: 'Input', value: content },
+				{ name: 'Provided generator', value: `\`${generator}\``, inline: true },
+				{ name: 'Provided checksum', value: `\`${crc}\``, inline: true },
+				{ name: 'CRC-check', value: `${check ? MESSAGES.COMMANDS.CRC.CHECK_PASSED : MESSAGES.COMMANDS.CRC.CHECK_FAILED}`, inline: true }
+			)
 			.setColor(check ? COMMANDS.CRC.COLORS.SUCCESS : COMMANDS.CRC.COLORS.FAIL);
 
 		if (verbose) {
 			embed.setDescription(MESSAGES.COMMANDS.CRC.EXPLANATIONS.CHECK);
 			if (ceillLenght > 2000) {
 				if (ceillLenght > 2000000) {
-					embed.addField(MESSAGES.COMMANDS.CRC.WARNINGS.TITLE, MESSAGES.COMMANDS.CRC.WARNINGS.ENTITY_TOO_LARGE);
+					embed.addFields({ name: MESSAGES.COMMANDS.CRC.WARNINGS.TITLE, value: MESSAGES.COMMANDS.CRC.WARNINGS.ENTITY_TOO_LARGE });
 					return message.util!.send(embed.shorten());
 				}
 				const attachText = stripIndents`

@@ -106,7 +106,7 @@ class MensaCommand extends Command {
 				string += `\nRating: \`${rate}\`\nVotes: ${dish.rating_count}`;
 			}
 			if (!veg || (veg && (dish.vegetarian || dish.loc === 'Buffet'))) {
-				e.addField(dish.loc, string, true);
+				e.addFields({ name: dish.loc, value: string, inline: true });
 			}
 		}
 		if (veg) {

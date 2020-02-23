@@ -53,20 +53,23 @@ class CRCCreateCommand extends Command {
 		const ceillLenght = computationCodeblock.length + MESSAGES.COMMANDS.CRC.EXPLANATIONS.CREATE.length + 3;
 
 		const embed = new CorEmbed().setTitle('Cyclic Redundancy Check')
-			.addField('Input', content);
+			.addFields({ name: 'Input', value: content });
 
 		if (verbose && content !== binaryContent) {
-			embed.addField('Binary Data', binaryContent);
+			embed.addFields({ name: 'Binary Data', value: binaryContent });
 		}
-		embed.addField('Provided generator', `\`${generator}\``, true)
-			.addField('Computed checksum', `\`${crc}\``, true)
+		embed
+			.addFields(
+				{ name: 'Provided generator', value: `\`${generator}\``, inline: true },
+				{ name: 'Computed checksum', value: `\`${crc}\``, inline: true }
+			)
 			.setFooter(`You can check the validity of a string with: ${prefix} ${crcCheck!.id} ${crcCheck!.description.usage}`);
 
 		if (verbose) {
 			embed.setDescription(MESSAGES.COMMANDS.CRC.EXPLANATIONS.CREATE);
 			if (ceillLenght > 2000) {
 				if (ceillLenght > 2000000) {
-					embed.addField(MESSAGES.COMMANDS.CRC.WARNINGS.TITLE, MESSAGES.COMMANDS.CRC.WARNINGS.ENTITY_TOO_LARGE);
+					embed.addFields({ name: MESSAGES.COMMANDS.CRC.WARNINGS.TITLE, value: MESSAGES.COMMANDS.CRC.WARNINGS.ENTITY_TOO_LARGE });
 					return message.util!.send(embed.shorten());
 				}
 				const attachText = stripIndents`

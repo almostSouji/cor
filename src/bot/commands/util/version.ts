@@ -51,14 +51,24 @@ class VersionCommand extends Command {
 			const creator = await this.client.users.fetch('83886770768314368');
 			const embed = new CorEmbed()
 				.setThumbnail(this.client.user!.displayAvatarURL())
-				.addField(`Project: C.O.R.: ${corVersion}`,
-					stripIndents`[view on GitHub](https://github.com/almostSouji/cor) | [invite ${this.client.user!.username}](https://discordapp.com/oauth2/authorize?client_id=${this.client.user!.id}&permissions=${permissions.bitfield}&scope=bot)
+				.addFields(
+					{
+						name: `Project: C.O.R.: ${corVersion}`,
+						value: stripIndents`[view on GitHub](https://github.com/almostSouji/cor) | [invite ${this.client.user!.username}](https://discordapp.com/oauth2/authorize?client_id=${this.client.user!.id}&permissions=${permissions.bitfield}&scope=bot)
 			
-			Maximum permissions needed in this version: ${permissionsArray.map(perm => `\`${perm}\``).join(', ')}`)
-				.addField(`Library: Discord.js: ${djsVersion}`, stripIndents`Commithash: \`${djsParts.hash}\`
-				[view on GitHub](https://github.com/${djsParts.holder}/${djsParts.repo}/commit/${djsParts.hash})`)
-				.addField(`Framework: Akairo: ${akairoVersion}`, stripIndents`Commithash: \`${akairoParts.hash}\`
-				[view on GitHub](https://github.com/${akairoParts.holder}/${akairoParts.repo}/commit/${akairoParts.hash})`)
+						Maximum permissions needed in this version: ${permissionsArray.map(perm => `\`${perm}\``).join(', ')}`
+					},
+					{
+						name: `Library: Discord.js: ${djsVersion}`,
+						value: stripIndents`Commithash: \`${djsParts.hash}\`
+							[view on GitHub](https://github.com/${djsParts.holder}/${djsParts.repo}/commit/${djsParts.hash})`
+					},
+					{
+						name: `Framework: Akairo: ${akairoVersion}`,
+						value: stripIndents`Commithash: \`${akairoParts.hash}\`
+							[view on GitHub](https://github.com/${akairoParts.holder}/${akairoParts.repo}/commit/${akairoParts.hash})`
+					}
+				)
 				.setFooter(`Coded with 🍵 by ${creator.username} | running on Node.js ${process.version}`, creator.displayAvatarURL());
 
 			if (!embed.color && message.guild && message.guild.me!.displayColor) {

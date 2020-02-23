@@ -79,8 +79,10 @@ export default class HelpCommand extends Command {
 		}
 
 		const embed = new CorEmbed()
-			.addField('Command Information', idString)
-			.addField('About', infoString);
+			.addFields(
+				{ name: 'Command Information', value: idString },
+				{ name: 'About', value: infoString }
+			);
 
 		if (ref.description.flags) {
 			let flagString = '\n';
@@ -90,10 +92,10 @@ export default class HelpCommand extends Command {
 					flagString += MESSAGES.COMMANDS.HELP.INFO.USAGE_FLAG_FORMAT(key, flags[key]);
 				}
 			}
-			embed.addField('Options', flagString);
+			embed.addFields({ name: 'Options', value: flagString });
 		}
 		if (restrictionString) {
-			embed.addField('Restrictions', restrictionString);
+			embed.addFields({ name: 'Restrictions', value: restrictionString });
 		}
 		if (!embed.color && message.guild && message.guild.me!.displayColor) {
 			embed.setColor(message.guild.me!.displayColor);

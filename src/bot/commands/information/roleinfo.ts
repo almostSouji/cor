@@ -50,11 +50,11 @@ class RoleInfoCommand extends Command {
 		if (role.color) {
 			infoString += `\nColor: ${role.hexColor} (${role.color})`;
 		}
-		embed.addField('Role Information', infoString);
+		embed.addFields({ name: 'Role Information', value: infoString });
 		if (role.members.size) {
 			const members = groupBy(role.members, (m: GuildMember) => m.presence.status)
 				.map((v: Collection<string, GuildMember>, k: PresenceStatus) => `${displayStatus(this.client as CorClient, k, guild)} ${v.size}`);
-			embed.addField('Members', members);
+			embed.addFields({ name: 'Members', value: members });
 		}
 		if (role.color && (!embed.color || color)) {
 			embed.setColor(role.color);
