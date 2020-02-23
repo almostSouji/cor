@@ -46,7 +46,8 @@ export const PREFIXES = {
 	SUCCESS: '✓ ',
 	ERROR: '✘ ',
 	GRANTED: '`✅`',
-	DENIED: '`❌`'
+	DENIED: '`❌`',
+	NO_ACCESS: '`⛔`'
 };
 
 export const PROMPT_ANSWERS = {
@@ -342,6 +343,13 @@ export const MESSAGES = {
 		CHANNELINFO: {
 			ERRORS: {
 				NO_PERMISSION: (channel: GuildChannel) => `${PREFIXES.ERROR}You don't have permission to view \`${channel.name}\`.`
+			}
+		},
+		USERINFO: {
+			RANDOM_FOOTER: 'I could not resolve your query to a user, so here is your information instead!',
+			BLACKLIST: {
+				BLACKLISTED: `${PREFIXES.NO_ACCESS} Blacklisted`,
+				NOT_BLACKLISTED: `Not blacklisted`
 			}
 		}
 	},

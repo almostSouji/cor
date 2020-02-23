@@ -11,6 +11,7 @@ import { MESSAGES, UTIL } from '../util/constants';
  * @returns {string} Key
  */
 const getKeyByValue = (object: Record<string, any>, predicate: Function): string | undefined => Object.keys(object).find(key => predicate(object[key]));
+
 /**
 * Returns the status emoji for provided member, results in an alternative if the bot does not have emoji permissions
 * @param {client} client Bot client
