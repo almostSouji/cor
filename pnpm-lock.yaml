@@ -9,7 +9,7 @@ dependencies:
   common-tags: 1.8.0
   date-fns: 2.9.0
   discord-akairo: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev
-  discord.js: github.com/discordjs/discord.js/161f90761aa357f17066f4171a5f43f76a552eb7
+  discord.js: github.com/discordjs/discord.js/4ec01ddef56272f6bed23dd0eced8ea9851127b7
   dotenv: 8.2.0
   eslint-config-marine: 6.0.0_eslint@6.8.0
   js-yaml: 3.13.1
@@ -2856,7 +2856,7 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
   github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev:
     dependencies:
-      discord.js: github.com/discordjs/discord.js/161f90761aa357f17066f4171a5f43f76a552eb7
+      discord.js: github.com/discordjs/discord.js/4ec01ddef56272f6bed23dd0eced8ea9851127b7
     dev: false
     id: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61
     name: discord-akairo
@@ -2868,7 +2868,7 @@ packages:
       registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/1Computer1/discord-akairo/tar.gz/ccd021cb8075db3c71aedb09672ec9c575a76e61'
     version: 8.0.0-beta.8
-  github.com/discordjs/discord.js/161f90761aa357f17066f4171a5f43f76a552eb7:
+  github.com/discordjs/discord.js/4ec01ddef56272f6bed23dd0eced8ea9851127b7:
     dependencies:
       '@discordjs/collection': 0.1.4
       abort-controller: 3.0.0
@@ -2880,7 +2880,7 @@ packages:
       ws: 7.2.1
     dev: false
     engines:
-      node: '>=10.2.0'
+      node: '>=11.0.0'
     name: discord.js
     peerDependencies:
       bufferutil: ^4.0.1
@@ -2903,7 +2903,7 @@ packages:
       zlib-sync:
         optional: true
     resolution:
-      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/161f90761aa357f17066f4171a5f43f76a552eb7'
+      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/4ec01ddef56272f6bed23dd0eced8ea9851127b7'
     version: 12.0.0-dev
 specifiers:
   '@naval-base/ms': ^3.1.0
