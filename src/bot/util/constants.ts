@@ -1,4 +1,4 @@
-import { Guild, User, ClientUser } from 'discord.js';
+import { Guild, User, ClientUser, GuildChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import { LooseVector } from '../commands/other/dijkstra';
 import { Task } from '../models/Tasks';
@@ -338,6 +338,11 @@ export const MESSAGES = {
 		},
 		ROLEINFO: {
 			RANDOM_FOOTER: 'I could not resolve your query to a role, so i picked one at random!'
+		},
+		CHANNELINFO: {
+			ERRORS: {
+				NO_PERMISSION: (channel: GuildChannel) => `${PREFIXES.ERROR}You don't have permission to view \`${channel.name}\`.`
+			}
 		}
 	},
 	LISTENERS: {
