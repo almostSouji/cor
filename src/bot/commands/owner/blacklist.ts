@@ -47,7 +47,7 @@ class BlacklistCommand extends Command {
 		}
 		blacklist.push(user.id);
 		this.client.settings.set('global', 'blacklist', blacklist);
-		return message.util!.send(MESSAGES.COMMANDS.BLACKLIST.SUCCESS.UNBLACKLIST(user));
+		return message.util!.send(MESSAGES.COMMANDS.BLACKLIST.SUCCESS.BLACKLIST(user));
 	}
 }
 export default BlacklistCommand;
