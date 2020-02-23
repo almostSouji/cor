@@ -18,7 +18,7 @@ const getKeyByValue = (object: Record<string, any>, predicate: Function): string
 * @param {Guild} guild Guild to take permission information from
 * @returns {string} Emojistring
 */
-const displayStatus = (client: CorClient, status: PresenceStatus, guild: Guild): string => {
+const displayStatus = (client: CorClient, status: PresenceStatus, guild: Guild | null): string => {
 	if (guild && !guild.me!.hasPermission('USE_EXTERNAL_EMOJIS')) {
 		return `${status}:`;
 	}
