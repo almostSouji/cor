@@ -69,13 +69,17 @@ export default class HelpCommand extends Command {
 			const check = message.channel.type === 'text' && message.guild!.me!.permissions.has(permissions);
 			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BOT_PERMISSIONS(permissionMapper(permissions), check);
 		}
-		if ([ref.id, ref.categoryID].some(source => globalBlacklist.includes(source))) {
-			const check = this.client.isOwner(message.author);
-			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLISTED_OWNER(check);
+		if (globalBlacklist.includes(ref.id)) {
+			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLIST.OWNER.COMMAND;
 		}
-		if ([ref.id, ref.categoryID].some(source => localBlacklist.includes(source))) {
-			const check = this.client.isOwner(message.author);
-			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLISTED_GUILD(check);
+		if (globalBlacklist.includes(ref.categoryID)) {
+			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLIST.OWNER.CATEGORY(ref.categoryID);
+		}
+		if (localBlacklist.includes(ref.id)) {
+			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLIST.GUILD.COMMAND;
+		}
+		if (localBlacklist.includes(ref.categoryID)) {
+			restrictionString += MESSAGES.COMMANDS.HELP.INFO.BLACKLIST.OWNER.CATEGORY(ref.categoryID);
 		}
 
 		const embed = new CorEmbed()
@@ -160,9 +164,15 @@ export default class HelpCommand extends Command {
 							return true;
 						}
 					);
-					return `${toTitleCase(category.id)}:${commands
-						.map((c: Command): string => `\`${c.id}\``)
+					const titleCaseCategory = toTitleCase(category.id);
+					const categoryBlacklisted = globalBlacklist.includes(category.id) || localBlacklist.includes(category.id);
+					const categoryString = `${categoryBlacklisted ? `~~${titleCaseCategory}~~` : titleCaseCategory}:${commands
+						.map((c: Command): string => {
+							const commandBlacklisted = globalBlacklist.includes(c.id) || localBlacklist.includes(c.id);
+							return commandBlacklisted ? `~~\`${c.id}\`~~` : `\`${c.id}\``;
+						})
 						.join(', ')}`;
+					return categoryString;
 				}
 			);
 			return message.util!.send(MESSAGES.COMMANDS.HELP.OUTPUT(map, prefix, this.id));

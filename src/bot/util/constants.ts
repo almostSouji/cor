@@ -278,8 +278,16 @@ export const MESSAGES = {
 				GUILD_ONLY: (isGuild: boolean) => `\n${isGuild ? PREFIXES.GRANTED : PREFIXES.DENIED} Command can only be used in a guild`,
 				USER_PERMISSIONS: (permissions: string, granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} User permissions: ${permissions}`,
 				BOT_PERMISSIONS: (permissions: string, granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Bot permissions: ${permissions}`,
-				BLACKLISTED_OWNER: (granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Disabled globally by Owner`,
-				BLACKLISTED_GUILD: (granted: boolean) => `\n${granted ? PREFIXES.GRANTED : PREFIXES.DENIED} Disabled locally on guild`
+				BLACKLIST: {
+					OWNER: {
+						COMMAND: `\n${PREFIXES.NO_ACCESS} Command disabled globally by Owner`,
+						CATEGORY: (category: string) => `\n${PREFIXES.NO_ACCESS} Command category \`${category}\` disabled globally by Owner`
+					},
+					GUILD: {
+						COMMAND: `\n${PREFIXES.NO_ACCESS} Command disabled locally on this guild`,
+						CATEGORY: (category: string) => `\n${PREFIXES.NO_ACCESS} Command category \`${category}\` disabled locally on this guild`
+					}
+				}
 			},
 			OUTPUT: (commandMap: string[], prefix: string, commandName: string) => stripIndents`
 			Your available commands are:
