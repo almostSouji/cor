@@ -13,7 +13,7 @@ export default class HelpCommand extends Command {
 					'Display Command help.',
 				usage: '[command] [--all]',
 				flags: {
-					'`-a`, `--all': 'show all, regardless permissions'
+					'`-a`, `--all`': 'show all, regardless permissions'
 				}
 			},
 			clientPermissions: ['EMBED_LINKS', 'SEND_MESSAGES'],
