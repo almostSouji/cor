@@ -65,13 +65,13 @@ class UserInfoCommand extends Command {
 			ID: ${user.id}
 			Tag: \`${user.tag}\`
 			Status: ${toTitleCase(user.presence.status)}${displayStatus(this.client as CorClient, user.presence.status, null)}
-			Created:${formatDistanceStrict(user.createdAt, Date.now(), { addSuffix: true })} (${format(user.createdAt, DATEFORMAT.DAY)})`;
+			Created: ${formatDistanceStrict(user.createdAt, Date.now(), { addSuffix: true })} (${format(user.createdAt, DATEFORMAT.DAY)})`;
 		if (this.client.isOwner(user)) {
 			infoString += `\n${this.client.user?.username} Owner \`🤖\``;
 		}
 		const embed = new CorEmbed()
 			.setThumbnail(user.displayAvatarURL())
-			.addFields({ name: `${user.bot ? 'Bot' : 'User'}Information`, value: infoString });
+			.addFields({ name: `${user.bot ? 'Bot' : 'User'} Information`, value: infoString });
 		return embed;
 	}
 
