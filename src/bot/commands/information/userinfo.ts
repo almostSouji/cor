@@ -67,7 +67,7 @@ class UserInfoCommand extends Command {
 			Status: ${toTitleCase(user.presence.status)}${displayStatus(this.client as CorClient, user.presence.status, null)}
 			Created: ${formatDistanceStrict(user.createdAt, Date.now(), { addSuffix: true })} (${format(user.createdAt, DATEFORMAT.DAY)})`;
 		if (this.client.isOwner(user)) {
-			infoString += `\n${this.client.user?.username} Owner \`🤖\``;
+			infoString += `\nBot Owner`;
 		}
 		const embed = new CorEmbed()
 			.setThumbnail(user.displayAvatarURL())
@@ -94,7 +94,7 @@ class UserInfoCommand extends Command {
 			infoString += `\nVoice channel: ${member.voice.channel.name}`;
 		}
 		if (member.guild.ownerID === member.id) {
-			infoString += `\nGuild Owner \`👑\``;
+			infoString += `\nGuild Owner \\👑`;
 		}
 		embed.addFields({ name: 'Member Information', value: infoString, inline: true });
 		if (member.presence?.activities.length) {
