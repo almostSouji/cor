@@ -222,6 +222,9 @@ export const MESSAGES = {
 			SUCCESS: {
 				BLACKLIST: (user: User) => `${PREFIXES.SUCCESS}Blacklisted \`${user.tag}\` (${user.id}).`,
 				UNBLACKLIST: (user: User) => `${PREFIXES.SUCCESS}Unblacklisted \`${user.tag}\` (${user.id}).`
+			},
+			ERRORS: {
+				NO_ENTRY: `${PREFIXES.ERROR}No blacklist entries found to show.`
 			}
 		},
 		EVAL: {
