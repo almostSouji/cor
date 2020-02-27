@@ -1,5 +1,5 @@
 import { Command, Argument } from 'discord-akairo';
-import { Message, User, Collection, EmbedFieldData } from 'discord.js';
+import { Message, User, Collection } from 'discord.js';
 import { MESSAGES } from '../../util/constants';
 import { CorEmbed } from '../../structures/CorEmbed';
 
@@ -51,24 +51,20 @@ class BlacklistCommand extends Command {
 					unresolvable.push({ entry, error });
 				}
 			}
-			const fields: EmbedFieldData[] = [];
+			const embed = new CorEmbed();
 			if (users.size) {
-				fields.push(
-					{
-						name: 'Blacklisted Users',
-						value: users.map((user: User) => `${user.tag} (${user.id}) [avatar](${user.displayAvatarURL({ dynamic: true, format: 'png', size: 2048 })} 'show ${user.username}\'s avatar')`)
-					}
-				);
+				embed.setTitle('Blacklisted Users')
+					.setDescription(users.map((user: User) => `${user.tag} (${user.id}) [avatar](${user.displayAvatarURL({ dynamic: true, format: 'png', size: 2048 })} 'show ${user.username}\'s avatar')`));
 			}
 			if (unresolvable.length) {
-				fields.push(
+				embed.addFields(
 					{
 						name: 'Unresolvable Entries',
 						value: unresolvable.map((unres: UnresolvableEnetry) => `${unres.entry}: ${unres.error}`)
 					}
 				);
 			}
-			return message.util!.send(new CorEmbed().addFields(fields).shorten());
+			return message.util!.send(embed);
 		}
 		if (!user) {
 			return message.util!.send(MESSAGES.ERRORS.TARGET('user to blacklist'));
