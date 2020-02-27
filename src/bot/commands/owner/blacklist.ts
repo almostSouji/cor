@@ -11,12 +11,7 @@ interface UnresolvableEnetry {
 class BlacklistCommand extends Command {
 	private constructor() {
 		super('blacklist', {
-			aliases: [
-				'blacklist',
-				'bl',
-				'unblacklist',
-				'un-bl'
-			],
+			aliases: ['blacklist', 'bl'],
 			description: {
 				content: 'Prohibit/Allow the provided user from using the bot',
 				usage: '<user>',
