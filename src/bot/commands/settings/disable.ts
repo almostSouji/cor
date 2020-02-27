@@ -1,6 +1,7 @@
 import { Command, Category } from 'discord-akairo';
 import { Message } from 'discord.js';
 import { MESSAGES } from '../../util/constants';
+import { CorEmbed } from '../../structures/CorEmbed';
 
 class DisableCommand extends Command {
 	private constructor() {
@@ -11,10 +12,11 @@ class DisableCommand extends Command {
 			],
 			description: {
 				content: 'disable or re-enable module or command for this guild',
-				usage: '[module or command] [--reset] [--global]',
+				usage: '[module or command] [--reset] [--global] [--list]',
 				flags: {
 					'`-g`, `--global`': 'edit global settings (Owner only)',
-					'`-r`, `--reset`': 'enable all commands'
+					'`-r`, `--reset`': 'enable all commands',
+					'`-ls`, `--list`': 'list disabled commands (add gobal flag for global settings) (Owner only)'
 				}
 			},
 			args: [
@@ -38,6 +40,11 @@ class DisableCommand extends Command {
 					id: 'reset',
 					match: 'flag',
 					flag: ['-r', '--reset']
+				},
+				{
+					id: 'list',
+					match: 'flag',
+					flag: ['-ls', '--list']
 				}
 			],
 			channel: 'guild',
@@ -46,10 +53,58 @@ class DisableCommand extends Command {
 		});
 	}
 
-	public async exec(message: Message,	{ target, global, reset }: { target: Command | Category<string, Command> | string; global: boolean; reset: boolean }): Promise<Message | Message[]> {
+	public buildInfoEmbed(blacklist: string[], global: boolean): CorEmbed | string {
+		const commands = [];
+		const categories = [];
+		for (const entry of blacklist) {
+			if (this.client.commandHandler.findCommand(entry)) {
+				commands.push(entry);
+				continue;
+			}
+			if (this.client.commandHandler.findCategory(entry)) {
+				categories.push(entry);
+				continue;
+			}
+		}
+
+		const fields = [];
+		if (commands.length) {
+			fields.push({
+				name: `Disabled Commands ${global ? ' (global)' : ' for this server'}`,
+				value: commands
+					.map((command: string) => `\`${command}\``)
+					.join(',')
+			});
+		}
+
+		if (categories.length) {
+			fields.push({
+				name: `Disabled Categories ${global ? ' (global)' : ' for this server'}`,
+				value: categories
+					.map((category: string) => `\`${category}\``)
+					.join(',')
+			});
+		}
+
+		if (!fields.length) {
+			return MESSAGES.COMMANDS.DISABLE.ERRORS.NO_DISABLED(global);
+		}
+
+
+		const embed = new CorEmbed()
+			.addFields(fields).shorten();
+		return embed;
+	}
+
+	public async exec(message: Message,	{ target, global, reset, list }: { target: Command | Category<string, Command> | string; global: boolean; reset: boolean; list: boolean }): Promise<Message | Message[]> {
 		const override = this.client.isOwner(message.author);
 		const globalBlacklist = this.client.settings.get('global', 'disabled', []);
 		const localBlacklist = this.client.settings.get(message.guild!, 'disabled', []);
+		if (list) {
+			const showGlobal = override && global;
+			const useList = showGlobal ? globalBlacklist : localBlacklist;
+			return message.util!.send(this.buildInfoEmbed(useList, showGlobal));
+		}
 		if (global && override) {
 			if (reset) {
 				this.client.settings.set('global', 'disabled', []);

@@ -263,7 +263,8 @@ export const MESSAGES = {
 				DISABLED: (name: string, location: string, isCommand: boolean) => `${PREFIXES.SUCCESS}Disabled ${isCommand ? 'command' : 'category'} ${name} ${location}`
 			},
 			ERRORS: {
-				OWNER_DISABLED: (name: string, isCommand: boolean) => `${PREFIXES.ERROR}The ${isCommand ? 'command' : 'category'} \`${name}\` ${isCommand ? 'or its category' : ''} is disabled globally by the owner. You can not apply settings for it at this time.`
+				OWNER_DISABLED: (name: string, isCommand: boolean) => `${PREFIXES.ERROR}The ${isCommand ? 'command' : 'category'} \`${name}\` ${isCommand ? 'or its category' : ''} is disabled globally by the owner. You can not apply settings for it at this time.`,
+				NO_DISABLED: (global: boolean) => `${PREFIXES.ERROR}There are currently no ${global ? 'globally' : ''} disabled commands or categories to show.`
 			}
 		},
 		HELP: {
