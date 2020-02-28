@@ -76,7 +76,7 @@ export class CorClient extends AkairoClient {
 				ownerID: config.owner
 			},
 			{
-				disableEveryone: true,
+				disableMentions: true,
 				disabledEvents: ['TYPING_START']
 			}
 		);

@@ -9,7 +9,7 @@ dependencies:
   common-tags: 1.8.0
   date-fns: 2.9.0
   discord-akairo: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev
-  discord.js: github.com/discordjs/discord.js/4ec01ddef56272f6bed23dd0eced8ea9851127b7
+  discord.js: github.com/discordjs/discord.js/653784b56445b015a1584de1b693e57fc9069050
   dotenv: 8.2.0
   eslint-config-marine: 6.0.0_eslint@6.8.0
   js-yaml: 3.13.1
@@ -41,10 +41,10 @@ packages:
       js-tokens: 4.0.0
     resolution:
       integrity: sha512-PX4y5xQUvy0fnEVHrYOarRPXVWafSjTW9T0Hab8gVIawpl2Sj0ORyrygANq+KjcNlSSTw0YCLSNA8OyZ1I4yEg==
-  /@discordjs/collection/0.1.4:
+  /@discordjs/collection/0.1.5:
     dev: false
     resolution:
-      integrity: sha512-AwCjNahVqASGv5mxnZCC0DfcV/hkAV/U7edUB0K+20xx7v0ZfQ3/o02bNROzpNjvfak5pM8KO5SCmJVK90e3lQ==
+      integrity: sha512-CU1q0UXQUpFNzNB7gufgoisDHP7n+T3tkqTsp3MNUkVJ5+hS3BCvME8uCXAUFlz+6T2FbTCu75A+yQ7HMKqRKw==
   /@naval-base/ms/3.1.0:
     dev: false
     resolution:
@@ -1060,16 +1060,16 @@ packages:
       node: '>= 0.12'
     resolution:
       integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==
-  /form-data/2.5.1:
+  /form-data/3.0.0:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.26
     dev: false
     engines:
-      node: '>= 0.12'
+      node: '>= 6'
     resolution:
-      integrity: sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
+      integrity: sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
   /fs-minipass/1.2.7:
     dependencies:
       minipass: 2.9.0
@@ -1899,7 +1899,7 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
-  /prism-media/1.2.0:
+  /prism-media/1.2.1:
     dev: false
     peerDependencies:
       '@discordjs/opus': ^0.1.0
@@ -1916,7 +1916,7 @@ packages:
       opusscript:
         optional: true
     resolution:
-      integrity: sha512-zjcO/BLVlfxWqFpEUlDyL1R9XXMquasNP4xpeYDPPZi/Zcz0i6OXoqcvxOLgbRVPsJXVd29vlYmRx2bts+hzEw==
+      integrity: sha512-R3EbKwJiYlTvGwcG1DpUt+06DsxOGS5W4AMEHT7oVOjG93MjpdhGX1whHyjnqknylLMupKAsKMEXcTNRbPe6Vw==
   /process-nextick-args/2.0.1:
     dev: false
     resolution:
@@ -2856,7 +2856,7 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
   github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev:
     dependencies:
-      discord.js: github.com/discordjs/discord.js/4ec01ddef56272f6bed23dd0eced8ea9851127b7
+      discord.js: github.com/discordjs/discord.js/653784b56445b015a1584de1b693e57fc9069050
     dev: false
     id: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61
     name: discord-akairo
@@ -2868,24 +2868,24 @@ packages:
       registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/1Computer1/discord-akairo/tar.gz/ccd021cb8075db3c71aedb09672ec9c575a76e61'
     version: 8.0.0-beta.8
-  github.com/discordjs/discord.js/4ec01ddef56272f6bed23dd0eced8ea9851127b7:
+  github.com/discordjs/discord.js/653784b56445b015a1584de1b693e57fc9069050:
     dependencies:
-      '@discordjs/collection': 0.1.4
+      '@discordjs/collection': 0.1.5
       abort-controller: 3.0.0
-      form-data: 2.5.1
+      form-data: 3.0.0
       node-fetch: 2.6.0
-      prism-media: 1.2.0
+      prism-media: 1.2.1
       setimmediate: 1.0.5
       tweetnacl: 1.0.3
       ws: 7.2.1
     dev: false
     engines:
-      node: '>=11.0.0'
+      node: '>=12.0.0'
     name: discord.js
     peerDependencies:
       bufferutil: ^4.0.1
       erlpack: discordapp/erlpack
-      libsodium-wrappers: ^0.7.4
+      libsodium-wrappers: ^0.7.6
       sodium: ^3.0.2
       utf-8-validate: ^5.0.2
       zlib-sync: ^0.1.6
@@ -2903,7 +2903,7 @@ packages:
       zlib-sync:
         optional: true
     resolution:
-      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/4ec01ddef56272f6bed23dd0eced8ea9851127b7'
+      tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/653784b56445b015a1584de1b693e57fc9069050'
     version: 12.0.0-dev
 specifiers:
   '@naval-base/ms': ^3.1.0
