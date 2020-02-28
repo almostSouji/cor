@@ -1,8 +1,7 @@
 import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
-import { join, extname } from 'path';
+import { join } from 'path';
 import { Setting } from '../models/Settings';
 import { Guild, Message, CategoryChannel } from 'discord.js';
-import { readdirSync } from 'fs';
 import { createLogger, Logger, transports, format } from 'winston';
 import { Connection } from 'typeorm';
 import { TypeORMProvider } from '../structures/SettingsProvider';
@@ -143,10 +142,4 @@ export class CorClient extends AkairoClient {
 		await this.schedule.init();
 		return loginString;
 	}
-}
-
-const extensions = readdirSync(join(__dirname, '..', 'extensions'));
-for (const ext of extensions.filter(file => ['.js', '.ts'].includes(extname(file)))) {
-	import(join(__dirname, '..', 'extensions', ext));
-	// require(join(__dirname, '..', 'extensions', ext));
 }
