@@ -71,6 +71,14 @@ export const UTIL = {
 	}
 };
 
+export const VERIFICATION_LEVELS = {
+	HIGH: '(╯°□°）╯︵ ┻━┻',
+	LOW: 'Low',
+	MEDIUM: 'Medium',
+	NONE: 'None',
+	VERY_HIGH: '┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻'
+};
+
 //#endregion
 
 export const COMMANDS = {

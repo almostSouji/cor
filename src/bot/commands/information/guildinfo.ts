@@ -1,10 +1,10 @@
 import { Command } from 'discord-akairo';
-import { Message, Guild, Collection, GuildChannel, Constants, GuildMember, PresenceStatus } from 'discord.js';
+import { Message, Guild, Collection, GuildChannel, GuildMember, PresenceStatus } from 'discord.js';
 import { CorEmbed } from '../../structures/CorEmbed';
 import { groupBy, toTitleCase, displayStatus } from '../../util';
 import { stripIndents } from 'common-tags';
 import { format, formatDistanceStrict } from 'date-fns';
-import { DATEFORMAT } from '../../util/constants';
+import { DATEFORMAT, VERIFICATION_LEVELS } from '../../util/constants';
 import { CorClient } from '../../client/CorClient';
 
 class GuildInfoCommand extends Command {
@@ -41,7 +41,7 @@ class GuildInfoCommand extends Command {
 						Created: ${formatDistanceStrict(guild.createdAt, Date.now(), { addSuffix: true })} (${format(guild.createdAt, DATEFORMAT.DAY)})
 						Region: ${guild.region}
 						Owner: \`${guild.owner?.user.tag}\`
-						Verification: ${Constants.VerificationLevels[guild.verificationLevel]}`,
+						Verification: ${VERIFICATION_LEVELS[guild.verificationLevel]}`,
 					inline: true
 				},
 				{
