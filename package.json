@@ -9,7 +9,8 @@
     "build": "tsc",
     "dev": "ts-node-dev src/index.ts",
     "sync": "typeorm schema:sync",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts",
+    "lint:fix" : "eslint src --ext ts --fix"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
