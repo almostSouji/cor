@@ -76,8 +76,7 @@ export class CorClient extends AkairoClient {
 				ownerID: config.owner
 			},
 			{
-				disableMentions: true,
-				disabledEvents: ['TYPING_START']
+				disableMentions: 'everyone'
 			}
 		);
 		this.logger = createLogger({
