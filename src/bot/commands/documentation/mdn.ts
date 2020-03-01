@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo';
-import { Message, MessageEmbed, TextChannel } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import * as qs from 'querystring';
 import * as Turndown from 'turndown';
@@ -48,7 +48,7 @@ export default class MDNCommand extends Command {
 			.setTitle(body.Title)
 			.setDescription(turndown.turndown(summary));
 
-		if (message.channel.type === 'dm' || !(message.channel as TextChannel).permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES'], false)) {
+		if (message.channel.type === 'dm' || !(message.channel).permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES'], false)) {
 			return message.util!.send({ embed });
 		}
 		const msg = await message.util!.send(embed);

@@ -51,7 +51,7 @@ class QuoteCommand extends Command {
 			embed.setAuthor(message.webhookID ? `${message.author.username} • Webhook` : `${message.author.tag} ${message.author.bot ? '• Bot' : ''}`, message.author.displayAvatarURL());
 		}
 		if (message.channel.type === 'text') {
-			embed.setFooter(`In #${(message.channel as TextChannel).name}`);
+			embed.setFooter(`In #${(message.channel).name}`);
 		}
 		if (message.edits.length && showedits) {
 			for (const m of message.edits.slice(1)) {

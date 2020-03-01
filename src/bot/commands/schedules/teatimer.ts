@@ -1,5 +1,5 @@
 import { Command } from 'discord-akairo';
-import { Message, TextChannel } from 'discord.js';
+import { Message } from 'discord.js';
 import { MESSAGES, COMMANDS } from '../../util/constants';
 import ms from '@naval-base/ms';
 import { stripIndents } from 'common-tags';
@@ -52,7 +52,7 @@ class TeaTimerCommand extends Command {
 			${quote} [quote #${rand + 1}]
 			${message.author}, ${MESSAGES.COMMANDS.TEA.FOOTER}`;
 		const dmCheck = dm || message.channel.type !== 'text';
-		const target = !dm && message.channel.type === 'text' ? (message.channel as TextChannel) : undefined;
+		const target = !dm && message.channel.type === 'text' ? (message.channel) : undefined;
 		const entry = await this.client.schedule.add({
 			target,
 			user: message.author,
