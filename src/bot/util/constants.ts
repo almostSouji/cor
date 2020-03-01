@@ -244,6 +244,12 @@ export const MESSAGES = {
 			TIME: (diff: number) => ` • time taken: \`${diff}ms\``,
 			TYPE: (type: string) => `• Type: \`${type}\``
 		},
+		EXPORT_TAGS: {
+			ERRORS: {
+				MISC: (error: Error) => `${PREFIXES.ERROR}Something wen wrong while constructing the export: \`${error}\``
+			},
+			SUCCESS: `${PREFIXES.SUCCESS}Tag database dump complete.`
+		},
 		HELP: {
 			INFO: {
 				ALIASES: (aliases: string[]) => `\nAliases: ${aliases.map(e => `\`${e}\``).join(', ')}`,
@@ -273,6 +279,19 @@ export const MESSAGES = {
 			${commandMap.join('\n')}
 
 			You can use \`${prefix}${commandName} <commandname>\` to get more information about a command.`
+		},
+		LOAD_BACKUP: {
+			ERRORS: {
+				NO_YAML: `${PREFIXES.ERROR}Please provide a .yaml file containing a compatible Tag dump.`
+			},
+			PROGRESS: {
+				CLEARED: '`[✔]` Datbase cleared',
+				CLEARING: '`[ ]` Clearing database...',
+				INSERTED: '`[✔]` Insertion finished',
+				INSERTING: '`[ ]` Starting tag insertion...',
+				NO_CLEAR: '`[X]` Clearing unsuccessful',
+				NO_TAGS: '`[X]` No tags found.'
+			}
 		},
 		MDN: {
 			ERRORS: {
