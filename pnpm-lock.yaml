@@ -1,11 +1,5 @@
 dependencies:
   '@naval-base/ms': 3.1.0
-  '@types/dotenv': 6.1.1
-  '@types/js-yaml': 3.12.2
-  '@types/ms': 0.7.31
-  '@types/node-fetch': 2.5.4
-  '@types/turndown': 5.0.0
-  '@types/ws': 6.0.4
   common-tags: 1.8.0
   date-fns: 2.9.0
   discord-akairo: github.com/1Computer1/discord-akairo/ccd021cb8075db3c71aedb09672ec9c575a76e61_discord.js@12.0.0-dev
@@ -21,7 +15,13 @@ dependencies:
   winston: 3.2.1
 devDependencies:
   '@types/common-tags': 1.8.0
+  '@types/dotenv': 6.1.1
+  '@types/js-yaml': 3.12.2
+  '@types/ms': 0.7.31
   '@types/node': 13.7.4
+  '@types/node-fetch': 2.5.4
+  '@types/turndown': 5.0.0
+  '@types/ws': 6.0.4
   '@typescript-eslint/eslint-plugin': 2.20.0_3c89355368312e4d14b8122b0cc40d07
   '@typescript-eslint/parser': 2.20.0_eslint@6.8.0+typescript@3.8.2
   eslint: 6.8.0
@@ -60,7 +60,7 @@ packages:
   /@types/dotenv/6.1.1:
     dependencies:
       '@types/node': 12.12.28
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-ftQl3DtBvqHl9L16tpqqzA4YzCSXZfi7g8cQceTz5rOlYtk/IZbFjAv3mLOQlNIgOaylCQWQoBdDQHPgEBJPHg==
   /@types/eslint-visitor-keys/1.0.0:
@@ -68,7 +68,7 @@ packages:
     resolution:
       integrity: sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
   /@types/js-yaml/3.12.2:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-0CFu/g4mDSNkodVwWijdlr8jH7RoplRWNgovjFLEZeT+QEbbZXjBmCe3HwaWheAlCbHwomTwzZoSedeOycABug==
   /@types/json-schema/7.0.4:
@@ -76,17 +76,17 @@ packages:
     resolution:
       integrity: sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
   /@types/ms/0.7.31:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==
   /@types/node-fetch/2.5.4:
     dependencies:
       '@types/node': 12.12.28
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-Oz6id++2qAOFuOlE1j0ouk1dzl3mmI1+qINPNBhi9nt/gVOz0G+13Ao6qjhdF0Ys+eOkhu6JnFmt38bR3H0POQ==
   /@types/node/12.12.28:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-g73GJYJDXgf0jqg+P9S8h2acWbDXNkoCX8DLtJVu7Fkn788pzQ/oJsrdJz/2JejRf/SjfZaAhsw+3nd1D5EWGg==
   /@types/node/13.7.4:
@@ -102,13 +102,13 @@ packages:
     resolution:
       integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
   /@types/turndown/5.0.0:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-Y7KZn6SfSv1vzjByJGijrM9w99HoUbLiAgYwe+sGH6RYi5diIGLYOcr4Z1YqR2biFs9K5PnxKv/Fbkmh57pvzg==
   /@types/ws/6.0.4:
     dependencies:
       '@types/node': 12.12.28
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-PpPrX7SZW9re6+Ha8ojZG4Se8AZXgf0GK6zmfqEuCsY49LFDNXO3SByp44X3dFEqtB73lkCDAdUazhAjVPiNwg==
   /@typescript-eslint/eslint-plugin/2.20.0_3c89355368312e4d14b8122b0cc40d07:
@@ -2903,6 +2903,7 @@ packages:
       zlib-sync:
         optional: true
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/discordjs/discord.js/tar.gz/713309e7bb87b10ca7432fdbbd7ca65fcddd4882'
     version: 12.0.0-dev
 specifiers:
