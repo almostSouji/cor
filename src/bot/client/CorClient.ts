@@ -94,7 +94,7 @@ export class CorClient extends AkairoClient {
 
 		this.commandHandler.resolver.addType('dijkstraVector', (_, phrase) => {
 			if (!phrase) return null;
-			const reg = new RegExp('/(?<src>[^-]+)- ?(?<dest>[^-]+)- ?(?<cost>\d*)/');
+			const reg = new RegExp('(?<src>[^-]+)- ?(?<dest>[^-]+)- ?(?<cost>\\d*)');
 			const match = reg.exec(phrase);
 			if (!match) return null;
 			const costNum = parseInt(match.groups!.cost, 10);
