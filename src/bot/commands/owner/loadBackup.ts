@@ -99,6 +99,7 @@ class LoadBackupTxtCommand extends Command {
 			status += MESSAGES.COMMANDS.LOAD_BACKUP.PROGRESS.NO_TAGS;
 			return message.util!.send(new CorEmbed().addField('Status', status));
 		}
+		this.client.settings.set('global', 'lastTagImport', Date.now());
 		status += MESSAGES.COMMANDS.LOAD_BACKUP.PROGRESS.INSERTED;
 		const embed = new CorEmbed()
 			.addField('Status', status)

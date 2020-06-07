@@ -339,6 +339,10 @@ export const MESSAGES = {
 		ROLEINFO: {
 			RANDOM_FOOTER: 'I could not resolve your query to a role, so i picked one at random!'
 		},
+		TAG: {
+			NOTICE_FOOTER: 'Tags are occasionally mirrored from discord.js official. Last import:',
+			HOISTED_FOOTER: `[staff tag] | Tags are occasionally mirrored from discord.js official. Last import:`
+		},
 		TEA: {
 			ERRORS: {
 				NO_ENTRY: `${PREFIXES.ERROR}Could not created task.`,

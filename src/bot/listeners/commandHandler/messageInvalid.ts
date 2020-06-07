@@ -2,6 +2,7 @@ import { Listener } from 'discord-akairo';
 import { Message, TextChannel } from 'discord.js';
 import { MESSAGES, DISCORD_LIMITS } from '../../util/constants';
 import { User } from '../../models/Users';
+import { CorEmbed } from '../../structures/CorEmbed';
 
 class MessageInvalidListener extends Listener {
 	private constructor() {
@@ -70,7 +71,16 @@ class MessageInvalidListener extends Listener {
 			if (!name) return;
 			const tag = this.client.tagCache.find(tag => Boolean(name === tag.name || (name && tag.aliases.includes(name))));
 			if (!tag) return;
-			return message.util?.send(tag.content);
+			const lastImport = this.client.settings.get('global', 'lastTagImport', null);
+			const embed = new CorEmbed()
+				.setDescription(tag.content)
+				.setTimestamp(new Date(lastImport));
+			if (tag.hoisted) {
+				embed.setFooter(MESSAGES.COMMANDS.TAG.HOISTED_FOOTER, this.client.user?.displayAvatarURL());
+			} else {
+				embed.setFooter(MESSAGES.COMMANDS.TAG.NOTICE_FOOTER, this.client.user?.displayAvatarURL());
+			}
+			return message.util?.send(embed);
 		}
 	}
 }
