@@ -86,7 +86,7 @@ export default class DocsCommand extends Command {
 		if (forceColor) {
 			embed.color = forceColor;
 		}
-		if (message.channel.type === 'dm' || message.channel.permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES'], false)) {
+		if (message.channel.type === 'dm' || !message.channel.permissionsFor(message.guild!.me!)!.has(['ADD_REACTIONS', 'MANAGE_MESSAGES'], false)) {
 			return message.util!.send({ embed });
 		}
 		const msg = await message.util!.send({ embed });
