@@ -5,7 +5,7 @@ import { MESSAGES } from '../../util/constants';
 class TagReloadCommand extends Command {
 	private constructor() {
 		super('reloadtags', {
-			aliases: ['tag reload', 'tagreload'],
+			aliases: ['reloadtags', 'tag reload', 'tagreload'],
 			description: {
 				content: 'Reloads all tags from the database',
 				usage: ''
