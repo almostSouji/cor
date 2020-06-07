@@ -44,7 +44,7 @@ export default class DocsCommand extends Command {
 					id: 'defaultDocs',
 					match: 'option',
 					flag: ['-d', '--default'],
-					type: Argument.union(COMMANDS.DOCS.SOURCES, 'string')
+					type: 'string'
 				}
 			]
 		});
@@ -56,7 +56,10 @@ export default class DocsCommand extends Command {
 				return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.MISSING_PERMISSIONS(message.guild!));
 			}
 			if (!COMMANDS.DOCS.SOURCES.includes(defaultDocs)) {
-				return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.INVALID_DOCS(defaultDocs, COMMANDS.DOCS.SOURCES));
+				const res =	await fetch(`${COMMANDS.DOCS.API.DOCS_URL}${defaultDocs}.json`);
+				if (!res.ok) {
+					return message.util!.send(MESSAGES.COMMANDS.DOCS.ERRORS.INVALID_DOCS(defaultDocs, COMMANDS.DOCS.SOURCES));
+				}
 			}
 			this.client.settings.set(message.guild!, 'defaultDocs', defaultDocs);
 			return message.util!.send(MESSAGES.COMMANDS.DOCS.SUCESS.SET_DEFAULT(message.guild!, defaultDocs));
@@ -64,13 +67,15 @@ export default class DocsCommand extends Command {
 
 		const q = query.split(' ');
 		if (!COMMANDS.DOCS.SOURCES.includes(source)) {
-			source = this.client.settings.get(message.guild!, 'defaultDocs', 'stable');
+			const potentialSource = `${COMMANDS.DOCS.API.DOCS_URL}${source}.json`;
+			const res = await fetch(potentialSource);
+			if (res.ok) {
+				source = potentialSource;
+			} else {
+				source = this.client.settings.get(message.guild!, 'defaultDocs', 'stable');
+			}
 		}
 		let forceColor;
-		if (source === COMMANDS.DOCS.STABLE_DEV_SOURCE) {
-			forceColor = COMMANDS.DOCS.COLORS.STABLE_DEV;
-			source = `${COMMANDS.DOCS.API.STABLE_DEV_DOCS}${source}.json`;
-		}
 		if (source === COMMANDS.DOCS.COLLECTION_SOURCE) {
 			forceColor = COMMANDS.DOCS.COLORS.COLLECTION;
 		}
@@ -97,9 +102,8 @@ export default class DocsCommand extends Command {
 				(reaction, user): boolean => reaction.emoji.name === COMMANDS.DOCS.EMOJIS.DELETE && user.id === message.author.id,
 				{ max: 1, time: 5000, errors: ['time'] }
 			);
-		} catch (error) {
-			msg.reactions.removeAll();
-
+		} catch {
+			await msg.reactions.removeAll();
 			return message;
 		}
 		react.first()!.message.delete();

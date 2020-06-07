@@ -99,7 +99,7 @@ export const COMMANDS = {
 	DOCS: {
 		API: {
 			BASE_URL: 'https://djsdocs.sorta.moe/v2/embed?',
-			STABLE_DEV_DOCS: 'https://raw.githubusercontent.com/discordjs/discord.js/docs/'
+			DOCS_URL: 'https://raw.githubusercontent.com/discordjs/discord.js/docs/'
 		},
 		COLLECTION_SOURCE: 'collection',
 		COLORS: {
@@ -111,8 +111,7 @@ export const COMMANDS = {
 		EMOJIS: {
 			DELETE: '🗑'
 		},
-		SOURCES: ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', '11.5-dev', 'collection'],
-		STABLE_DEV_SOURCE: '11.5-dev'
+		SOURCES: ['stable', 'master', 'rpc', 'commando', 'akairo', 'akairo-master', 'collection']
 	},
 	MENSA: {
 		API: {
