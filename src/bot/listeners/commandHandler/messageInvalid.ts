@@ -74,12 +74,8 @@ class MessageInvalidListener extends Listener {
 			const lastImport = this.client.settings.get('global', 'lastTagImport', null);
 			const embed = new CorEmbed()
 				.setDescription(tag.content)
-				.setTimestamp(new Date(lastImport));
-			if (tag.hoisted) {
-				embed.setFooter(MESSAGES.COMMANDS.TAG.HOISTED_FOOTER, this.client.user?.displayAvatarURL());
-			} else {
-				embed.setFooter(MESSAGES.COMMANDS.TAG.NOTICE_FOOTER, this.client.user?.displayAvatarURL());
-			}
+				.setTimestamp(new Date(lastImport))
+				.setFooter(MESSAGES.COMMANDS.TAG.NOTICE_FOOTER, this.client.user?.displayAvatarURL());
 			return message.util?.send(embed);
 		}
 	}
