@@ -23,7 +23,7 @@ class PrefixCommand extends Command {
 					type: 'string'
 				},
 				{
-					id: 'sudo',
+					id: 'force',
 					match: 'flag',
 					flag: ['-f', '--force']
 				},
