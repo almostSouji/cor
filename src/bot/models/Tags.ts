@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 @Entity('tags')
-export class Tag {
+export class DBTag {
 	@PrimaryGeneratedColumn()
 	id!: number;
 
@@ -13,21 +13,21 @@ export class Tag {
 	@Column()
 	content!: string;
 
-	@Column()
+	@Column({ nullable: true })
 	aliases!: string;
 
 	@Column()
 	user!: string;
 
-	@Column()
+	@Column({ nullable: true })
 	templated!: boolean;
 
-	@Column()
+	@Column({ nullable: true })
 	hoisted!: boolean;
 
-	@Column()
+	@Column({ nullable: true })
 	createdAt!: string;
 
-	@Column()
+	@Column({ nullable: true })
 	updatedAt!: string;
 }

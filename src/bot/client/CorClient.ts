@@ -1,14 +1,25 @@
 import { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler } from 'discord-akairo';
 import { join } from 'path';
 import { Setting } from '../models/Settings';
-import { Tag } from '../models/Tags';
-import { Guild, Message, CategoryChannel } from 'discord.js';
+import { DBTag } from '../models/Tags';
+import { Guild, Message, CategoryChannel, Collection } from 'discord.js';
 import { createLogger, Logger, transports, format } from 'winston';
 import { Connection, Repository } from 'typeorm';
 import { TypeORMProvider } from '../structures/SettingsProvider';
 import { connectionManager } from '../structures/Database';
 import { Schedule } from '../structures/Schedule';
 import { Task } from '../models/Tasks';
+
+interface Tag {
+	name: string;
+	content: string;
+	aliases: string[];
+	user: string;
+	templated: boolean;
+	hoisted: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
 
 export interface CorConfig {
 	token: string;
@@ -38,7 +49,8 @@ declare module 'discord-akairo' {
 		listenerHandler: ListenerHandler;
 		hubGuild: Guild | undefined;
 		hubCategory: CategoryChannel | undefined;
-		tags: Repository<Tag>;
+		tags: Repository<DBTag>;
+		tagCache: Collection<string, Tag>;
 	}
 }
 
@@ -138,7 +150,16 @@ export class CorClient extends AkairoClient {
 		await this.db.synchronize();
 		this.settings = new TypeORMProvider(this.db.getRepository(Setting));
 		this.schedule = new Schedule(this.db.getRepository(Task), this);
-		this.tags = this.db.getRepository(Tag);
+		this.tags = this.db.getRepository(DBTag);
+		this.tagCache = new Collection();
+		const dbTags = await this.tags.find();
+		for (const dbTag of dbTags) {
+			const tag = {
+				...dbTag,
+				aliases: dbTag.aliases.split(',')
+			};
+			this.tagCache.set(tag.name, tag);
+		}
 		const loginString = await this.login(this.config.token);
 		await this.settings.init();
 		await this.schedule.init();

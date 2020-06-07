@@ -11,6 +11,7 @@ class MessageInvalidListener extends Listener {
 		});
 	}
 
+
 	public async exec(message: Message): Promise<Message|Message[]|undefined> {
 		const repo = this.client.db.getRepository(User);
 		if (message.channel.type === 'dm') {
@@ -63,6 +64,13 @@ class MessageInvalidListener extends Listener {
 			} catch (_) {
 				return message.channel.send(MESSAGES.LISTENERS.MESSAGE_INVALID.ERRORS.NO_RECIPIENT);
 			}
+		}
+		if (message.guild && message.util?.parsed?.prefix) {
+			const name = message.util?.parsed?.afterPrefix;
+			if (!name) return;
+			const tag = this.client.tagCache.find(tag => Boolean(name === tag.name || (name && tag.aliases.includes(name))));
+			if (!tag) return;
+			return message.util?.send(tag.content);
 		}
 	}
 }
