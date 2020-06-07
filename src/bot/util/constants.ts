@@ -333,6 +333,9 @@ export const MESSAGES = {
 				RELOAD_ONE_LISTENER: (commandOrListener: string) => `${PREFIXES.SUCCESS}Reloaded event listener \`${commandOrListener}\`.`
 			}
 		},
+		RELOADTAGS: {
+			SUCCESS: `${PREFIXES.SUCCESS}Reloaded tags.`
+		},
 		ROLEINFO: {
 			RANDOM_FOOTER: 'I could not resolve your query to a role, so i picked one at random!'
 		},
