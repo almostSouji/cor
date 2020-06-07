@@ -8,6 +8,17 @@ import { MESSAGES } from '../../util/constants';
 interface TagData {
 	name: string;
 	content: string;
+	aliases: string[];
+	user: string;
+	templated: boolean;
+	hoisted?: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
+
+interface CleanedTag {
+	name: string;
+	content: string;
 	aliases: string;
 	user: string;
 	templated: boolean;
@@ -71,7 +82,12 @@ class LoadBackupTxtCommand extends Command {
 		let fails = 0;
 		for (const tag of data) {
 			try {
-				const entry = await this.client.tags.create(tag);
+				const cleanedTag: CleanedTag = {
+					...tag,
+					aliases: tag.aliases.join(','),
+					hoisted: tag.hoisted || false
+				};
+				const entry = await this.client.tags.create(cleanedTag);
 				await this.client.tags.save(entry);
 				success++;
 			} catch {

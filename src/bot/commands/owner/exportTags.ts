@@ -20,7 +20,10 @@ class ExportTagsCommand extends Command {
 
 	public async exec(message: Message): Promise<Message | Message[]> {
 		const tags = await this.client.tags.find();
-		const dump = safeDump(tags, {});
+		const dump = safeDump(tags.map(tag => ({
+			...tag,
+			aliases: tag.aliases.split(',')
+		})), {});
 		const b = Buffer.from(dump, 'utf-8');
 		try {
 			return message.util!.send(MESSAGES.COMMANDS.EXPORT_TAGS.SUCCESS, new MessageAttachment(b, 'tags.yaml'));
